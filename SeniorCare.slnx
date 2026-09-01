@@ -9,6 +9,10 @@
     <Project Path="src/Services/SeniorCare.Communication.Api/SeniorCare.Communication.Api.csproj" />
     <Project Path="src/Services/SeniorCare.Analytics.Api/SeniorCare.Analytics.Api.csproj" />
   </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Api/">
+    <Project Path="src/Api/SeniorCare.Api/SeniorCare.Api.csproj" />
+  </Folder>
   <Folder Name="/Workers/">
     <Project Path="src/Workers/SeniorCare.Etl.Worker/SeniorCare.Etl.Worker.csproj" />
   </Folder>
