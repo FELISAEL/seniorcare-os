@@ -1,0 +1,175 @@
+:root {
+  --navy: #102a43;
+  --navy-light: #1d4668;
+  --blue: #176eb5;
+  --blue-soft: #e8f2fb;
+  --green: #237944;
+  --green-soft: #e3f4e8;
+  --red: #c82d34;
+  --red-soft: #fde9ea;
+  --amber: #a76305;
+  --amber-soft: #fff2d8;
+  --ink: #172b3d;
+  --muted: #637486;
+  --line: #dbe4ec;
+  --surface: #fff;
+  --background: #f3f7fa;
+  --shadow: 0 12px 34px rgba(35, 58, 79, 0.1);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background: var(--background);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+summary {
+  cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 4px solid #ffca3a;
+  outline-offset: 3px;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.login-view {
+  display: grid;
+  min-height: 100vh;
+  padding: 2rem;
+  place-items: center;
+  background:
+    linear-gradient(135deg, rgba(16, 42, 67, 0.96), rgba(23, 110, 181, 0.9)),
+    #102a43;
+}
+
+.login-card {
+  width: min(100%, 460px);
+  padding: 2.6rem;
+  border-radius: 24px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.logo {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  place-items: center;
+  color: #fff;
+  background: var(--blue);
+  font-weight: 950;
+}
+
+.eyebrow {
+  margin: 0 0 0.25rem;
+  color: var(--blue);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.login-card .eyebrow {
+  margin-top: 1.3rem;
+}
+
+.login-card h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.login-card > p {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.login-card label,
+.medication-form-wrapper label {
+  display: block;
+  margin: 1rem 0 0.4rem;
+  font-weight: 800;
+}
+
+.login-card input,
+.medication-form-wrapper input,
+.medication-form-wrapper textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #aebdca;
+  border-radius: 10px;
+  color: var(--ink);
+  background: #fff;
+}
+
+.medication-form-wrapper textarea {
+  resize: vertical;
+}
+
+.button {
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 850;
+}
+
+.button--primary {
+  color: #fff;
+  background: var(--blue);
+}
+
+.login-card .button {
+  width: 100%;
+  margin-top: 1.3rem;
+}
+
+.button--secondary {
+  border: 1px solid #b9c7d3;
+  color: var(--ink);
+  background: #fff;
+}
+
+.form-message {
+  min-height: 1.3rem;
+  margin: 0.7rem 0 0;
+  color: var(--red);
+  font-weight: 750;
+}
+
+.login-card small {
+  display: block;
+  margin-top: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+

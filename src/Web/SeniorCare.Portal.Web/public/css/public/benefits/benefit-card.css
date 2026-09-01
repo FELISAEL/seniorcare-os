@@ -1,0 +1,172 @@
+/* ==========================================================
+   SeniorCare OS
+   Tarjeta individual de beneficio
+
+   Responsabilidad:
+   - Pintar cada beneficio como una tarjeta independiente.
+   - Mantener el icono a la izquierda.
+   - Mantener título y descripción a la derecha.
+   - Usar una apariencia limpia similar a las tarjetas
+     públicas de AYUMED, conservando la identidad SeniorCare.
+========================================================== */
+
+.benefit-card {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        64px minmax(0, 1fr);
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+
+    width:
+        100%;
+
+    min-height:
+        132px;
+
+    padding:
+        20px 22px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(18, 54, 60, 0.13);
+
+    border-radius:
+        18px;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 7px 22px
+        rgba(18, 54, 60, 0.055);
+
+    transition:
+        transform
+        var(--sc-transition),
+        border-color
+        var(--sc-transition),
+        box-shadow
+        var(--sc-transition);
+}
+
+
+/* ==========================================================
+   HOVER
+========================================================== */
+
+.benefit-card:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(11, 122, 120, 0.32);
+
+    box-shadow:
+        0 13px 30px
+        rgba(18, 54, 60, 0.10);
+}
+
+
+/* ==========================================================
+   ELIMINAR DIVISORES DEL DISEÑO ANTERIOR
+========================================================== */
+
+.benefit-card::after {
+    display:
+        none;
+}
+
+
+/* ==========================================================
+   ICONO
+========================================================== */
+
+.benefit-card__icon {
+    width:
+        60px;
+
+    height:
+        60px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    flex:
+        0 0 auto;
+
+    border-radius:
+        17px;
+
+    background:
+        var(--sc-primary-light);
+
+    color:
+        var(--sc-primary);
+
+    font-size:
+        1.45rem;
+}
+
+
+/* ==========================================================
+   CONTENIDO
+========================================================== */
+
+.benefit-card__content {
+    min-width:
+        0;
+}
+
+
+/* ==========================================================
+   TÍTULO
+========================================================== */
+
+.benefit-card h3 {
+    margin:
+        0 0 6px;
+
+    color:
+        var(--sc-dark);
+
+    font-size:
+        0.98rem;
+
+    font-weight:
+        800;
+
+    line-height:
+        1.25;
+}
+
+
+/* ==========================================================
+   DESCRIPCIÓN
+========================================================== */
+
+.benefit-card p {
+    margin:
+        0;
+
+    color:
+        var(--sc-text-soft);
+
+    font-size:
+        0.82rem;
+
+    line-height:
+        1.5;
+}

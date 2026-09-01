@@ -1,0 +1,100 @@
+/* ==========================================================
+   SeniorCare OS
+   Responsive - Header
+========================================================== */
+
+@media (max-width: 900px) {
+
+    .site-header {
+        padding:
+            0 28px;
+
+        gap:
+            18px;
+    }
+
+    .site-header nav {
+        gap:
+            16px;
+    }
+
+    .site-header nav a {
+        font-size:
+            0.9rem;
+    }
+
+    .nav-login {
+        min-width:
+            auto;
+
+        padding:
+            9px 16px;
+    }
+}
+
+
+@media (max-width: 680px) {
+
+    .site-header {
+        min-height:
+            auto;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+        padding:
+            14px 18px 12px;
+    }
+
+    .brand {
+        align-self:
+            flex-start;
+    }
+
+    .brand-mark {
+        width:
+            44px;
+
+        height:
+            44px;
+
+        font-size:
+            1rem;
+    }
+
+    .site-header nav {
+        width:
+            100%;
+
+        justify-content:
+            space-between;
+
+        gap:
+            8px;
+
+        overflow-x:
+            auto;
+
+        padding-bottom:
+            2px;
+    }
+
+    .site-header nav a {
+        flex:
+            0 0 auto;
+
+        min-height:
+            38px;
+
+        font-size:
+            0.78rem;
+    }
+
+    .nav-login {
+        padding:
+            7px 12px;
+    }
+}

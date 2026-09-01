@@ -1,0 +1,106 @@
+/* ==========================================================
+   SeniorCare OS
+   Responsive - Hero
+========================================================== */
+
+@media (max-width: 1100px) {
+
+    .hero {
+        grid-template-columns:
+            minmax(0, 1.1fr)
+            minmax(340px, 0.9fr);
+
+        gap:
+            32px;
+
+        padding:
+            64px 42px;
+    }
+
+    .hero h1 {
+        font-size:
+            clamp(3rem, 6vw, 4.8rem);
+    }
+}
+
+
+@media (max-width: 850px) {
+
+    .hero {
+        min-height:
+            auto;
+
+        grid-template-columns:
+            1fr;
+
+        padding:
+            60px 28px 90px;
+
+        background-position:
+            68% center;
+    }
+
+    .hero {
+        background-image:
+
+            linear-gradient(
+                rgba(248, 251, 251, 0.94),
+                rgba(248, 251, 251, 0.94)
+            ),
+
+            url("/images/public/inicio/hero-seniorcare.webp");
+    }
+
+    .hero > div {
+        max-width:
+            680px;
+    }
+
+    .hero h1 {
+        max-width:
+            650px;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .hero {
+        padding:
+            44px 20px 72px;
+    }
+
+    .hero .eyebrow {
+        padding:
+            7px 11px;
+
+        font-size:
+            0.65rem;
+    }
+
+    .hero h1 {
+        margin-bottom:
+            20px;
+
+        font-size:
+            clamp(2.5rem, 13vw, 3.5rem);
+    }
+
+    .hero-copy {
+        font-size:
+            0.96rem;
+
+        line-height:
+            1.65;
+    }
+
+    .hero-actions {
+        width:
+            100%;
+    }
+
+    .hero-actions .button {
+        width:
+            100%;
+    }
+}

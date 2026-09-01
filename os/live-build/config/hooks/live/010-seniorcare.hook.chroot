@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! id seniorcare >/dev/null 2>&1; then
+  useradd \
+    --create-home \
+    --shell /bin/bash \
+    --comment "SeniorCare Resident" \
+    seniorcare
+fi
+
+install -d -o seniorcare -g seniorcare /home/seniorcare/.config/openbox
+cp /etc/skel/.config/openbox/autostart \
+  /home/seniorcare/.config/openbox/autostart
+chown seniorcare:seniorcare /home/seniorcare/.config/openbox/autostart
+chmod 750 /home/seniorcare/.config/openbox/autostart
+
+chmod 750 /usr/local/lib/seniorcare/health-check
+systemctl enable lightdm.service
+systemctl enable seniorcare-health.timer
+
+cat >/etc/issue <<'EOF'
+SeniorCare OS
+Sistema especializado para personas adultas mayores
+
+EOF
+

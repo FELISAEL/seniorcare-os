@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="theme-color"
+    content="#0b7a78"
+  >
+
+  <meta
+    name="description"
+    content="Inicio de sesión de SeniorCare OS."
+  >
+
+  <title>Iniciar sesión | SeniorCare OS</title>
+
+  <link
+    rel="stylesheet"
+    href="/css/iniciar-sesion/app.css"
+  >
+</head>
+
+
+<body class="login-page">
+
+
+  <!-- =====================================================
+       HEADER
+       Hereda visualmente el encabezado del Inicio
+  ====================================================== -->
+  <header class="site-header">
+
+
+    <!-- ===================================================
+         MARCA
+    ==================================================== -->
+    <a
+      class="brand"
+      href="/"
+      aria-label="Inicio de SeniorCare OS"
+    >
+
+      <span
+        class="brand-mark"
+        aria-hidden="true"
+      >
+        SC
+      </span>
+
+      <span class="brand-name">
+
+        <strong>
+          SeniorCare
+        </strong>
+
+        <small>
+          OS
+        </small>
+
+      </span>
+
+    </a>
+
+
+    <!-- ===================================================
+         NAVEGACIÓN PÚBLICA
+
+         Funciones, Perfiles y Seguridad todavía
+         no tienen navegación.
+
+         Inicio regresa a la portada principal.
+    ==================================================== -->
+    <nav
+      class="public-navigation"
+      aria-label="Navegación pública"
+    >
+
+      <span class="public-navigation__item">
+        Funciones
+      </span>
+
+      <span class="public-navigation__item">
+        Perfiles
+      </span>
+
+      <span class="public-navigation__item">
+        Seguridad
+      </span>
+
+      <a
+        class="nav-login"
+        href="/"
+      >
+        Inicio
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =====================================================
+       CONTENIDO PRINCIPAL
+  ====================================================== -->
+  <main class="login-layout">
+
+
+    <!-- ===================================================
+         PANEL DEL FORMULARIO
+  ==================================================== -->
+    <section
+      class="login-panel"
+      aria-labelledby="loginTitle"
+    >
+
+
+      <!-- =================================================
+           TARJETA LOGIN
+      ================================================== -->
+      <form
+        class="login-card"
+        id="loginForm"
+      >
+
+
+        <!-- ===============================================
+             ENCABEZADO DE LA TARJETA
+        ================================================ -->
+        <div class="login-card__header">
+
+          <span
+            class="login-card__icon"
+            aria-hidden="true"
+          ></span>
+
+
+          <p class="login-card__eyebrow">
+            Acceso único SeniorCare
+          </p>
+
+
+          <h1 id="loginTitle">
+            Iniciar sesión
+          </h1>
+
+
+          <p class="login-card__description">
+            Ingresá tus credenciales.
+            SeniorCare reconocerá tu rol automáticamente.
+          </p>
+
+        </div>
+
+
+        <!-- ===============================================
+             FORMULARIO
+        ================================================ -->
+        <div class="login-form">
+
+
+          <!-- =============================================
+               USUARIO
+          ============================================== -->
+          <div class="login-field">
+
+            <label for="username">
+              Usuario
+            </label>
+
+
+            <div class="login-input">
+
+              <span
+                class="login-input__icon login-input__icon--user"
+                aria-hidden="true"
+              ></span>
+
+
+              <input
+                id="username"
+                name="username"
+                type="text"
+                autocomplete="username"
+                placeholder="Ingresá tu usuario"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- =============================================
+               CONTRASEÑA
+          ============================================== -->
+          <div class="login-field">
+
+            <label for="password">
+              Contraseña
+            </label>
+
+
+            <div class="login-input">
+
+              <span
+                class="login-input__icon login-input__icon--password"
+                aria-hidden="true"
+              ></span>
+
+
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Ingresá tu contraseña"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- =============================================
+               BOTÓN ENTRAR
+          ============================================== -->
+          <button
+            class="login-submit"
+            type="submit"
+          >
+
+            <span>
+              Entrar
+            </span>
+
+            <span
+              class="login-submit__icon"
+              aria-hidden="true"
+            ></span>
+
+          </button>
+
+
+          <!-- =============================================
+               MENSAJE DE ESTADO / ERROR
+          ============================================== -->
+          <p
+            class="form-message"
+            id="loginMessage"
+            role="alert"
+            aria-live="polite"
+          ></p>
+
+
+          <!-- =============================================
+               CONTINUAR SESIÓN ACTIVA
+          ============================================== -->
+          <button
+            class="continue-button is-hidden"
+            id="continueButton"
+            type="button"
+          ></button>
+
+        </div>
+
+
+        <!-- ===============================================
+             USUARIOS DE DEMOSTRACIÓN
+        ================================================ -->
+        <details class="demo-access">
+
+          <summary>
+            Usuarios de demostración
+          </summary>
+
+
+          <div class="demo-access__content">
+
+
+            <p>
+
+              <strong>
+                Administrador
+              </strong>
+
+              <span>
+                admin / Cambiar123!
+              </span>
+
+            </p>
+
+
+            <p>
+
+              <strong>
+                Cuidador
+              </strong>
+
+              <span>
+                cuidador / Cuidador123!
+              </span>
+
+            </p>
+
+
+            <p>
+
+              <strong>
+                Adulto mayor
+              </strong>
+
+              <span>
+                maria / Maria123!
+              </span>
+
+            </p>
+
+
+            <p>
+
+              <strong>
+                Familiar
+              </strong>
+
+              <span>
+                ana / Familia123!
+              </span>
+
+            </p>
+
+
+          </div>
+
+        </details>
+
+
+        <!-- ===============================================
+             SEGURIDAD
+        ================================================ -->
+        <div class="login-card__footer">
+
+          <span
+            class="login-card__security-icon"
+            aria-hidden="true"
+          ></span>
+
+          <span>
+            Tus credenciales se procesan de forma segura.
+          </span>
+
+        </div>
+
+
+      </form>
+      <!-- FIN .login-card -->
+
+
+    </section>
+    <!-- FIN .login-panel -->
+
+
+  </main>
+
+
+  <!-- =====================================================
+       JAVASCRIPT DE AUTENTICACIÓN
+
+       Se conservan los identificadores originales:
+       #loginForm
+       #username
+       #password
+       #loginMessage
+       #continueButton
+  ====================================================== -->
+
+  <script
+    src="/js/shared/error-handler.js"
+    defer
+  ></script>
+
+  <script
+    src="/js/auth/session.js"
+    defer
+  ></script>
+
+  <script
+    src="/js/public/state.js"
+    defer
+  ></script>
+
+  <script
+    src="/js/public/login.js"
+    defer
+  ></script>
+
+  <script
+    src="/js/public/app.js"
+    defer
+  ></script>
+
+
+</body>
+
+</html>

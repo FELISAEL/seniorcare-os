@@ -1,0 +1,107 @@
+/* ==========================================================
+   SeniorCare OS
+   Usuarios de demostración
+========================================================== */
+
+.demo-access {
+    margin-top:
+        23px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--login-border);
+
+    border-radius:
+        14px;
+
+    background:
+        var(--login-surface-soft);
+}
+
+
+/* ==========================================================
+   RESUMEN
+========================================================== */
+
+.demo-access summary {
+    padding:
+        13px
+        16px;
+
+    color:
+        var(--login-primary);
+
+    font-size:
+        0.84rem;
+
+    font-weight:
+        750;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+
+/* ==========================================================
+   CONTENIDO
+========================================================== */
+
+.demo-access__content {
+    padding:
+        3px
+        16px
+        14px;
+
+    border-top:
+        1px solid
+        var(--login-border);
+}
+
+
+.demo-access__content p {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap:
+        15px;
+
+    margin:
+        0;
+
+    padding:
+        10px 0;
+
+    color:
+        var(--login-text-soft);
+
+    font-size:
+        0.78rem;
+}
+
+
+.demo-access__content p:not(:last-child) {
+    border-bottom:
+        1px solid
+        var(--login-border);
+}
+
+
+.demo-access__content strong {
+    color:
+        var(--login-text);
+
+    font-weight:
+        750;
+}
+
+
+.demo-access__content span {
+    text-align:
+        right;
+}

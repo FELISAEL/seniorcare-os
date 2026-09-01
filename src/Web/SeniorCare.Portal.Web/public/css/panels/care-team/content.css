@@ -1,0 +1,118 @@
+.two-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.resident-item,
+.schedule-item,
+.metric-row,
+.video-item {
+  padding: 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fafcfd;
+}
+
+.resident-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.resident-item.is-selected {
+  border-color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.resident-item button {
+  min-height: 38px;
+  padding: 0.45rem 0.75rem;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--blue);
+  font-weight: 800;
+}
+
+.schedule-item {
+  display: grid;
+  grid-template-columns: 75px 1fr auto;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.schedule-time {
+  color: var(--blue);
+  font-weight: 950;
+}
+
+.schedule-status {
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  color: var(--amber);
+  background: var(--amber-soft);
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.schedule-status.is-taken {
+  color: var(--green);
+  background: var(--green-soft);
+}
+
+.medication-form-wrapper {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.medication-form-wrapper summary {
+  color: var(--blue);
+  font-weight: 900;
+}
+
+.medication-form-wrapper .button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.metric-row {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.metric-bar {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #dce7ef;
+}
+
+.metric-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--green);
+}
+
+.video-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.video-item a {
+  padding: 0.55rem 0.75rem;
+  border-radius: 9px;
+  color: #fff;
+  background: #7447b8;
+  font-weight: 850;
+  text-decoration: none;
+}
+

@@ -1,0 +1,152 @@
+/* ==========================================================
+   SeniorCare OS
+   Marca del encabezado - Inicio de sesión
+
+   Responsabilidad:
+   - Pintar únicamente la identidad SeniorCare OS.
+   - Mantener el mismo estilo visual de la pantalla Inicio.
+   - No controla el Header ni la navegación.
+========================================================== */
+
+
+/* ==========================================================
+   MARCA
+========================================================== */
+
+.brand {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    flex:
+        0 0 auto;
+
+    color:
+        var(--login-text);
+
+    white-space:
+        nowrap;
+
+    text-decoration:
+        none;
+
+    transition:
+        transform
+        var(--login-transition);
+}
+
+
+.brand:hover {
+    transform:
+        translateY(-1px);
+}
+
+
+/* ==========================================================
+   MARCA "SC"
+========================================================== */
+
+.brand-mark {
+    width:
+        52px;
+
+    height:
+        52px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    flex:
+        0 0 auto;
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b817e 0%,
+            #086763 100%
+        );
+
+    color:
+        #ffffff;
+
+    font-size:
+        1.25rem;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.03em;
+
+    box-shadow:
+        0 8px 20px
+        rgba(11, 122, 120, 0.18);
+}
+
+
+/* ==========================================================
+   NOMBRE SENIORCARE OS
+========================================================== */
+
+.brand-name {
+    display:
+        inline-flex;
+
+    align-items:
+        baseline;
+
+    gap:
+        5px;
+}
+
+
+/* ==========================================================
+   SENIORCARE
+========================================================== */
+
+.brand-name strong {
+    color:
+        var(--login-text);
+
+    font-size:
+        1.18rem;
+
+    font-weight:
+        850;
+
+    line-height:
+        1;
+}
+
+
+/* ==========================================================
+   OS
+========================================================== */
+
+.brand-name small {
+    color:
+        var(--login-primary);
+
+    font-size:
+        0.76rem;
+
+    font-weight:
+        850;
+
+    line-height:
+        1;
+
+    text-transform:
+        uppercase;
+}

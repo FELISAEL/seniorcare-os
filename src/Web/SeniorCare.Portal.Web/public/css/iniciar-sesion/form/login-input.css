@@ -1,0 +1,100 @@
+/* ==========================================================
+   SeniorCare OS
+   Campos de entrada del Login
+========================================================== */
+
+.login-input {
+    position: relative;
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+/* ==========================================================
+   ICONO DEL CAMPO
+========================================================== */
+
+.login-input__icon {
+    position: absolute;
+
+    left: 15px;
+
+    z-index: 2;
+
+    width: 21px;
+    height: 21px;
+
+    color:
+        var(--login-primary);
+
+    pointer-events: none;
+}
+
+
+/* ==========================================================
+   INPUT
+========================================================== */
+
+.login-input input {
+    width: 100%;
+
+    min-height: 52px;
+
+    padding:
+        11px
+        15px
+        11px
+        48px;
+
+    outline: none;
+
+    border:
+        1.5px solid
+        var(--login-border);
+
+    border-radius:
+        13px;
+
+    background:
+        var(--login-surface-soft);
+
+    color:
+        var(--login-text);
+
+    font-size:
+        0.94rem;
+
+    transition:
+        border-color var(--login-transition),
+        background var(--login-transition),
+        box-shadow var(--login-transition);
+}
+
+
+.login-input input::placeholder {
+    color:
+        #91a0a3;
+}
+
+
+.login-input input:hover {
+    border-color:
+        var(--login-border-strong);
+}
+
+
+.login-input input:focus {
+    border-color:
+        var(--login-primary);
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(11, 129, 126, 0.10);
+}

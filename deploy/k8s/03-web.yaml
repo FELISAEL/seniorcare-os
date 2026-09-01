@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: portal-web
+  namespace: seniorcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: portal-web
+  template:
+    metadata:
+      labels:
+        app: portal-web
+    spec:
+      containers:
+        - name: portal-web
+          image: seniorcare/portal-web:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 20m
+              memory: 32Mi
+            limits:
+              cpu: 150m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: portal-web
+  namespace: seniorcare
+spec:
+  selector:
+    app: portal-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

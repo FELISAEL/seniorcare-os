@@ -1,0 +1,155 @@
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+
+.stat-card,
+.panel {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.stat-card {
+  padding: 1.2rem;
+  border-top: 5px solid var(--blue);
+  border-radius: 16px;
+}
+
+.stat-card--warning {
+  border-top-color: var(--red);
+}
+
+.stat-card--success {
+  border-top-color: var(--green);
+}
+
+.stat-card--info {
+  border-top-color: #7447b8;
+}
+
+.stat-card span,
+.stat-card small {
+  display: block;
+  color: var(--muted);
+}
+
+.stat-card > strong {
+  display: block;
+  margin: 0.35rem 0 0.15rem;
+  font-size: 2rem;
+}
+
+.stat-card .stat-time {
+  font-size: 1.2rem;
+}
+
+.panel {
+  padding: 1.35rem;
+  border-radius: 18px;
+}
+
+.panel--alerts {
+  margin-top: 1.2rem;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.alert-list,
+.resident-list,
+.schedule-list,
+.metrics-list,
+.video-list {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.alert-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #efc2c4;
+  border-radius: 13px;
+  background: var(--red-soft);
+}
+
+.alert-item--assistance {
+  border-color: #f0d49d;
+  background: var(--amber-soft);
+}
+
+.alert-badge {
+  min-width: 72px;
+  padding: 0.55rem;
+  border-radius: 10px;
+  color: #fff;
+  background: var(--red);
+  font-size: 0.8rem;
+  font-weight: 950;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.alert-item--assistance .alert-badge {
+  background: var(--amber);
+}
+
+.alert-copy h3,
+.resident-item h3,
+.schedule-item h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.alert-copy p,
+.resident-item p,
+.schedule-item p,
+.metric-row p,
+.video-item p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.alert-actions {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.alert-actions button {
+  min-height: 40px;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #b7c5d1;
+  border-radius: 9px;
+  color: var(--ink);
+  background: #fff;
+  font-weight: 800;
+}
+
+.empty-state {
+  margin-top: 1rem;
+  padding: 1.2rem;
+  border-radius: 12px;
+  color: #1d6538;
+  background: var(--green-soft);
+  font-weight: 750;
+  text-align: center;
+}
+

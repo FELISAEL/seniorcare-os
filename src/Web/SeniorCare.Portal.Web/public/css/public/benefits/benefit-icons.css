@@ -1,0 +1,100 @@
+/* ==========================================================
+   SeniorCare OS
+   Iconos de tarjetas de beneficios
+
+   Responsabilidad:
+   - Dibujar únicamente los iconos de beneficios.
+   - Mantener el HTML libre de SVG.
+   - Heredar el color corporativo SeniorCare.
+========================================================== */
+
+
+/* ==========================================================
+   BASE DEL ICONO
+========================================================== */
+
+.benefit-card__icon::before {
+    content: "";
+
+    display: block;
+
+    width: 31px;
+    height: 31px;
+
+    background-color:
+        var(--sc-primary);
+
+    -webkit-mask-repeat:
+        no-repeat;
+
+    mask-repeat:
+        no-repeat;
+
+    -webkit-mask-position:
+        center;
+
+    mask-position:
+        center;
+
+    -webkit-mask-size:
+        contain;
+
+    mask-size:
+        contain;
+}
+
+
+/* ==========================================================
+   1. SEGURO Y CONFIABLE
+   Escudo con check
+========================================================== */
+
+.benefit-card__icon--security::before {
+    -webkit-mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+
+    mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+}
+
+
+/* ==========================================================
+   2. PRIVACIDAD GARANTIZADA
+   Candado
+========================================================== */
+
+.benefit-card__icon--privacy::before {
+    -webkit-mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='10' width='14' height='11' rx='2'/%3E%3Cpath d='M8 10V7a4 4 0 0 1 8 0v3'/%3E%3Ccircle cx='12' cy='15.5' r='1' fill='black' stroke='none'/%3E%3C/svg%3E");
+
+    mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='5' y='10' width='14' height='11' rx='2'/%3E%3Cpath d='M8 10V7a4 4 0 0 1 8 0v3'/%3E%3Ccircle cx='12' cy='15.5' r='1' fill='black' stroke='none'/%3E%3C/svg%3E");
+}
+
+
+/* ==========================================================
+   3. DISEÑADO PARA CUIDAR
+   Corazón con cruz médica
+========================================================== */
+
+.benefit-card__icon--care::before {
+    -webkit-mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10Z'/%3E%3Cpath d='M12 10v5'/%3E%3Cpath d='M9.5 12.5h5'/%3E%3C/svg%3E");
+
+    mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-4.35-7-10a4 4 0 0 1 7-2.65A4 4 0 0 1 19 11c0 5.65-7 10-7 10Z'/%3E%3Cpath d='M12 10v5'/%3E%3Cpath d='M9.5 12.5h5'/%3E%3C/svg%3E");
+}
+
+
+/* ==========================================================
+   4. ACOMPAÑAMIENTO REAL
+   Headset / soporte
+========================================================== */
+
+.benefit-card__icon--support::before {
+    -webkit-mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 14a8 8 0 0 1 16 0'/%3E%3Cpath d='M4 14v5a2 2 0 0 0 2 2h2v-8H5a1 1 0 0 0-1 1Z'/%3E%3Cpath d='M20 14v5a2 2 0 0 1-2 2h-2v-8h3a1 1 0 0 1 1 1Z'/%3E%3Cpath d='M16 21h-3'/%3E%3C/svg%3E");
+
+    mask-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 14a8 8 0 0 1 16 0'/%3E%3Cpath d='M4 14v5a2 2 0 0 0 2 2h2v-8H5a1 1 0 0 0-1 1Z'/%3E%3Cpath d='M20 14v5a2 2 0 0 1-2 2h-2v-8h3a1 1 0 0 1 1 1Z'/%3E%3Cpath d='M16 21h-3'/%3E%3C/svg%3E");
+}

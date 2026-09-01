@@ -1,0 +1,93 @@
+.medication-panel {
+  margin-top: 1.5rem;
+  border: 2px solid var(--line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 32px rgba(13, 34, 59, 0.1);
+}
+
+.today-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 1.8rem;
+}
+
+.today-panel h2,
+.medication-panel h2 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.today-summary {
+  margin: 0;
+  color: #1d527e;
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-align: right;
+}
+
+.medication-panel {
+  padding: 1.5rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.medication-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.3rem;
+}
+
+.medication-item {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: 1.2rem;
+  align-items: center;
+  padding: 1.2rem;
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  background: #f8fbfd;
+}
+
+.medication-time {
+  color: #1d527e;
+  font-size: 1.35rem;
+  font-weight: 950;
+}
+
+.medication-name {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.medication-details {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.taken-badge {
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  color: #174b26;
+  background: #cfead5;
+  font-weight: 900;
+}
+
+.confirm-dose {
+  min-height: 52px;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 12px;
+  color: #fff;
+  background: #237944;
+  font-weight: 900;
+}
+

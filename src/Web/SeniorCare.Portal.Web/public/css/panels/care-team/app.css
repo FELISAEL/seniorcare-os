@@ -1,0 +1,7 @@
+/* Estilos compartidos por administración, cuidador y familia. */
+@import url("./base.css");
+@import url("./layout.css");
+@import url("./dashboard.css");
+@import url("./content.css");
+@import url("./feedback.css");
+@import url("./responsive.css");

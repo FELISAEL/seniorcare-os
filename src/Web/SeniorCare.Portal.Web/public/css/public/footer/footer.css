@@ -1,0 +1,51 @@
+/* ==========================================================
+   SeniorCare OS
+   Footer del Inicio
+========================================================== */
+
+footer {
+    width: 100%;
+
+    min-height:
+        78px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap:
+        2px;
+
+    padding:
+        18px 24px;
+
+    border-top:
+        1px solid
+        var(--sc-border);
+
+    background:
+        #ffffff;
+
+    text-align:
+        center;
+}
+
+footer strong {
+    color:
+        var(--sc-dark);
+
+    font-size:
+        0.94rem;
+}
+
+footer span {
+    color:
+        var(--sc-text-soft);
+
+    font-size:
+        0.78rem;
+}

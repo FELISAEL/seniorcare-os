@@ -1,0 +1,38 @@
+@startuml
+skinparam componentStyle rectangle
+
+component "SeniorCare OS\nPWA residente" as Resident
+component "Panel web" as Admin
+component ".NET MAUI" as Mobile
+component "Identity API" as Identity
+component "Care API" as Care
+component "Emergency API" as Emergency
+component "Communication API" as Communication
+component "Analytics API" as Analytics
+component "ETL Worker" as Etl
+database "PostgreSQL" as Db
+component "Aspire Dashboard" as Monitor
+
+Resident --> Identity
+Resident --> Care
+Resident --> Emergency
+Resident --> Communication
+Admin --> Identity
+Admin --> Care
+Admin --> Emergency
+Admin --> Analytics
+Mobile --> Identity
+Mobile --> Emergency
+Mobile --> Communication
+Identity --> Db
+Care --> Db
+Emergency --> Db
+Analytics --> Db
+Etl --> Db
+Identity ..> Monitor
+Care ..> Monitor
+Emergency ..> Monitor
+Communication ..> Monitor
+Analytics ..> Monitor
+@enduml
+

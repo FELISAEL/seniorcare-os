@@ -1,0 +1,153 @@
+/* ==========================================================
+   SeniorCare OS
+   Responsive - Beneficios
+
+   Responsabilidad:
+   - Adaptar la distribución de las tarjetas.
+   - Mantener cada tarjeta independiente.
+   - Conservar separación, borde y sombra en todos los tamaños.
+========================================================== */
+
+
+/* ==========================================================
+   TABLET GRANDE
+   2 tarjetas por fila
+========================================================== */
+
+@media (max-width: 1050px) {
+
+    .benefits {
+        width:
+            calc(100% - 48px);
+
+        margin:
+            -36px auto 36px;
+    }
+
+    .benefits-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap:
+            16px;
+    }
+
+    .benefit-card {
+        min-height:
+            124px;
+    }
+}
+
+
+/* ==========================================================
+   TABLET / MÓVIL
+   1 tarjeta por fila
+========================================================== */
+
+@media (max-width: 620px) {
+
+    .benefits {
+        width:
+            calc(100% - 32px);
+
+        margin:
+            -26px auto 30px;
+
+        padding:
+            0;
+    }
+
+    .benefits-grid {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            12px;
+    }
+
+    .benefit-card {
+        min-height:
+            108px;
+
+        grid-template-columns:
+            56px minmax(0, 1fr);
+
+        gap:
+            14px;
+
+        padding:
+            16px 18px;
+
+        border-radius:
+            16px;
+    }
+
+    .benefit-card__icon {
+        width:
+            54px;
+
+        height:
+            54px;
+
+        border-radius:
+            15px;
+    }
+
+    .benefit-card h3 {
+        font-size:
+            0.94rem;
+    }
+
+    .benefit-card p {
+        font-size:
+            0.79rem;
+
+        line-height:
+            1.45;
+    }
+}
+
+
+/* ==========================================================
+   MÓVIL PEQUEÑO
+========================================================== */
+
+@media (max-width: 420px) {
+
+    .benefits {
+        width:
+            calc(100% - 24px);
+    }
+
+    .benefit-card {
+        grid-template-columns:
+            50px minmax(0, 1fr);
+
+        gap:
+            12px;
+
+        padding:
+            15px;
+    }
+
+    .benefit-card__icon {
+        width:
+            48px;
+
+        height:
+            48px;
+
+        border-radius:
+            14px;
+    }
+
+    .benefit-card h3 {
+        font-size:
+            0.9rem;
+    }
+
+    .benefit-card p {
+        font-size:
+            0.76rem;
+    }
+}

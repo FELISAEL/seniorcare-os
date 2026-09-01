@@ -1,0 +1,68 @@
+/* ==========================================================
+   SeniorCare OS
+   Roles dentro de la tarjeta de acceso
+========================================================== */
+
+.role-pills {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap:
+        10px;
+}
+
+.role-pills span {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height:
+        38px;
+
+    padding:
+        8px
+        15px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.10);
+
+    border-radius:
+        var(--sc-radius-pill);
+
+    background:
+        rgba(255, 255, 255, 0.13);
+
+    color:
+        #ffffff;
+
+    font-size:
+        0.84rem;
+
+    font-weight:
+        750;
+
+    backdrop-filter:
+        blur(6px);
+
+    transition:
+        background
+        var(--sc-transition),
+        transform
+        var(--sc-transition);
+}
+
+.role-pills span:hover {
+    background:
+        rgba(255, 255, 255, 0.20);
+
+    transform:
+        translateY(-1px);
+}

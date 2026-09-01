@@ -1,0 +1,422 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-api
+  namespace: seniorcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-api
+  template:
+    metadata:
+      labels:
+        app: identity-api
+    spec:
+      containers:
+        - name: identity-api
+          image: seniorcare/identity-api:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ConnectionStrings__IdentityDatabase
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: IDENTITY_DB
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: JWT_SECRET
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_AUDIENCE
+            - name: SEED_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: SEED_ADMIN_PASSWORD
+            - name: SEED_CAREGIVER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: SEED_CAREGIVER_PASSWORD
+            - name: SEED_RESIDENT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: SEED_RESIDENT_PASSWORD
+            - name: SEED_FAMILY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: SEED_FAMILY_PASSWORD
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 96Mi
+            limits:
+              cpu: 500m
+              memory: 384Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-api
+  namespace: seniorcare
+spec:
+  selector:
+    app: identity-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: care-api
+  namespace: seniorcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: care-api
+  template:
+    metadata:
+      labels:
+        app: care-api
+    spec:
+      containers:
+        - name: care-api
+          image: seniorcare/care-api:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ConnectionStrings__CareDatabase
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: CARE_DB
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: JWT_SECRET
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_AUDIENCE
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 96Mi
+            limits:
+              cpu: 500m
+              memory: 384Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: care-api
+  namespace: seniorcare
+spec:
+  selector:
+    app: care-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emergency-api
+  namespace: seniorcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: emergency-api
+  template:
+    metadata:
+      labels:
+        app: emergency-api
+    spec:
+      containers:
+        - name: emergency-api
+          image: seniorcare/emergency-api:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ConnectionStrings__EmergencyDatabase
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: EMERGENCY_DB
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: JWT_SECRET
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_AUDIENCE
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 50m
+              memory: 96Mi
+            limits:
+              cpu: 500m
+              memory: 384Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: emergency-api
+  namespace: seniorcare
+spec:
+  selector:
+    app: emergency-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: communication-api
+  namespace: seniorcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: communication-api
+  template:
+    metadata:
+      labels:
+        app: communication-api
+    spec:
+      containers:
+        - name: communication-api
+          image: seniorcare/communication-api:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: JWT_SECRET
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_AUDIENCE
+            - name: VIDEO_PROVIDER_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: VIDEO_PROVIDER_BASE_URL
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 40m
+              memory: 64Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: communication-api
+  namespace: seniorcare
+spec:
+  selector:
+    app: communication-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: analytics-api
+  namespace: seniorcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: analytics-api
+  template:
+    metadata:
+      labels:
+        app: analytics-api
+    spec:
+      containers:
+        - name: analytics-api
+          image: seniorcare/analytics-api:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ConnectionStrings__AnalyticsDatabase
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: ANALYTICS_DB
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: JWT_SECRET
+            - name: JWT_ISSUER
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_ISSUER
+            - name: JWT_AUDIENCE
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: JWT_AUDIENCE
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: 40m
+              memory: 64Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: analytics-api
+  namespace: seniorcare
+spec:
+  selector:
+    app: analytics-api
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: etl-worker
+  namespace: seniorcare
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: etl-worker
+  template:
+    metadata:
+      labels:
+        app: etl-worker
+    spec:
+      containers:
+        - name: etl-worker
+          image: seniorcare/etl-worker:1.0.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ConnectionStrings__CareDatabase
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: CARE_DB
+            - name: ConnectionStrings__EmergencyDatabase
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: EMERGENCY_DB
+            - name: ConnectionStrings__AnalyticsDatabase
+              valueFrom:
+                secretKeyRef:
+                  name: seniorcare-secrets
+                  key: ANALYTICS_DB
+            - name: ETL_INTERVAL_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: ETL_INTERVAL_SECONDS
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: seniorcare-config
+                  key: TZ
+          resources:
+            requests:
+              cpu: 40m
+              memory: 64Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi

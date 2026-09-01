@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: seniorcare
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seniorcare-config
+  namespace: seniorcare
+data:
+  JWT_ISSUER: SeniorCare.Identity
+  JWT_AUDIENCE: SeniorCare.Platform
+  VIDEO_PROVIDER_BASE_URL: https://meet.jit.si/
+  ETL_INTERVAL_SECONDS: "30"
+  TZ: America/Guatemala
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: seniorcare-secrets
+  namespace: seniorcare
+type: Opaque
+stringData:
+  POSTGRES_USER: seniorcare
+  POSTGRES_PASSWORD: seniorcare_dev_2026
+  JWT_SECRET: SeniorCare-Development-Key-Change-Before-Deploying-2026-At-Least-32-Bytes
+  SEED_ADMIN_PASSWORD: Cambiar123!
+  SEED_CAREGIVER_PASSWORD: Cuidador123!
+  SEED_RESIDENT_PASSWORD: Maria123!
+  SEED_FAMILY_PASSWORD: Familia123!
+  IDENTITY_DB: Host=postgres;Port=5432;Database=identity_db;Username=seniorcare;Password=seniorcare_dev_2026
+  CARE_DB: Host=postgres;Port=5432;Database=care_db;Username=seniorcare;Password=seniorcare_dev_2026
+  EMERGENCY_DB: Host=postgres;Port=5432;Database=emergency_db;Username=seniorcare;Password=seniorcare_dev_2026
+  ANALYTICS_DB: Host=postgres;Port=5432;Database=analytics_db;Username=seniorcare;Password=seniorcare_dev_2026
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+  namespace: seniorcare
+data:
+  001-databases.sql: |
+    CREATE DATABASE identity_db;
+    CREATE DATABASE care_db;
+    CREATE DATABASE emergency_db;
+    CREATE DATABASE analytics_db;

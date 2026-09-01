@@ -1,0 +1,32 @@
+﻿# ==============================
+# SeniorCare OS
+# ==============================
+
+# Variables privadas
+.env
+.env.*
+!.env.example
+
+# .NET
+**/bin/
+**/obj/
+*.user
+*.suo
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+.idea/
+
+# Frontend
+node_modules/
+dist/
+
+# Logs y temporales
+*.log
+*.tmp
+*.cache
+
+# Windows / macOS
+Thumbs.db
+.DS_Store

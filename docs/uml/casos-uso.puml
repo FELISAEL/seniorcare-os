@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+
+actor "Persona adulta mayor" as Resident
+actor Cuidador
+actor Familiar
+actor Administrador
+
+rectangle "SeniorCare OS" {
+  usecase "Consultar medicamentos" as UC1
+  usecase "Confirmar toma" as UC2
+  usecase "Solicitar asistencia" as UC3
+  usecase "Activar SOS" as UC4
+  usecase "Iniciar videollamada" as UC5
+  usecase "Atender alerta" as UC6
+  usecase "Gestionar medicamentos" as UC7
+  usecase "Consultar métricas" as UC8
+  usecase "Gestionar usuarios" as UC9
+}
+
+Resident --> UC1
+Resident --> UC2
+Resident --> UC3
+Resident --> UC4
+Resident --> UC5
+Cuidador --> UC6
+Cuidador --> UC7
+Cuidador --> UC8
+Familiar --> UC5
+Familiar --> UC6
+Administrador --> UC7
+Administrador --> UC8
+Administrador --> UC9
+@enduml
+

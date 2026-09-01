@@ -1,0 +1,279 @@
+/* ==========================================================
+   SeniorCare OS
+   Responsive - Inicio de sesión
+========================================================== */
+
+
+/* ==========================================================
+   LAPTOP / TABLET GRANDE
+========================================================== */
+
+@media (max-width: 1100px) {
+
+    .login-layout {
+        grid-template-columns:
+            minmax(350px, 0.8fr)
+            minmax(480px, 1.2fr);
+    }
+
+    .login-visual {
+        padding:
+            40px
+            38px
+            34px;
+    }
+
+    .login-panel {
+        padding:
+            70px
+            40px
+            45px;
+    }
+
+    .login-visual__title {
+        font-size:
+            clamp(2.8rem, 5vw, 4rem);
+    }
+}
+
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 820px) {
+
+    .login-layout {
+        display: block;
+
+        min-height: 100vh;
+
+        background:
+            var(--login-surface-soft);
+    }
+
+    .login-visual {
+        min-height:
+            auto;
+
+        padding:
+            28px
+            28px
+            44px;
+    }
+
+    .login-brand__mark {
+        width:
+            48px;
+
+        height:
+            48px;
+    }
+
+    .login-visual__content {
+        margin:
+            50px 0 0;
+
+        max-width:
+            650px;
+    }
+
+    .login-visual__title {
+        max-width:
+            620px;
+
+        font-size:
+            clamp(2.6rem, 8vw, 4rem);
+    }
+
+    .login-features {
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap:
+            10px;
+    }
+
+    .login-feature {
+        width:
+            100%;
+
+        justify-content:
+            center;
+
+        padding:
+            8px 10px;
+
+        font-size:
+            0.76rem;
+    }
+
+    .login-visual__footer {
+        display:
+            none;
+    }
+
+    .login-panel {
+        min-height:
+            auto;
+
+        padding:
+            82px
+            24px
+            46px;
+    }
+
+    .login-back {
+        top:
+            24px;
+
+        left:
+            24px;
+    }
+
+    .login-card {
+        width:
+            min(100%, 560px);
+    }
+}
+
+
+/* ==========================================================
+   MÓVIL
+========================================================== */
+
+@media (max-width: 560px) {
+
+    .login-visual {
+        padding:
+            22px
+            20px
+            34px;
+    }
+
+    .login-brand__mark {
+        width:
+            44px;
+
+        height:
+            44px;
+
+        border-radius:
+            13px;
+    }
+
+    .login-brand__name strong {
+        font-size:
+            1.02rem;
+    }
+
+    .login-visual__content {
+        margin-top:
+            38px;
+    }
+
+    .login-visual__eyebrow {
+        margin-bottom:
+            13px;
+
+        font-size:
+            0.67rem;
+    }
+
+    .login-visual__title {
+        margin-bottom:
+            17px;
+
+        font-size:
+            clamp(2.35rem, 13vw, 3.3rem);
+    }
+
+    .login-visual__description {
+        margin-bottom:
+            22px;
+
+        font-size:
+            0.91rem;
+
+        line-height:
+            1.6;
+    }
+
+    .login-features {
+        grid-template-columns:
+            1fr;
+    }
+
+    .login-feature {
+        justify-content:
+            flex-start;
+    }
+
+    .login-panel {
+        padding:
+            76px
+            16px
+            32px;
+    }
+
+    .login-back {
+        top:
+            20px;
+
+        left:
+            16px;
+    }
+
+    .login-card {
+        padding:
+            27px
+            21px;
+
+        border-radius:
+            21px;
+    }
+
+    .login-card__icon {
+        width:
+            48px;
+
+        height:
+            48px;
+
+        border-radius:
+            15px;
+    }
+
+    .login-card h2 {
+        font-size:
+            2rem;
+    }
+
+    .login-input input {
+        min-height:
+            50px;
+    }
+
+    .login-submit {
+        min-height:
+            52px;
+    }
+
+    .demo-access__content p {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            2px;
+    }
+
+    .demo-access__content span {
+        text-align:
+            left;
+    }
+}

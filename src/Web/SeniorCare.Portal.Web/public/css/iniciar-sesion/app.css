@@ -1,0 +1,31 @@
+/* ==========================================================
+   SeniorCare OS
+   Inicio de sesión
+   Punto de entrada de estilos
+========================================================== */
+
+/* Base */
+@import url("./base/variables.css");
+@import url("./base/reset.css");
+
+/* Layout */
+@import url("./layout/layout.css");
+
+
+/* Marca */
+
+@import url("./header/header.css");
+@import url("./brand/brand.css");
+@import url("./header/navigation.css");
+
+/* Formulario */
+@import url("./form/login-card.css");
+@import url("./form/login-form.css");
+@import url("./form/login-input.css");
+@import url("./form/demo-access.css");
+
+/* Iconos */
+@import url("./icons/icons.css");
+
+/* Responsive */
+@import url("./responsive/responsive.css");

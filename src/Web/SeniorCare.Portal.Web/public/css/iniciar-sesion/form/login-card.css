@@ -1,0 +1,155 @@
+/* ==========================================================
+   SeniorCare OS
+   Tarjeta principal de Inicio de sesión
+========================================================== */
+
+.login-card {
+    width:
+        min(100%, 500px);
+
+    padding:
+        clamp(30px, 4vw, 46px);
+
+    border:
+        1px solid
+        rgba(18, 56, 62, 0.09);
+
+    border-radius:
+        var(--login-radius-lg);
+
+    background:
+        rgba(255, 255, 255, 0.97);
+
+    box-shadow:
+        var(--login-shadow-lg);
+}
+
+
+/* ==========================================================
+   ENCABEZADO
+========================================================== */
+
+.login-card__header {
+    margin-bottom:
+        28px;
+}
+
+
+.login-card__icon {
+    width: 54px;
+    height: 54px;
+
+    display: grid;
+
+    place-items: center;
+
+    margin-bottom:
+        20px;
+
+    border-radius:
+        17px;
+
+    background:
+        var(--login-primary-light);
+
+    color:
+        var(--login-primary);
+}
+
+
+.login-card__eyebrow {
+    margin-bottom:
+        7px;
+
+    color:
+        var(--login-primary);
+
+    font-size:
+        0.73rem;
+
+    font-weight:
+        850;
+
+    letter-spacing:
+        0.09em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.login-card h2 {
+    margin:
+        0 0 12px;
+
+    color:
+        var(--login-text);
+
+    font-size:
+        clamp(2rem, 3vw, 2.65rem);
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -0.04em;
+
+    line-height:
+        1.05;
+}
+
+
+.login-card__description {
+    margin:
+        0;
+
+    color:
+        var(--login-text-soft);
+
+    font-size:
+        0.92rem;
+
+    line-height:
+        1.65;
+}
+
+
+/* ==========================================================
+   PIE DE TARJETA
+========================================================== */
+
+.login-card__footer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-top:
+        22px;
+
+    padding-top:
+        18px;
+
+    border-top:
+        1px solid
+        var(--login-border);
+
+    color:
+        var(--login-text-soft);
+
+    font-size:
+        0.76rem;
+}
+
+
+.login-card__security-icon {
+    width: 18px;
+    height: 18px;
+
+    flex:
+        0 0 auto;
+
+    color:
+        var(--login-primary);
+}

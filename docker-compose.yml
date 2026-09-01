@@ -1,0 +1,176 @@
+﻿name: seniorcare-os
+
+x-dotnet-service: &dotnet-service
+  restart: unless-stopped
+  environment: &dotnet-environment
+    ASPNETCORE_URLS: http://+:8080
+    JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET en .env}
+    JWT_ISSUER: ${JWT_ISSUER:-SeniorCare.Identity}
+    JWT_AUDIENCE: ${JWT_AUDIENCE:-SeniorCare.Platform}
+    OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+    OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+    TZ: America/Guatemala
+  depends_on:
+    postgres:
+      condition: service_healthy
+
+services:
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-seniorcare}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: postgres
+      TZ: America/Guatemala
+      PGTZ: America/Guatemala
+    ports:
+      - "5438:5432"
+    volumes:
+      - seniorcare-postgres:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d postgres
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  aspire-dashboard:
+    profiles: ["monitoring"]
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    restart: unless-stopped
+    environment:
+      ASPIRE_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS: "true"
+    ports:
+      - "18888:18888"
+      - "4317:18889"
+      - "4318:18890"
+
+  identity-api:
+    <<: *dotnet-service
+    build:
+      context: .
+      dockerfile: infra/docker/DotNetService.Dockerfile
+      args:
+        PROJECT_PATH: src/Services/SeniorCare.Identity.Api/SeniorCare.Identity.Api.csproj
+        DLL_NAME: SeniorCare.Identity.Api.dll
+    environment:
+      <<: *dotnet-environment
+      ConnectionStrings__IdentityDatabase: Host=postgres;Port=5432;Database=identity_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      SEED_ADMIN_USERNAME: ${SEED_ADMIN_USERNAME:-admin}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:?Defina SEED_ADMIN_PASSWORD en .env}
+      SEED_CAREGIVER_USERNAME: ${SEED_CAREGIVER_USERNAME:-cuidador}
+      SEED_CAREGIVER_PASSWORD: ${SEED_CAREGIVER_PASSWORD:?Defina SEED_CAREGIVER_PASSWORD en .env}
+      SEED_RESIDENT_USERNAME: ${SEED_RESIDENT_USERNAME:-maria}
+      SEED_RESIDENT_PASSWORD: ${SEED_RESIDENT_PASSWORD:?Defina SEED_RESIDENT_PASSWORD en .env}
+      SEED_FAMILY_USERNAME: ${SEED_FAMILY_USERNAME:-ana}
+      SEED_FAMILY_PASSWORD: ${SEED_FAMILY_PASSWORD:?Defina SEED_FAMILY_PASSWORD en .env}
+    ports:
+      - "7001:8080"
+
+  care-api:
+    <<: *dotnet-service
+    build:
+      context: .
+      dockerfile: infra/docker/DotNetService.Dockerfile
+      args:
+        PROJECT_PATH: src/Services/SeniorCare.Care.Api/SeniorCare.Care.Api.csproj
+        DLL_NAME: SeniorCare.Care.Api.dll
+    environment:
+      <<: *dotnet-environment
+      ConnectionStrings__CareDatabase: Host=postgres;Port=5432;Database=care_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+    ports:
+      - "7002:8080"
+
+  emergency-api:
+    <<: *dotnet-service
+    build:
+      context: .
+      dockerfile: infra/docker/DotNetService.Dockerfile
+      args:
+        PROJECT_PATH: src/Services/SeniorCare.Emergency.Api/SeniorCare.Emergency.Api.csproj
+        DLL_NAME: SeniorCare.Emergency.Api.dll
+    environment:
+      <<: *dotnet-environment
+      ConnectionStrings__EmergencyDatabase: Host=postgres;Port=5432;Database=emergency_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+    ports:
+      - "7003:8080"
+
+  communication-api:
+    <<: *dotnet-service
+    build:
+      context: .
+      dockerfile: infra/docker/DotNetService.Dockerfile
+      args:
+        PROJECT_PATH: src/Services/SeniorCare.Communication.Api/SeniorCare.Communication.Api.csproj
+        DLL_NAME: SeniorCare.Communication.Api.dll
+    environment:
+      <<: *dotnet-environment
+      VIDEO_PROVIDER_BASE_URL: ${VIDEO_PROVIDER_BASE_URL:-https://meet.jit.si/}
+    ports:
+      - "7004:8080"
+
+  analytics-api:
+    <<: *dotnet-service
+    build:
+      context: .
+      dockerfile: infra/docker/DotNetService.Dockerfile
+      args:
+        PROJECT_PATH: src/Services/SeniorCare.Analytics.Api/SeniorCare.Analytics.Api.csproj
+        DLL_NAME: SeniorCare.Analytics.Api.dll
+    environment:
+      <<: *dotnet-environment
+      ConnectionStrings__AnalyticsDatabase: Host=postgres;Port=5432;Database=analytics_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+    ports:
+      - "7005:8080"
+
+  etl-worker:
+    profiles: ["analytics"]
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: infra/docker/DotNetService.Dockerfile
+      args:
+        PROJECT_PATH: src/Workers/SeniorCare.Etl.Worker/SeniorCare.Etl.Worker.csproj
+        DLL_NAME: SeniorCare.Etl.Worker.dll
+    environment:
+      ConnectionStrings__CareDatabase: Host=postgres;Port=5432;Database=care_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      ConnectionStrings__EmergencyDatabase: Host=postgres;Port=5432;Database=emergency_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      ConnectionStrings__AnalyticsDatabase: Host=postgres;Port=5432;Database=analytics_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      ETL_INTERVAL_SECONDS: ${ETL_INTERVAL_SECONDS:-30}
+      TZ: America/Guatemala
+    depends_on:
+      postgres:
+        condition: service_healthy
+      care-api:
+        condition: service_started
+      emergency-api:
+        condition: service_started
+      analytics-api:
+        condition: service_started
+
+  portal-web:
+    build:
+      context: .
+      dockerfile: src/Web/SeniorCare.Portal.Web/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    depends_on:
+      identity-api:
+        condition: service_started
+      care-api:
+        condition: service_started
+      emergency-api:
+        condition: service_started
+      communication-api:
+        condition: service_started
+      analytics-api:
+        condition: service_started
+
+volumes:
+  seniorcare-postgres:
+

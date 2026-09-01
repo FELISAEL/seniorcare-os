@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08111f">
+  <meta name="description" content="Panel accesible de SeniorCare OS para personas adultas mayores">
+  <title>Mi SeniorCare | SeniorCare OS</title>
+  <link rel="manifest" href="/pwa/adulto-mayor/manifest.webmanifest">
+  <link rel="stylesheet" href="/css/panels/adulto-mayor/app.css">
+</head>
+<body>
+  <noscript>
+    <div class="noscript">SeniorCare OS necesita JavaScript para mostrar recordatorios y alertas.</div>
+  </noscript>
+
+  <div class="app-shell" id="appView">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark brand-mark--small" aria-hidden="true">♡</span>
+        <span>SeniorCare OS</span>
+      </div>
+
+      <div class="resident-summary">
+        <div class="avatar" aria-hidden="true">SC</div>
+        <div>
+          <p class="greeting" id="greeting">Buenos días</p>
+          <h1 id="residentName">Mi SeniorCare</h1>
+        </div>
+      </div>
+
+      <div class="time-panel" role="group" aria-label="Fecha, hora y conexión">
+        <span id="currentDate"></span>
+        <strong id="currentTime"></strong>
+        <span class="connection-status" id="connectionStatus">Con conexión</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="action-grid" aria-label="Acciones principales">
+        <button class="action-card action-card--medicine" data-action="medications" type="button">
+          <span class="action-icon" aria-hidden="true">✚</span>
+          <span class="action-title">Medicamentos</span>
+          <span class="action-description">Ver horarios de hoy</span>
+        </button>
+        <button class="action-card action-card--video" data-action="video" type="button">
+          <span class="action-icon" aria-hidden="true">▣</span>
+          <span class="action-title">Videollamada</span>
+          <span class="action-description">Llamar a mi familia</span>
+        </button>
+        <button class="action-card action-card--assistance" data-action="assistance" type="button">
+          <span class="action-icon" aria-hidden="true">♙</span>
+          <span class="action-title">Pedir asistencia</span>
+          <span class="action-description">Avisar a mi cuidador</span>
+        </button>
+        <button class="action-card action-card--emergency" data-action="emergency" type="button">
+          <span class="sos-icon" aria-hidden="true">SOS</span>
+          <span class="action-title">Emergencia</span>
+          <span class="action-description">Presionar en caso de emergencia</span>
+        </button>
+      </section>
+
+      <section class="today-panel" aria-labelledby="todayTitle">
+        <div><p class="eyebrow">Recordatorios</p><h2 id="todayTitle">Medicamentos de hoy</h2></div>
+        <p class="today-summary" id="todaySummary">Cargando tus horarios…</p>
+      </section>
+
+      <section class="medication-panel is-hidden" id="medicationPanel" aria-live="polite">
+        <div class="section-heading">
+          <div><p class="eyebrow">Tu día</p><h2>Horarios de medicamentos</h2></div>
+          <button class="secondary-button" id="closeMedications" type="button">Cerrar</button>
+        </div>
+        <div class="medication-list" id="medicationList"></div>
+      </section>
+    </main>
+
+    <footer class="accessibility-bar">
+      <button type="button" id="toggleVoice"><span aria-hidden="true">◖))</span> Voz activada</button>
+      <button type="button" id="increaseText"><span aria-hidden="true">A+</span> Texto grande</button>
+      <button type="button" id="toggleContrast"><span aria-hidden="true">◐</span> Alto contraste</button>
+      <button type="button" id="logoutButton"><span aria-hidden="true">↪</span> Salir</button>
+    </footer>
+  </div>
+
+  <dialog class="confirm-dialog" id="emergencyDialog">
+    <form method="dialog">
+      <div class="dialog-icon" aria-hidden="true">SOS</div>
+      <h2>¿Necesitás ayuda urgente?</h2>
+      <p>Al confirmar, SeniorCare avisará inmediatamente a tu cuidador.</p>
+      <div class="dialog-actions">
+        <button class="secondary-button" type="submit" value="cancel">No, regresar</button>
+        <button class="danger-button" id="confirmEmergency" type="submit" value="default">Sí, enviar emergencia</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="assertive"></div>
+  <script src="/js/shared/error-handler.js" defer></script>
+  <script src="/js/auth/session.js" defer></script>
+  <script src="/js/panels/adulto-mayor/state.js" defer></script>
+  <script src="/js/panels/adulto-mayor/eventos.js" defer></script>
+  <script src="/js/panels/adulto-mayor/residente.js" defer></script>
+  <script src="/js/panels/adulto-mayor/medicamentos.js" defer></script>
+  <script src="/js/panels/adulto-mayor/alertas.js" defer></script>
+  <script src="/js/panels/adulto-mayor/videollamada.js" defer></script>
+  <script src="/js/panels/adulto-mayor/offline.js" defer></script>
+  <script src="/js/panels/adulto-mayor/accesibilidad.js" defer></script>
+  <script src="/js/panels/adulto-mayor/ui.js" defer></script>
+  <script src="/js/panels/adulto-mayor/app.js" defer></script>
+</body>
+</html>

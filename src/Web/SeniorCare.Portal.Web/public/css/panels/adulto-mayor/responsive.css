@@ -1,0 +1,77 @@
+@media (max-width: 1050px) {
+  .topbar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .action-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 660px) {
+  :root {
+    font-size: 16px;
+  }
+
+  .topbar {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .time-panel {
+    align-items: flex-start;
+  }
+
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-card {
+    min-height: 220px;
+  }
+
+  .today-panel,
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .today-summary {
+    text-align: left;
+  }
+
+  .medication-item {
+    grid-template-columns: 1fr;
+  }
+
+  .accessibility-bar {
+    position: static;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .accessibility-bar button {
+    min-height: 68px;
+  }
+
+  .app-shell {
+    padding-bottom: 0;
+  }
+
+  .dialog-actions {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+

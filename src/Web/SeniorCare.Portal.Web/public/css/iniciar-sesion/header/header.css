@@ -1,0 +1,49 @@
+/* ==========================================================
+   SeniorCare OS
+   Header - Inicio de sesión
+
+   Responsabilidad:
+   - Controlar únicamente la barra superior.
+   - Distribuir marca y navegación.
+   - Heredar visualmente el encabezado del Inicio.
+   - No controla estilos internos de la marca.
+   - No controla estilos internos de navegación.
+========================================================== */
+
+.site-header {
+    position: relative;
+
+    z-index: 100;
+
+    width: 100%;
+
+    min-height:
+        88px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        32px;
+
+    padding:
+        0
+        clamp(24px, 5vw, 76px);
+
+    border-bottom:
+        1px solid
+        var(--login-border);
+
+    background:
+        rgba(255, 255, 255, 0.98);
+
+    box-shadow:
+        0 2px 12px
+        rgba(18, 56, 62, 0.035);
+}

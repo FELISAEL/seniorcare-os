@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/SeniorCare.Shared/SeniorCare.Shared.csproj" />
+  </Folder>
+  <Folder Name="/Services/">
+    <Project Path="src/Services/SeniorCare.Identity.Api/SeniorCare.Identity.Api.csproj" />
+    <Project Path="src/Services/SeniorCare.Care.Api/SeniorCare.Care.Api.csproj" />
+    <Project Path="src/Services/SeniorCare.Emergency.Api/SeniorCare.Emergency.Api.csproj" />
+    <Project Path="src/Services/SeniorCare.Communication.Api/SeniorCare.Communication.Api.csproj" />
+    <Project Path="src/Services/SeniorCare.Analytics.Api/SeniorCare.Analytics.Api.csproj" />
+  </Folder>
+  <Folder Name="/Workers/">
+    <Project Path="src/Workers/SeniorCare.Etl.Worker/SeniorCare.Etl.Worker.csproj" />
+  </Folder>
+  <Folder Name="/Mobile/">
+    <Project Path="src/Mobile/SeniorCare.Mobile/SeniorCare.Mobile.csproj" />
+  </Folder>
+</Solution>
+

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a43">
+  <meta name="description" content="Panel familiar de SeniorCare OS">
+  <title>Familia | SeniorCare OS</title>
+  <link rel="stylesheet" href="/css/panels/familiar/app.css">
+</head>
+<body>
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><span class="logo" aria-hidden="true">SC</span><div><strong>SeniorCare</strong><span>Familia</span></div></div>
+      <nav aria-label="Navegación principal"><a class="nav-link is-active" href="#overview">Resumen</a><a class="nav-link" href="#medications">Medicamentos</a><a class="nav-link" href="#alerts">Alertas</a><a class="nav-link" href="#communication">Comunicación</a></nav>
+      <button class="logout" id="logoutButton" type="button">Cerrar sesión</button>
+    </aside>
+
+    <main class="content">
+      <header class="page-header" id="overview">
+        <div><p class="eyebrow">Acompañamiento familiar</p><h1>Hola, <span id="familyName">Familiar</span></h1><p id="residentSummary">Cargando información vinculada…</p></div>
+        <div class="system-status"><span class="status-dot"></span>Conectado</div>
+      </header>
+
+      <section class="family-hero panel">
+        <div><p class="eyebrow">Persona vinculada</p><h2 id="residentName">Adulto mayor</h2><p id="residentContact"></p></div>
+        <button class="button button--primary" id="videoButton" type="button">Iniciar videollamada</button>
+      </section>
+
+      <section class="two-columns">
+        <article class="panel" id="medications">
+          <div class="panel-heading"><div><p class="eyebrow">Hoy</p><h2>Medicamentos</h2></div></div>
+          <div class="schedule-list" id="scheduleList"></div>
+        </article>
+        <article class="panel" id="communication">
+          <div class="panel-heading"><div><p class="eyebrow">Comunicación</p><h2>Videollamada activa</h2></div></div>
+          <div class="video-list" id="videoList"></div>
+        </article>
+      </section>
+
+      <section class="panel panel--alerts" id="alerts">
+        <div class="panel-heading"><div><p class="eyebrow">Seguimiento</p><h2>Alertas recientes</h2></div><button class="button button--secondary" id="refreshButton" type="button">Actualizar</button></div>
+        <div class="alert-list" id="alertList"></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/js/shared/error-handler.js" defer></script>
+  <script src="/js/auth/session.js" defer></script>
+  <script src="/js/panels/familiar/state.js" defer></script>
+  <script src="/js/panels/familiar/residente.js" defer></script>
+  <script src="/js/panels/familiar/medicamentos.js" defer></script>
+  <script src="/js/panels/familiar/alertas.js" defer></script>
+  <script src="/js/panels/familiar/videollamada.js" defer></script>
+  <script src="/js/panels/familiar/ui.js" defer></script>
+  <script src="/js/panels/familiar/app.js" defer></script>
+</body>
+</html>

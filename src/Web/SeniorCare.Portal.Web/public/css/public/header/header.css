@@ -1,0 +1,38 @@
+/* ==========================================================
+   SeniorCare OS
+   Header principal
+========================================================== */
+
+.site-header {
+    position: relative;
+
+    z-index: 100;
+
+    width: 100%;
+
+    min-height:
+        var(--sc-header-height);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 32px;
+
+    padding:
+        0
+        clamp(24px, 5vw, 76px);
+
+    background:
+        rgba(255, 255, 255, 0.97);
+
+    border-bottom:
+        1px solid
+        var(--sc-border);
+
+    box-shadow:
+        0 2px 12px
+        rgba(18, 54, 60, 0.03);
+}

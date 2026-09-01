@@ -1,0 +1,25 @@
+/* ==========================================================
+   SeniorCare OS
+   Responsive - Footer
+========================================================== */
+
+@media (max-width: 520px) {
+
+    footer {
+        min-height:
+            68px;
+
+        padding:
+            16px;
+    }
+
+    footer strong {
+        font-size:
+            0.88rem;
+    }
+
+    footer span {
+        font-size:
+            0.72rem;
+    }
+}

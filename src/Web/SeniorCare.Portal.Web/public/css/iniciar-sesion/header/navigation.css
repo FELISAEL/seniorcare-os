@@ -1,0 +1,208 @@
+/* ==========================================================
+   SeniorCare OS
+   Navegación - Inicio de sesión
+
+   Responsabilidad:
+   - Distribuir las opciones del Header.
+   - Pintar Funciones, Perfiles y Seguridad.
+   - Pintar el botón Inicio.
+   - Mantener la apariencia del Header principal.
+========================================================== */
+
+
+/* ==========================================================
+   NAVEGACIÓN
+========================================================== */
+
+.public-navigation {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        clamp(20px, 2.5vw, 38px);
+}
+
+
+/* ==========================================================
+   OPCIONES TEMPORALES
+========================================================== */
+
+.public-navigation__item {
+    position:
+        relative;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    min-height:
+        44px;
+
+    color:
+        var(--login-text);
+
+    font-size:
+        0.98rem;
+
+    font-weight:
+        750;
+
+    white-space:
+        nowrap;
+
+    user-select:
+        none;
+
+    transition:
+        color
+        var(--login-transition);
+}
+
+
+/* ==========================================================
+   LÍNEA INFERIOR
+========================================================== */
+
+.public-navigation__item::after {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    bottom:
+        5px;
+
+    width:
+        0;
+
+    height:
+        2px;
+
+    border-radius:
+        var(--login-radius-pill);
+
+    background:
+        var(--login-primary);
+
+    transform:
+        translateX(-50%);
+
+    transition:
+        width
+        var(--login-transition);
+}
+
+
+/* ==========================================================
+   EFECTO VISUAL
+========================================================== */
+
+.public-navigation__item:hover {
+    color:
+        var(--login-primary);
+}
+
+
+.public-navigation__item:hover::after {
+    width:
+        65%;
+}
+
+
+/* ==========================================================
+   BOTÓN INICIO
+
+   Usa .nav-login para mantener la misma apariencia
+   que el botón "Iniciar sesión" de la portada.
+========================================================== */
+
+.nav-login {
+    min-width:
+        120px;
+
+    min-height:
+        44px;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        9px
+        22px;
+
+    border:
+        1.5px solid
+        var(--login-primary);
+
+    border-radius:
+        var(--login-radius-pill);
+
+    background:
+        #ffffff;
+
+    color:
+        var(--login-primary);
+
+    font-size:
+        0.94rem;
+
+    font-weight:
+        800;
+
+    white-space:
+        nowrap;
+
+    text-decoration:
+        none;
+
+    transition:
+        background
+        var(--login-transition),
+        color
+        var(--login-transition),
+        transform
+        var(--login-transition),
+        box-shadow
+        var(--login-transition);
+}
+
+
+/* ==========================================================
+   HOVER BOTÓN INICIO
+========================================================== */
+
+.nav-login:hover {
+    background:
+        var(--login-primary);
+
+    color:
+        #ffffff;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(11, 129, 126, 0.16);
+}

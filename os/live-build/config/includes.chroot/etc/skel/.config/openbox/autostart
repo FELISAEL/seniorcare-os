@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -u
+
+if [[ -r /etc/seniorcare/kiosk.env ]]; then
+  source /etc/seniorcare/kiosk.env
+fi
+
+SENIORCARE_URL="${SENIORCARE_URL:-http://localhost:8088}"
+
+xset s off
+xset -dpms
+xset s noblank
+unclutter --idle 0.5 --root &
+
+while true; do
+  chromium \
+    --kiosk \
+    --no-first-run \
+    --disable-session-crashed-bubble \
+    --disable-infobars \
+    --noerrdialogs \
+    --disable-translate \
+    --disable-pinch \
+    --overscroll-history-navigation=0 \
+    "${SENIORCARE_URL}"
+  sleep 2
+done

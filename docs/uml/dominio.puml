@@ -1,0 +1,55 @@
+@startuml
+class Usuario {
+  +id: UUID
+  +usuario: string
+  +nombre: string
+  +rol: string
+}
+
+class Residente {
+  +id: UUID
+  +nombreCompleto: string
+  +fechaNacimiento: date
+  +contactoEmergencia: string
+}
+
+class Medicamento {
+  +id: UUID
+  +nombre: string
+  +dosis: string
+  +indicaciones: string
+}
+
+class Horario {
+  +id: UUID
+  +hora: time
+  +diario: bool
+}
+
+class Toma {
+  +fechaProgramada: date
+  +estado: string
+  +confirmadaEn: datetime
+}
+
+class Alerta {
+  +id: UUID
+  +tipo: string
+  +estado: string
+  +creadaEn: datetime
+}
+
+class Videollamada {
+  +id: UUID
+  +codigoSala: string
+  +estado: string
+}
+
+Usuario "1" -- "0..1" Residente
+Residente "1" -- "*" Medicamento
+Medicamento "1" -- "*" Horario
+Horario "1" -- "*" Toma
+Residente "1" -- "*" Alerta
+Residente "1" -- "*" Videollamada
+@enduml
+

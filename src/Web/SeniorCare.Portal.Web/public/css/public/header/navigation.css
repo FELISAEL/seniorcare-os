@@ -1,0 +1,128 @@
+/* ==========================================================
+   SeniorCare OS
+   Navegación pública
+========================================================== */
+
+.site-header nav {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap:
+        clamp(20px, 2.5vw, 38px);
+}
+
+.site-header nav a {
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 44px;
+
+    color:
+        var(--sc-dark);
+
+    font-size:
+        0.98rem;
+
+    font-weight:
+        750;
+
+    transition:
+        color
+        var(--sc-transition);
+}
+
+.site-header nav a:not(.nav-login)::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 5px;
+
+    width: 0;
+
+    height: 2px;
+
+    border-radius:
+        var(--sc-radius-pill);
+
+    background:
+        var(--sc-primary);
+
+    transform:
+        translateX(-50%);
+
+    transition:
+        width
+        var(--sc-transition);
+}
+
+.site-header nav a:not(.nav-login):hover {
+    color:
+        var(--sc-primary);
+}
+
+.site-header nav a:not(.nav-login):hover::after {
+    width:
+        65%;
+}
+
+
+/* ----------------------------------------------------------
+   Botón iniciar sesión
+---------------------------------------------------------- */
+
+.nav-login {
+    min-width: 146px;
+
+    padding:
+        10px
+        22px;
+
+    border:
+        1.5px solid
+        var(--sc-primary);
+
+    border-radius:
+        var(--sc-radius-pill);
+
+    color:
+        var(--sc-primary) !important;
+
+    background:
+        rgba(255, 255, 255, 0.82);
+
+    transition:
+        background
+        var(--sc-transition),
+        color
+        var(--sc-transition),
+        transform
+        var(--sc-transition),
+        box-shadow
+        var(--sc-transition);
+}
+
+.nav-login:hover {
+    background:
+        var(--sc-primary);
+
+    color:
+        #ffffff !important;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 20px
+        rgba(11, 122, 120, 0.16);
+}

@@ -1,0 +1,187 @@
+/* ==========================================================
+   SeniorCare OS
+   Formulario de Inicio de sesión
+========================================================== */
+
+.login-form {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 19px;
+}
+
+
+/* ==========================================================
+   CAMPO
+========================================================== */
+
+.login-field {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+
+.login-field label {
+    color:
+        var(--login-text);
+
+    font-size:
+        0.86rem;
+
+    font-weight:
+        750;
+}
+
+
+/* ==========================================================
+   BOTÓN ENTRAR
+========================================================== */
+
+.login-submit {
+    width: 100%;
+
+    min-height: 54px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 11px;
+
+    margin-top:
+        3px;
+
+    padding:
+        12px
+        20px;
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0b8b86,
+            #08736f
+        );
+
+    color:
+        #ffffff;
+
+    font-size:
+        0.97rem;
+
+    font-weight:
+        800;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 24px
+        rgba(11, 122, 120, 0.18);
+
+    transition:
+        transform var(--login-transition),
+        box-shadow var(--login-transition),
+        filter var(--login-transition);
+}
+
+
+.login-submit:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 14px 30px
+        rgba(11, 122, 120, 0.25);
+}
+
+
+.login-submit:active {
+    transform:
+        translateY(0);
+}
+
+
+.login-submit__icon {
+    width: 20px;
+    height: 20px;
+
+    color:
+        currentColor;
+}
+
+
+/* ==========================================================
+   MENSAJES
+========================================================== */
+
+.form-message {
+    min-height: 20px;
+
+    margin: -4px 0 0;
+
+    color:
+        var(--login-danger);
+
+    font-size:
+        0.82rem;
+
+    font-weight:
+        650;
+
+    line-height:
+        1.45;
+}
+
+
+/* ==========================================================
+   CONTINUAR SESIÓN
+========================================================== */
+
+.continue-button {
+    width: 100%;
+
+    min-height: 48px;
+
+    padding:
+        10px
+        18px;
+
+    border:
+        1px solid
+        var(--login-primary);
+
+    border-radius:
+        13px;
+
+    background:
+        #ffffff;
+
+    color:
+        var(--login-primary);
+
+    font-weight:
+        750;
+
+    cursor: pointer;
+
+    transition:
+        background var(--login-transition),
+        color var(--login-transition);
+}
+
+
+.continue-button:hover {
+    background:
+        var(--login-primary);
+
+    color:
+        #ffffff;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#102a43"><title>Administración | SeniorCare OS</title><link rel="stylesheet" href="/css/panels/administracion/app.css"></head>
+<body data-expected-role="admin">
+  <div class="dashboard" id="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-brand"><span class="logo" aria-hidden="true">SC</span><div><strong>SeniorCare</strong><span>Administración</span></div></div>
+      <nav aria-label="Navegación principal"><a class="nav-link is-active" href="#overview">Resumen</a><a class="nav-link" href="#alerts">Alertas</a><a class="nav-link" href="#residents">Adultos mayores</a><a class="nav-link" href="#analytics">Analítica</a><a class="nav-link" href="#users">Usuarios</a></nav>
+      <button class="logout" id="logoutButton" type="button">Cerrar sesión</button>
+    </aside>
+    <main class="content">
+      <header class="page-header" id="overview"><div><p class="eyebrow">Centro de administración</p><h1>Hola, <span id="operatorName">Usuario</span></h1><p>Estado general de personas adultas mayores, medicamentos y alertas.</p></div><div class="system-status"><span class="status-dot"></span>Sistema conectado</div></header>
+      <section class="stat-grid" aria-label="Indicadores principales"><article class="stat-card"><span>Adultos mayores</span><strong id="residentCount">0</strong><small>perfiles registrados</small></article><article class="stat-card stat-card--warning"><span>Alertas activas</span><strong id="alertCount">0</strong><small>requieren seguimiento</small></article><article class="stat-card stat-card--success"><span>Adherencia hoy</span><strong id="adherence">0%</strong><small id="doseSummary">0 de 0 tomas</small></article><article class="stat-card stat-card--info"><span>Último ETL</span><strong class="stat-time" id="etlTime">Pendiente</strong><small>actualización analítica</small></article></section>
+      <section class="panel panel--alerts" id="alerts"><div class="panel-heading"><div><p class="eyebrow">Atención rápida</p><h2>Alertas activas</h2></div><button class="button button--secondary" id="refreshButton" type="button">Actualizar</button></div><div class="empty-state is-hidden" id="noAlerts">No hay alertas activas en este momento.</div><div class="alert-list" id="alertList"></div></section>
+      <section class="two-columns" id="residents"><article class="panel"><div class="panel-heading"><div><p class="eyebrow">Personas adultas mayores</p><h2>Residentes</h2></div></div><div class="resident-list" id="residentList"></div></article><article class="panel"><div class="panel-heading"><div><p class="eyebrow">Plan de cuidado</p><h2 id="selectedResidentTitle">Medicamentos</h2></div></div><div class="schedule-list" id="scheduleList"></div><details class="medication-form-wrapper"><summary>Agregar medicamento</summary><form id="medicationForm"><label for="medicineName">Nombre</label><input id="medicineName" name="name" type="text" required><label for="dosage">Dosis</label><input id="dosage" name="dosage" type="text" placeholder="Ej. 50 mg" required><label for="instructions">Indicaciones</label><textarea id="instructions" name="instructions" rows="3" required></textarea><label for="medicineTime">Horario diario</label><input id="medicineTime" name="time" type="time" required><button class="button button--primary" type="submit">Guardar medicamento</button><p class="form-message" id="medicationMessage" role="status"></p></form></details></article></section>
+      <section class="two-columns" id="analytics"><article class="panel"><div class="panel-heading"><div><p class="eyebrow">ETL</p><h2>Métricas recientes</h2></div></div><div class="metrics-list" id="metricsList"></div></article><article class="panel"><div class="panel-heading"><div><p class="eyebrow">Comunicación</p><h2>Videollamadas activas</h2></div></div><div class="video-list" id="videoList"></div></article></section>
+      
+      <section class="two-columns" id="users">
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">Seguridad</p><h2>Usuarios y roles</h2></div></div>
+          <div class="user-list" id="userList"></div>
+        </article>
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">Administración</p><h2>Crear usuario</h2></div></div>
+          <form id="userForm" class="admin-user-form">
+            <label for="newUsername">Usuario</label><input id="newUsername" name="username" type="text" required>
+            <label for="newDisplayName">Nombre completo</label><input id="newDisplayName" name="displayName" type="text" required>
+            <label for="newPassword">Contraseña temporal</label><input id="newPassword" name="password" type="password" minlength="8" required>
+            <label for="userRole">Rol</label>
+            <select id="userRole" name="role" required>
+              <option value="caregiver">Cuidador</option><option value="resident">Adulto mayor</option><option value="family">Familiar</option><option value="admin">Administrador</option>
+            </select>
+            <div class="is-hidden" id="residentLinkField"><label for="residentLink">Residente vinculado</label><select id="residentLink" name="residentId"></select></div>
+            <button class="button button--primary" type="submit">Crear usuario</button>
+            <p class="form-message" id="userMessage" role="status"></p>
+          </form>
+        </article>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/js/shared/error-handler.js" defer></script>
+  <script src="/js/auth/session.js" defer></script>
+  <script src="/js/panels/care-team/state.js" defer></script>
+  <script src="/js/panels/care-team/residentes.js" defer></script>
+  <script src="/js/panels/care-team/medicamentos.js" defer></script>
+  <script src="/js/panels/care-team/alertas.js" defer></script>
+  <script src="/js/panels/care-team/analitica.js" defer></script>
+  <script src="/js/panels/care-team/comunicacion.js" defer></script>
+  <script src="/js/panels/care-team/usuarios.js" defer></script>
+  <script src="/js/panels/care-team/ui.js" defer></script>
+  <script src="/js/panels/care-team/app.js" defer></script>
+</body></html>

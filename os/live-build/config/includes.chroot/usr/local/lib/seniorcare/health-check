@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -u
+
+if [[ -r /etc/seniorcare/kiosk.env ]]; then
+  source /etc/seniorcare/kiosk.env
+fi
+
+SENIORCARE_URL="${SENIORCARE_URL:-http://localhost:8088}"
+
+if curl \
+  --fail \
+  --silent \
+  --show-error \
+  --max-time 8 \
+  "${SENIORCARE_URL}" >/dev/null; then
+  logger --tag seniorcare-health "Interfaz disponible en ${SENIORCARE_URL}"
+  exit 0
+fi
+
+logger \
+  --priority user.warning \
+  --tag seniorcare-health \
+  "Interfaz no disponible en ${SENIORCARE_URL}"
+exit 1
+

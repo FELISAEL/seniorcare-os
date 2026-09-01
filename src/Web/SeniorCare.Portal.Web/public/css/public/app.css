@@ -1,0 +1,40 @@
+/* ==========================================================
+   SeniorCare OS
+   Inicio público
+   Punto de entrada de estilos
+========================================================== */
+
+/* Base */
+@import url("./base/variables.css");
+@import url("./base/reset.css");
+@import url("./base/typography.css");
+
+/* Header */
+@import url("./header/header.css");
+@import url("./header/brand.css");
+@import url("./header/navigation.css");
+
+/* Hero */
+@import url("./hero/hero.css");
+@import url("./hero/hero-content.css");
+@import url("./hero/hero-image.css");
+@import url("./hero/hero-actions.css");
+
+/* Tarjeta de acceso */
+@import url("./access/access-card.css");
+@import url("./access/role-pills.css");
+
+/* Beneficios */
+@import url("./benefits/benefits.css");
+@import url("./benefits/benefit-card.css");
+@import url("./benefits/benefit-icons.css");
+
+/* Footer */
+@import url("./footer/footer.css");
+
+/* Responsive */
+@import url("./responsive/header.css");
+@import url("./responsive/hero.css");
+@import url("./responsive/access.css");
+@import url("./responsive/benefits.css");
+@import url("./responsive/footer.css");

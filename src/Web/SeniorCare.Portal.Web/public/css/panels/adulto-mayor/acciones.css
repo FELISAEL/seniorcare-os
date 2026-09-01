@@ -1,0 +1,83 @@
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2vw, 1.6rem);
+}
+
+.action-card {
+  display: flex;
+  min-height: 280px;
+  padding: 1.4rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 30px;
+  color: #fff;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.action-card:hover {
+  filter: brightness(1.06);
+  transform: translateY(-4px);
+}
+
+.action-card:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.action-card--medicine {
+  background: linear-gradient(145deg, #6da53d, var(--medicine));
+}
+
+.action-card--video {
+  background: linear-gradient(145deg, #8759cf, var(--video));
+}
+
+.action-card--assistance {
+  background: linear-gradient(145deg, #2f89cf, var(--assistance));
+}
+
+.action-card--emergency {
+  background: linear-gradient(145deg, #ec5b61, var(--emergency));
+}
+
+.action-icon {
+  display: grid;
+  width: 92px;
+  height: 92px;
+  margin-bottom: 1rem;
+  border: 5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  place-items: center;
+  font-size: 3.2rem;
+  font-weight: 900;
+}
+
+.sos-icon {
+  display: grid;
+  width: 104px;
+  height: 104px;
+  margin-bottom: 0.85rem;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 950;
+}
+
+.action-title {
+  font-size: clamp(1.35rem, 2.3vw, 1.9rem);
+  font-weight: 950;
+}
+
+.action-description {
+  margin-top: 0.45rem;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.today-panel,

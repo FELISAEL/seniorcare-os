@@ -1,0 +1,55 @@
+/* ==========================================================
+   SeniorCare OS
+   Variables de Inicio de sesión
+========================================================== */
+
+:root {
+
+    /* Colores corporativos */
+    --login-primary: #0b817e;
+    --login-primary-dark: #075f61;
+    --login-primary-deep: #083f47;
+    --login-primary-light: #e5f5f3;
+
+    --login-accent: #e8a35b;
+
+    /* Fondos */
+    --login-background: #f4f9f9;
+    --login-surface: #ffffff;
+    --login-surface-soft: #f8fbfb;
+
+    /* Texto */
+    --login-text: #12383e;
+    --login-text-soft: #667a7f;
+    --login-white: #ffffff;
+
+    /* Bordes */
+    --login-border: #d9e8e7;
+    --login-border-strong: #bdd8d6;
+
+    /* Estados */
+    --login-danger: #ba3c4d;
+    --login-danger-bg: #fff0f2;
+
+    --login-success: #167c65;
+
+    /* Radios */
+    --login-radius-sm: 10px;
+    --login-radius-md: 16px;
+    --login-radius-lg: 26px;
+    --login-radius-pill: 999px;
+
+    /* Sombras */
+    --login-shadow-sm:
+        0 5px 18px rgba(18, 56, 62, 0.06);
+
+    --login-shadow-md:
+        0 18px 45px rgba(18, 56, 62, 0.11);
+
+    --login-shadow-lg:
+        0 30px 75px rgba(18, 56, 62, 0.17);
+
+    /* Transición */
+    --login-transition:
+        180ms ease;
+}

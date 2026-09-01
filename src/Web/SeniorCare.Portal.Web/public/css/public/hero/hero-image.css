@@ -1,0 +1,74 @@
+/* ==========================================================
+   SeniorCare OS
+   Fondo visual temporal del Hero
+
+   Responsabilidad:
+   - Pintar el fondo del Hero.
+   - Agregar efectos decorativos.
+   - La fotografía se agregará posteriormente.
+========================================================== */
+
+.hero {
+    background:
+        linear-gradient(
+            105deg,
+            #f8fbfb 0%,
+            #f5fbfa 48%,
+            #eef8f7 100%
+        );
+
+    background-repeat:
+        no-repeat;
+}
+
+
+/* ==========================================================
+   ILUMINACIÓN DECORATIVA
+========================================================== */
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 4% 90%,
+            rgba(11, 122, 120, 0.11),
+            transparent 27%
+        );
+}
+
+
+/* ==========================================================
+   CÍRCULO DECORATIVO INFERIOR
+========================================================== */
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    left: -90px;
+
+    bottom: -180px;
+
+    z-index: 0;
+
+    width: 390px;
+
+    height: 390px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(46, 170, 164, 0.07);
+
+    pointer-events: none;
+}

@@ -1,0 +1,120 @@
+.accessibility-bar {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  min-height: 78px;
+  border-top: 2px solid #263443;
+  background: #08111f;
+}
+
+.accessibility-bar button {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-right: 1px solid #324253;
+  color: #fff;
+  background: transparent;
+  font-weight: 800;
+}
+
+.confirm-dialog {
+  width: min(92vw, 620px);
+  padding: 0;
+  border: 0;
+  border-radius: 28px;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.4);
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(3, 8, 15, 0.76);
+}
+
+.confirm-dialog form {
+  padding: clamp(1.6rem, 5vw, 3rem);
+  text-align: center;
+}
+
+.dialog-icon {
+  display: grid;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 1.2rem;
+  border: 7px solid #fff;
+  border-radius: 50%;
+  place-items: center;
+  color: #fff;
+  background: var(--emergency);
+  box-shadow: 0 0 0 8px #f6c8ca;
+  font-size: 2rem;
+  font-weight: 950;
+}
+
+.confirm-dialog h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.confirm-dialog p {
+  color: var(--muted);
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+
+.dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.toast {
+  position: fixed;
+  z-index: 30;
+  top: 1rem;
+  left: 50%;
+  width: min(90vw, 620px);
+  padding: 1rem 1.4rem;
+  border-radius: 16px;
+  color: #fff;
+  background: #102033;
+  box-shadow: var(--shadow);
+  font-size: 1.05rem;
+  font-weight: 850;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -20px);
+  transition: 180ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+body.large-text {
+  font-size: 21px;
+}
+
+body.high-contrast {
+  --ink: #000;
+  --muted: #111;
+  --surface: #fff;
+  --surface-soft: #fff;
+  --line: #000;
+  background: #fff;
+}
+
+body.high-contrast .today-panel,
+body.high-contrast .medication-panel,
+body.high-contrast .medication-item {
+  border-color: #000;
+  box-shadow: none;
+}
+

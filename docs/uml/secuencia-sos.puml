@@ -1,0 +1,24 @@
+@startuml
+actor "Persona adulta mayor" as Resident
+participant "PWA residente" as Pwa
+participant "Emergency API" as Api
+database "emergency_db" as Db
+participant "Panel / móvil" as Caregiver
+participant "ETL Worker" as Etl
+database "analytics_db" as Analytics
+
+Resident -> Pwa: Presiona Emergencia
+Pwa -> Resident: Solicita confirmación
+Resident -> Pwa: Confirma SOS
+Pwa -> Api: POST /alerts
+Api -> Db: Registra alerta activa
+Api --> Pwa: Alerta creada
+Pwa --> Resident: Mensaje y voz de confirmación
+Caregiver -> Api: Consulta alertas activas
+Api --> Caregiver: Devuelve alerta SOS
+Caregiver -> Api: Marca atendida/resuelta
+Api -> Db: Actualiza estado
+Etl -> Db: Extrae métricas
+Etl -> Analytics: Carga resumen diario
+@enduml
+

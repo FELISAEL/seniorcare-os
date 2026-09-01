@@ -1,0 +1,10 @@
+**/bin
+**/obj
+**/.git
+**/.vs
+**/.idea
+**/node_modules
+artifacts
+data
+.env
+
