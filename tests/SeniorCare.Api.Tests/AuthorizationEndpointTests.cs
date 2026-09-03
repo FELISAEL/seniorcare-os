@@ -6,8 +6,13 @@ namespace SeniorCare.Api.Tests.Integration;
 
 public sealed class AuthorizationEndpointTests
 {
-    [Fact]
-    public async Task CareResidents_WithoutToken_ReturnsUnauthorized()
+    [Theory]
+    [InlineData("/api/care/residents")]
+    [InlineData("/api/emergencies/alerts/active")]
+    [InlineData("/api/communication/video-rooms/active")]
+    [InlineData("/api/analytics/recent?days=7")]
+    public async Task ProtectedEndpoint_WithoutToken_ReturnsUnauthorized(
+        string endpoint)
     {
         const string variable = "JWT_SECRET";
         var previousValue = Environment.GetEnvironmentVariable(variable);
@@ -26,8 +31,7 @@ public sealed class AuthorizationEndpointTests
 
             using var client = factory.CreateClient();
 
-            var response = await client.GetAsync(
-                "/api/care/residents");
+            var response = await client.GetAsync(endpoint);
 
             Assert.Equal(
                 HttpStatusCode.Unauthorized,
