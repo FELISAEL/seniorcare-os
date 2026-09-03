@@ -49,83 +49,38 @@ services:
       - "4317:18889"
       - "4318:18890"
 
-  identity-api:
+  seniorcare-api:
     <<: *dotnet-service
     build:
       context: .
       dockerfile: infra/docker/DotNetService.Dockerfile
       args:
-        PROJECT_PATH: src/Services/SeniorCare.Identity.Api/SeniorCare.Identity.Api.csproj
-        DLL_NAME: SeniorCare.Identity.Api.dll
+        PROJECT_PATH: api/SeniorCare.Api.csproj
+        DLL_NAME: SeniorCare.Api.dll
     environment:
       <<: *dotnet-environment
+
       ConnectionStrings__IdentityDatabase: Host=postgres;Port=5432;Database=identity_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      ConnectionStrings__CareDatabase: Host=postgres;Port=5432;Database=care_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      ConnectionStrings__EmergencyDatabase: Host=postgres;Port=5432;Database=emergency_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+      ConnectionStrings__AnalyticsDatabase: Host=postgres;Port=5432;Database=analytics_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
+
       SEED_ADMIN_USERNAME: ${SEED_ADMIN_USERNAME:-admin}
       SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:?Defina SEED_ADMIN_PASSWORD en .env}
+
       SEED_CAREGIVER_USERNAME: ${SEED_CAREGIVER_USERNAME:-cuidador}
       SEED_CAREGIVER_PASSWORD: ${SEED_CAREGIVER_PASSWORD:?Defina SEED_CAREGIVER_PASSWORD en .env}
+
       SEED_RESIDENT_USERNAME: ${SEED_RESIDENT_USERNAME:-maria}
       SEED_RESIDENT_PASSWORD: ${SEED_RESIDENT_PASSWORD:?Defina SEED_RESIDENT_PASSWORD en .env}
+
       SEED_FAMILY_USERNAME: ${SEED_FAMILY_USERNAME:-ana}
       SEED_FAMILY_PASSWORD: ${SEED_FAMILY_PASSWORD:?Defina SEED_FAMILY_PASSWORD en .env}
-    ports:
-      - "7001:8080"
 
-  care-api:
-    <<: *dotnet-service
-    build:
-      context: .
-      dockerfile: infra/docker/DotNetService.Dockerfile
-      args:
-        PROJECT_PATH: src/Services/SeniorCare.Care.Api/SeniorCare.Care.Api.csproj
-        DLL_NAME: SeniorCare.Care.Api.dll
-    environment:
-      <<: *dotnet-environment
-      ConnectionStrings__CareDatabase: Host=postgres;Port=5432;Database=care_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
-    ports:
-      - "7002:8080"
-
-  emergency-api:
-    <<: *dotnet-service
-    build:
-      context: .
-      dockerfile: infra/docker/DotNetService.Dockerfile
-      args:
-        PROJECT_PATH: src/Services/SeniorCare.Emergency.Api/SeniorCare.Emergency.Api.csproj
-        DLL_NAME: SeniorCare.Emergency.Api.dll
-    environment:
-      <<: *dotnet-environment
-      ConnectionStrings__EmergencyDatabase: Host=postgres;Port=5432;Database=emergency_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
-    ports:
-      - "7003:8080"
-
-  communication-api:
-    <<: *dotnet-service
-    build:
-      context: .
-      dockerfile: infra/docker/DotNetService.Dockerfile
-      args:
-        PROJECT_PATH: src/Services/SeniorCare.Communication.Api/SeniorCare.Communication.Api.csproj
-        DLL_NAME: SeniorCare.Communication.Api.dll
-    environment:
-      <<: *dotnet-environment
       VIDEO_PROVIDER_BASE_URL: ${VIDEO_PROVIDER_BASE_URL:-https://meet.jit.si/}
-    ports:
-      - "7004:8080"
 
-  analytics-api:
-    <<: *dotnet-service
-    build:
-      context: .
-      dockerfile: infra/docker/DotNetService.Dockerfile
-      args:
-        PROJECT_PATH: src/Services/SeniorCare.Analytics.Api/SeniorCare.Analytics.Api.csproj
-        DLL_NAME: SeniorCare.Analytics.Api.dll
-    environment:
-      <<: *dotnet-environment
-      ConnectionStrings__AnalyticsDatabase: Host=postgres;Port=5432;Database=analytics_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
     ports:
-      - "7005:8080"
+      - "7000:8080"
 
   etl-worker:
     profiles: ["analytics"]
@@ -145,11 +100,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-      care-api:
-        condition: service_started
-      emergency-api:
-        condition: service_started
-      analytics-api:
+      seniorcare-api:
         condition: service_started
 
   portal-web:
@@ -160,17 +111,8 @@ services:
     ports:
       - "8088:80"
     depends_on:
-      identity-api:
-        condition: service_started
-      care-api:
-        condition: service_started
-      emergency-api:
-        condition: service_started
-      communication-api:
-        condition: service_started
-      analytics-api:
+      seniorcare-api:
         condition: service_started
 
 volumes:
   seniorcare-postgres:
-
