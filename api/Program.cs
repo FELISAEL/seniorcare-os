@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.RateLimiting;
+﻿using Microsoft.AspNetCore.RateLimiting;
 using SeniorCare.Api.App.Core.Auth;
 using SeniorCare.Api.Config;
 
@@ -20,10 +20,13 @@ var app = builder.Build();
 app.UseSeniorCareServiceDefaults();
 app.UseRateLimiter();
 
-await app.InitializeIdentityModuleAsync();
-await app.InitializeCareModuleAsync();
-await app.InitializeEmergencyModuleAsync();
-await app.InitializeAnalyticsModuleAsync();
+if (!app.Environment.IsEnvironment("Testing"))
+{
+    await app.InitializeIdentityModuleAsync();
+    await app.InitializeCareModuleAsync();
+    await app.InitializeEmergencyModuleAsync();
+    await app.InitializeAnalyticsModuleAsync();
+}
 
 app.MapIdentityModule();
 app.MapCareModule();
@@ -32,3 +35,6 @@ app.MapCommunicationModule();
 app.MapAnalyticsModule();
 
 app.Run();
+public partial class Program { }
+
+
