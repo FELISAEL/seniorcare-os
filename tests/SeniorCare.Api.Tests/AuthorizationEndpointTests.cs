@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace SeniorCare.Api.Tests.Integration;
 
+[Collection("Integration")]
 public sealed class AuthorizationEndpointTests
 {
     [Theory]
@@ -45,3 +46,4 @@ public sealed class AuthorizationEndpointTests
         }
     }
 }
+

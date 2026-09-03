@@ -7,6 +7,7 @@ using SeniorCare.Api.App.Models.Identity;
 
 namespace SeniorCare.Api.Tests.Integration;
 
+[Collection("Integration")]
 public sealed class RoleAuthorizationEndpointTests
 {
     private const string JwtSecret =
@@ -74,3 +75,4 @@ public sealed class RoleAuthorizationEndpointTests
         }
     }
 }
+

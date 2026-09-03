@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace SeniorCare.Api.Tests.Integration;
 
+[Collection("Integration")]
 public sealed class HealthEndpointTests
 {
     [Fact]
@@ -44,3 +45,4 @@ public sealed class HealthEndpointTests
         }
     }
 }
+
