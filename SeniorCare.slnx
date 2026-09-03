@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/SeniorCare.Api.Tests/SeniorCare.Api.Tests.csproj" />
+  </Folder>
   <Folder Name="/Workers/">
     <Project Path="src/Workers/SeniorCare.Etl.Worker/SeniorCare.Etl.Worker.csproj" />
   </Folder>
