@@ -1,9 +1,8 @@
-﻿name: seniorcare-os
+name: seniorcare-os
 
 x-dotnet-service: &dotnet-service
   restart: unless-stopped
   environment: &dotnet-environment
-    ASPNETCORE_URLS: http://+:8080
     JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET en .env}
     JWT_ISSUER: ${JWT_ISSUER:-SeniorCare.Identity}
     JWT_AUDIENCE: ${JWT_AUDIENCE:-SeniorCare.Platform}
