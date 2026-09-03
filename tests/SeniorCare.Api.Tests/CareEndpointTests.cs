@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
@@ -127,6 +127,113 @@ public sealed class CareEndpointTests
         }
     }
 
+
+    [Fact]
+    public async Task MyResidents_WithResidentRole_ReturnsOnlyLinkedResident()
+    {
+        const string variable = "JWT_SECRET";
+        var previousValue =
+            Environment.GetEnvironmentVariable(variable);
+
+        Environment.SetEnvironmentVariable(
+            variable,
+            JwtSecret);
+
+        try
+        {
+            var residentId = Guid.NewGuid();
+
+            var resident = new Resident(
+                residentId,
+                "maria",
+                "María López",
+                new DateOnly(1948, 4, 12),
+                "Ana López",
+                "+502 5555-0101",
+                DateTimeOffset.UtcNow);
+
+            var repository =
+                new FakeCareRepository([resident]);
+
+            await using var factory =
+                new WebApplicationFactory<Program>()
+                    .WithWebHostBuilder(builder =>
+                    {
+                        builder.UseEnvironment("Testing");
+
+                        builder.ConfigureServices(services =>
+                        {
+                            services.RemoveAll<ICareRepository>();
+
+                            services.AddSingleton<ICareRepository>(
+                                repository);
+                        });
+                    });
+
+            using var client = factory.CreateClient();
+
+            var tokenService = new TokenService(
+                new JwtOptions
+                {
+                    Issuer = "SeniorCare.Identity",
+                    Audience = "SeniorCare.Platform",
+                    Secret = JwtSecret,
+                    ExpirationMinutes = 60
+                });
+
+            var user = new UserAccount(
+                Guid.NewGuid(),
+                "maria",
+                "María López",
+                "hash",
+                "resident",
+                residentId,
+                true,
+                DateTimeOffset.UtcNow,
+                null);
+
+            var login = tokenService.Create(
+                user,
+                "/panel/residente/");
+
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(
+                    "Bearer",
+                    login.AccessToken);
+
+            using var response = await client.GetAsync(
+                "/api/care/me/residents");
+
+            Assert.Equal(
+                HttpStatusCode.OK,
+                response.StatusCode);
+
+            using var json = JsonDocument.Parse(
+                await response.Content.ReadAsStringAsync());
+
+            var residents = json.RootElement;
+
+            Assert.Single(residents.EnumerateArray());
+
+            Assert.Equal(
+                residentId,
+                residents[0]
+                    .GetProperty("id")
+                    .GetGuid());
+
+            Assert.Equal(
+                "maria",
+                residents[0]
+                    .GetProperty("username")
+                    .GetString());
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(
+                variable,
+                previousValue);
+        }
+    }
     private sealed class FakeCareRepository(
         IReadOnlyList<Resident> residents) : ICareRepository
     {
@@ -146,7 +253,9 @@ public sealed class CareEndpointTests
         public Task<Resident?> FindResidentByIdAsync(
             Guid residentId,
             CancellationToken cancellationToken = default) =>
-            Task.FromResult<Resident?>(null);
+            Task.FromResult<Resident?>(
+                residents.FirstOrDefault(resident =>
+                    resident.Id == residentId));
 
         public Task<Resident> CreateResidentAsync(
             CreateResidentRequest request,
