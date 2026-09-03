@@ -16,6 +16,27 @@ public sealed class RoleAuthorizationEndpointTests
     [Fact]
     public async Task CommunicationActiveRooms_WithResidentRole_ReturnsForbidden()
     {
+        var response = await SendRequestAsync(
+            SeniorCareRoles.Resident,
+            Guid.NewGuid());
+
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task CommunicationActiveRooms_WithAdminRole_ReturnsOk()
+    {
+        var response = await SendRequestAsync(
+            SeniorCareRoles.Admin,
+            null);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    private static async Task<HttpResponseMessage> SendRequestAsync(
+        string role,
+        Guid? residentId)
+    {
         const string variable = "JWT_SECRET";
         var previousValue = Environment.GetEnvironmentVariable(variable);
 
@@ -40,32 +61,26 @@ public sealed class RoleAuthorizationEndpointTests
                     ExpirationMinutes = 60
                 });
 
-            var resident = new UserAccount(
+            var user = new UserAccount(
                 Guid.NewGuid(),
-                "resident-test",
-                "Residente Test",
+                "integration-test",
+                "Usuario Integration Test",
                 "hash",
-                SeniorCareRoles.Resident,
-                Guid.NewGuid(),
+                role,
+                residentId,
                 true,
                 DateTimeOffset.UtcNow,
                 null);
 
-            var login = tokenService.Create(
-                resident,
-                "/panel/adulto-mayor/");
+            var login = tokenService.Create(user, "/test/");
 
             client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue(
                     "Bearer",
                     login.AccessToken);
 
-            var response = await client.GetAsync(
+            return await client.GetAsync(
                 "/api/communication/video-rooms/active");
-
-            Assert.Equal(
-                HttpStatusCode.Forbidden,
-                response.StatusCode);
         }
         finally
         {
@@ -75,4 +90,3 @@ public sealed class RoleAuthorizationEndpointTests
         }
     }
 }
-
