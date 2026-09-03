@@ -1,5 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -64,6 +66,89 @@ public sealed class LoginEndpointTests
         Assert.False(repository.UpdateLastLoginCalled);
     }
 
+    [Fact]
+    public async Task Login_ThenMe_WithReturnedToken_ReturnsCurrentUser()
+    {
+        const string variable = "JWT_SECRET";
+        var previousValue =
+            Environment.GetEnvironmentVariable(variable);
+
+        Environment.SetEnvironmentVariable(
+            variable,
+            JwtSecret);
+
+        try
+        {
+            var repository = new FakeIdentityRepository(
+                CreateAdmin());
+
+            await using var factory =
+                new WebApplicationFactory<Program>()
+                    .WithWebHostBuilder(builder =>
+                    {
+                        builder.UseEnvironment("Testing");
+
+                        builder.ConfigureServices(services =>
+                        {
+                            services.RemoveAll<IIdentityRepository>();
+
+                            services.AddSingleton<IIdentityRepository>(
+                                repository);
+                        });
+                    });
+
+            using var client = factory.CreateClient();
+
+            using var loginResponse = await client.PostAsJsonAsync(
+                "/api/identity/login",
+                new LoginRequest("admin", TestPassword));
+
+            Assert.Equal(
+                HttpStatusCode.OK,
+                loginResponse.StatusCode);
+
+            var login =
+                await loginResponse.Content
+                    .ReadFromJsonAsync<LoginResponse>();
+
+            Assert.NotNull(login);
+
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(
+                    "Bearer",
+                    login!.AccessToken);
+
+            using var meResponse = await client.GetAsync(
+                "/api/identity/me");
+
+            Assert.Equal(
+                HttpStatusCode.OK,
+                meResponse.StatusCode);
+
+            var json = JsonDocument.Parse(
+                await meResponse.Content.ReadAsStringAsync());
+
+            var root = json.RootElement;
+
+            Assert.Equal(
+                "admin",
+                root.GetProperty("username").GetString());
+
+            Assert.Equal(
+                "admin",
+                root.GetProperty("role").GetString());
+
+            Assert.Equal(
+                "/panel/administracion/",
+                root.GetProperty("panelPath").GetString());
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(
+                variable,
+                previousValue);
+        }
+    }
     private static async Task<HttpResponseMessage> SendLoginAsync(
         FakeIdentityRepository repository,
         LoginRequest request)
@@ -164,3 +249,4 @@ public sealed class LoginEndpointTests
         }
     }
 }
+
