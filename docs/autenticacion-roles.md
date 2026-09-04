@@ -33,7 +33,7 @@ lo utiliza para autorización por recurso.
 
 ## Políticas
 
-Las políticas se encuentran en `src/BuildingBlocks/SeniorCare.Shared/Auth`.
+Las políticas se encuentran en `api/app/Core/Auth`.
 Entre ellas:
 
 - `AdminOnly`;
