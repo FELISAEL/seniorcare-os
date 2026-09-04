@@ -24,27 +24,27 @@ try {
         throw 'Docker no pudo iniciar los servicios.'
     }
 
-    $healthUrls = @(
-        'http://localhost:7001/health',
-        'http://localhost:7002/health',
-        'http://localhost:7003/health',
-        'http://localhost:7004/health',
-        'http://localhost:7005/health'
-    )
+    $healthUrl = 'http://localhost:7000/health'
 
     $deadline = (Get-Date).AddMinutes(3)
     do {
         $ready = $true
-        foreach ($url in $healthUrls) {
-            try { Invoke-RestMethod -Uri $url -TimeoutSec 4 | Out-Null }
-            catch { $ready = $false; break }
+        try {
+            $health = Invoke-RestMethod -Uri $healthUrl -TimeoutSec 4
+            if ($health.status -ne 'healthy') { $ready = $false }
         }
+        catch { $ready = $false }
         if (-not $ready) { Start-Sleep -Seconds 4 }
     } until ($ready -or (Get-Date) -ge $deadline)
 
     Write-Host ''
-    if ($ready) { Write-Host 'SeniorCare OS está listo.' -ForegroundColor Green }
-    else { Write-Host 'Los contenedores iniciaron; revisá docker compose ps si una API continúa inicializando.' -ForegroundColor Yellow }
+    if ($ready) {
+        Write-Host 'SeniorCare OS está listo.' -ForegroundColor Green
+    }
+    else {
+        Write-Host 'Los contenedores iniciaron; revisá docker compose ps si una API continúa inicializando.' -ForegroundColor Yellow
+        exit 1
+    }
 
     Write-Host ''
     Write-Host 'Portal público + login: http://localhost:8088'
