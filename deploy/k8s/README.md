@@ -11,11 +11,7 @@ Los manifiestos usan imágenes locales con prefijo `seniorcare/`.
 Para Minikube:
 
 ```powershell
-minikube image load seniorcare/identity-api:1.0.0
-minikube image load seniorcare/care-api:1.0.0
-minikube image load seniorcare/emergency-api:1.0.0
-minikube image load seniorcare/communication-api:1.0.0
-minikube image load seniorcare/analytics-api:1.0.0
+minikube image load seniorcare/api:1.0.0
 minikube image load seniorcare/etl-worker:1.0.0
 minikube image load seniorcare/portal-web:1.0.0
 ```
