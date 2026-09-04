@@ -8,3 +8,6 @@
 *.ps1 text eol=crlf
 *.cmd text eol=crlf
 
+/os/live-build/config/includes.chroot/etc/skel/.config/openbox/autostart text eol=lf
+/os/live-build/config/includes.chroot/usr/local/lib/seniorcare/health-check text eol=lf
+

@@ -30,3 +30,7 @@ dist/
 # Windows / macOS
 Thumbs.db
 .DS_Store
+
+# SeniorCare OS: artefactos de construcción de la ISO
+/os/live-build/.build/
+/artifacts/

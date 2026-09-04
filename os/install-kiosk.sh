@@ -22,9 +22,15 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   lightdm \
   openbox \
   unclutter \
-  x11-xserver-utils
+  x11-xserver-utils \
+  xserver-xorg \
+  dbus-x11 \
+  ca-certificates \
+  fonts-noto-core
 
 cp -a "${OVERLAY_DIR}/." /
+
+chmod 750 /usr/local/lib/seniorcare/health-check
 
 if ! id seniorcare >/dev/null 2>&1; then
   useradd \

@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/sh
 set -u
 
-if [[ -r /etc/seniorcare/kiosk.env ]]; then
-  source /etc/seniorcare/kiosk.env
+if [ -r /etc/seniorcare/kiosk.env ]; then
+  . /etc/seniorcare/kiosk.env
 fi
 
 SENIORCARE_URL="${SENIORCARE_URL:-http://localhost:8088}"
@@ -10,7 +10,7 @@ SENIORCARE_URL="${SENIORCARE_URL:-http://localhost:8088}"
 xset s off
 xset -dpms
 xset s noblank
-unclutter --idle 0.5 --root &
+unclutter -idle 0.5 -root &
 
 while true; do
   chromium \

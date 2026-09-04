@@ -4,4 +4,8 @@ lightdm
 openbox
 unclutter
 x11-xserver-utils
+xserver-xorg
+dbus-x11
+ca-certificates
+fonts-noto-core
 
