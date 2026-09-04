@@ -33,19 +33,11 @@ function Assert-Forbidden([scriptblock]$Action, [string]$Name) {
 }
 
 try {
-    $services = [ordered]@{
-        'Identidad' = 'http://localhost:7001/health'
-        'Cuidados' = 'http://localhost:7002/health'
-        'Emergencias' = 'http://localhost:7003/health'
-        'Comunicación' = 'http://localhost:7004/health'
-        'Analítica' = 'http://localhost:7005/health'
+    $health = Invoke-RestMethod -Uri 'http://localhost:7000/health' -TimeoutSec 8
+    if ($health.status -ne 'healthy') {
+        throw 'La API unificada no está saludable.'
     }
-
-    foreach ($service in $services.GetEnumerator()) {
-        $result = Invoke-RestMethod -Uri $service.Value -TimeoutSec 8
-        if ($result.status -ne 'healthy') { throw "El servicio $($service.Key) no está saludable." }
-        Write-Host "[OK] $($service.Key)" -ForegroundColor Green
-    }
+    Write-Host "[OK] API unificada ($($health.service))" -ForegroundColor Green
 
     $admin = Login-SeniorCare 'admin' 'Cambiar123!'
     $caregiver = Login-SeniorCare 'cuidador' 'Cuidador123!'
