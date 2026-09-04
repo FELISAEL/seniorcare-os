@@ -9,7 +9,10 @@ profesional y escalable para cuidadores, familiares y administradores.
 ## Patrón general
 
 Se adoptó la disciplina arquitectónica observada en AYUMED, pero conservando el
-stack nativo de SeniorCare (.NET, microservicios, PWA, MAUI y Linux):
+stack nativo de SeniorCare (.NET 10, PWA, MAUI y Linux). El backend es una sola
+API ASP.NET Core (`api/SeniorCare.Api.csproj`, servicio Docker `seniorcare-api`)
+compuesta por cinco módulos internos (Identity, Care, Emergency, Communication y
+Analytics) que comparten proceso, autenticación y configuración:
 
 ```text
 UI / Controller
@@ -21,10 +24,11 @@ Service (reglas de negocio)
 Repository (persistencia)
       |
       v
-Domain / PostgreSQL
+Modelo / PostgreSQL
 ```
 
-Las responsabilidades transversales se concentran en `SeniorCare.Shared`:
+Las responsabilidades transversales viven en `api/app/Core`, `api/app/Middleware`
+y `api/config/ServiceDefaultsExtensions.cs`:
 
 - autenticación JWT;
 - roles y políticas;
@@ -38,46 +42,53 @@ Las responsabilidades transversales se concentran en `SeniorCare.Shared`:
 
 ```mermaid
 flowchart TD
-    P[Portal público SeniorCare] --> L[Login único]
-    L --> I[Identity API]
-    I -->|admin| A[Panel Administración]
-    I -->|caregiver| C[Panel Cuidador]
-    I -->|resident| R[Panel Adulto Mayor]
-    I -->|family| F[Panel Familiar]
-    A --> APIs[Microservicios .NET]
-    C --> APIs
-    R --> APIs
-    F --> APIs
+    P[Portal público SeniorCare] --> N[Nginx del portal]
+    N --> L[Login único: módulo Identity]
+    L -->|admin| A[Panel Administración]
+    L -->|caregiver| C[Panel Cuidador]
+    L -->|resident| R[Panel Adulto Mayor]
+    L -->|family| F[Panel Familiar]
+    A --> API[API unificada seniorcare-api:8080]
+    C --> API
+    R --> API
+    F --> API
 ```
 
-La ruta del panel es determinada en backend por `RolePanelService`; el frontend
-solo consume el resultado. Esto evita duplicar reglas de redirección.
+El navegador siempre llega al portal en `http://localhost:8088`; Nginx reenvía
+todo `/api/*` a `seniorcare-api:8080`. La ruta del panel la determina en backend
+`RolePanelService`; el frontend solo consume el resultado. Esto evita duplicar
+reglas de redirección.
 
-## Microservicios
+## Módulos de la API unificada
 
-- `SeniorCare.Identity.Api`: autenticación, usuarios, roles y tokens.
-- `SeniorCare.Care.Api`: residentes y medicamentos.
-- `SeniorCare.Emergency.Api`: asistencia y SOS.
-- `SeniorCare.Communication.Api`: videollamadas.
-- `SeniorCare.Analytics.Api`: métricas.
-- `SeniorCare.Etl.Worker`: ETL.
+`api/Program.cs` registra y expone los cinco módulos mediante los archivos
+`api/config/*Module.cs`:
 
-En los servicios que persisten datos se usa la separación:
+- **Identity** (`/api/identity`): autenticación, usuarios, roles y tokens.
+- **Care** (`/api/care`): residentes y medicamentos.
+- **Emergency** (`/api/emergencies`): asistencia y SOS.
+- **Communication** (`/api/communication`): videollamadas.
+- **Analytics** (`/api/analytics`): métricas.
+
+`SeniorCare.Etl.Worker` (`src/Workers/`) es un worker independiente, opcional
+mediante el perfil `analytics` de Docker Compose.
+
+Cada módulo mantiene su separación interna dentro de `api/app/`:
 
 ```text
-Controllers/
-Services/
-Repositories/
-Domain/
-Program.cs
+api/app/Controllers/<Módulo>/
+api/app/Services/<Módulo>/
+api/app/Repositories/<Módulo>/
+api/app/Models/<Módulo>/
+api/config/<Módulo>Module.cs
 ```
 
 ## Seguridad de recursos
 
 El rol por sí solo no es suficiente. Los tokens de las cuentas `resident` y
-`family` incluyen `resident_id`. Las APIs comprueban que el recurso solicitado
-pertenezca al residente vinculado. Un usuario no obtiene acceso a otra persona
-cambiando un GUID en la URL.
+`family` incluyen `resident_id`. Los módulos comprueban que el recurso
+solicitado pertenezca al residente vinculado. Un usuario no obtiene acceso a
+otra persona cambiando un GUID en la URL.
 
 El equipo de cuidado (`admin`, `caregiver`) puede operar sobre residentes según
 las políticas correspondientes. Administración de usuarios queda limitada a

@@ -4,7 +4,7 @@ SeniorCare OS es una plataforma distribuida y un entorno Linux en modo kiosco
 orientado a personas adultas mayores. Incluye un portal público único,
 autenticación centralizada por roles, paneles especializados, recordatorios de
 medicamentos, asistencia y SOS, videollamadas, aplicación móvil para el equipo
-de cuidado, microservicios .NET, PostgreSQL, ETL y observabilidad.
+de cuidado, una API unificada .NET con módulos, PostgreSQL, ETL y observabilidad.
 
 ## Arquitectura
 
@@ -12,30 +12,33 @@ La organización sigue el mismo principio de separación de responsabilidades
 que se tomó como referencia de AYUMED, adaptado al stack de SeniorCare:
 
 ```text
-Portal público / Login
+Portal público / Login   (http://localhost:8088)
         |
         v
-Identity API
+Nginx del portal  --/api/*-->  seniorcare-api:8080  (local: http://localhost:7000)
         |
         +-- admin ------> /panel/administracion/
         +-- caregiver --> /panel/cuidador/
         +-- resident ---> /panel/adulto-mayor/
         +-- family -----> /panel/familiar/
 
-API por servicio
-Controller -> Service -> Repository -> Domain/PostgreSQL
+API unificada (un proceso, cinco módulos: Identity, Care, Emergency,
+Communication, Analytics)
+Controller -> Service -> Repository -> Modelo/PostgreSQL
                    |
                    +-> Policies / JWT / autorización por recurso
 ```
 
 No se copió el código PHP de AYUMED. Se trasladó su disciplina arquitectónica
 a .NET: controladores pequeños, servicios para reglas de negocio, repositorios
-para persistencia, middleware transversal y autorización centralizada.
+para persistencia, middleware transversal y autorización centralizada. El
+backend es una sola API ASP.NET Core (`api/SeniorCare.Api.csproj`); cada módulo
+conserva su separación interna dentro de `api/app/`.
 
 ## Tecnologías
 
 - C# y .NET 10.
-- ASP.NET Core para microservicios.
+- ASP.NET Core: una API unificada con cinco módulos internos.
 - JWT y políticas de autorización por rol y por residente vinculado.
 - Portal web/PWA accesible servido por Nginx.
 - .NET MAUI para la aplicación del equipo de cuidado.
@@ -50,7 +53,8 @@ para persistencia, middleware transversal y autorización centralizada.
 
 - Docker Desktop con Docker Compose.
 - Al menos 6 GB de memoria disponible para Docker.
-- Puertos `5438`, `7001` a `7005`, `8088`, `18888`, `4317` y `4318` disponibles.
+- Puertos `5438`, `7000`, `8088` disponibles (y `18888`, `4317`, `4318` si se
+  usa el perfil `monitoring`).
 
 ### Iniciar
 
@@ -69,8 +73,16 @@ docker compose up --build
 
 Portal público y login único:
 
-- <http://localhost:8088>
-- Monitoreo: <http://localhost:18888>
+- <http://localhost:8088> (portal + paneles por rol)
+- <http://localhost:7000/health> (salud de la API unificada)
+- Monitoreo (perfil `monitoring`): <http://localhost:18888>
+
+Componentes opcionales por perfil de Docker Compose:
+
+```powershell
+docker compose --profile analytics up -d etl-worker
+docker compose --profile monitoring up -d aspire-dashboard
+```
 
 Usuarios de demostración:
 
@@ -105,17 +117,30 @@ docker compose down --volumes
 
 ## Componentes
 
+La API unificada `seniorcare-api` (`api/SeniorCare.Api.csproj`) expone cinco
+módulos internos:
+
+| Módulo de la API | Responsabilidad | Prefijo |
+| --- | --- | --- |
+| Identity | Login, usuarios, roles, JWT y panel asignado | `/api/identity` |
+| Care | Residentes, medicamentos, horarios y tomas | `/api/care` |
+| Emergency | SOS, asistencia y seguimiento | `/api/emergencies` |
+| Communication | Videollamadas | `/api/communication` |
+| Analytics | Métricas operativas | `/api/analytics` |
+
+Resto de componentes:
+
 | Componente | Responsabilidad |
 | --- | --- |
-| Identity API | Login, usuarios, roles, JWT y panel asignado |
-| Care API | Residentes, medicamentos, horarios y tomas |
-| Emergency API | SOS, asistencia y seguimiento |
-| Communication API | Videollamadas |
-| Analytics API | Métricas operativas |
-| ETL Worker | Consolidación de métricas |
-| Portal Web | Sitio público + login + paneles por rol |
+| ETL Worker | Consolidación de métricas (opcional, perfil `analytics`) |
+| Portal Web | Sitio público + login + paneles por rol; Nginx reenvía `/api/*` a `seniorcare-api:8080` |
 | Mobile | Operación para administrador/cuidador |
 | SeniorCare OS | Linux restringido con modo kiosco |
+
+Docker Compose declara solo `postgres`, `seniorcare-api` y `portal-web` como
+servicios activos; `etl-worker` y `aspire-dashboard` quedan tras perfiles. Las
+cinco APIs separadas y los puertos `7001–7005` ya no forman parte de la
+arquitectura.
 
 ## Documentación
 
@@ -131,11 +156,3 @@ docker compose down --volumes
 - [Matriz de requisitos](docs/matriz-requisitos.md)
 - [Diagramas UML](docs/uml/README.md)
 - [Botón físico SOS por USB](docs/boton-sos-usb.md)
-
-
-
-
-
-
-docker compose build portal-web
-docker compose up -d --force-recreate portal-web

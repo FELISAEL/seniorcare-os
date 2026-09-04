@@ -14,48 +14,51 @@
 
 | Puerto | Componente |
 | --- | --- |
-| 5438 | PostgreSQL de desarrollo |
-| 7001 | Identity API |
-| 7002 | Care API |
-| 7003 | Emergency API |
-| 7004 | Communication API |
-| 7005 | Analytics API |
-| 8088 | Portal público + todos los paneles |
-| 18888 | Aspire Dashboard |
-| 4317 | OpenTelemetry OTLP/gRPC |
-| 4318 | OpenTelemetry OTLP/HTTP |
+| 5438 | PostgreSQL de desarrollo (contenedor en `5432`) |
+| 7000 | API unificada `seniorcare-api` (contenedor en `8080`) |
+| 8088 | Portal público + todos los paneles (Nginx → `seniorcare-api:8080`) |
+| 18888 | Aspire Dashboard (perfil `monitoring`) |
+| 4317 | OpenTelemetry OTLP/gRPC (perfil `monitoring`) |
+| 4318 | OpenTelemetry OTLP/HTTP (perfil `monitoring`) |
+
+El worker `etl-worker` no publica puertos y es opcional mediante el perfil
+`analytics`. Las cinco APIs separadas y los puertos `7001–7005` ya no existen.
 
 ## Organización backend
 
-```text
-src/BuildingBlocks/SeniorCare.Shared/
-  Auth/
-  Middleware/
-  Data/
-  Web/
+Una sola solución (`SeniorCare.slnx`) con cuatro proyectos: `api/SeniorCare.Api`,
+`tests/SeniorCare.Api.Tests`, `src/Workers/SeniorCare.Etl.Worker` y
+`src/Mobile/SeniorCare.Mobile`.
 
-src/Services/SeniorCare.*.Api/
-  Controllers/
-  Services/
-  Repositories/
-  Domain/
-  Program.cs
+```text
+api/
+  Program.cs                     # compone los cinco módulos
+  config/*Module.cs              # registro y endpoints por módulo
+  config/ServiceDefaultsExtensions.cs  # CORS, telemetría, /health
+  app/Core/Auth/                 # hash PBKDF2-SHA256, JWT, políticas
+  app/Middleware/                # correlation ID, excepciones, headers
+  app/Controllers/<Módulo>/
+  app/Services/<Módulo>/
+  app/Repositories/<Módulo>/
+  app/Models/<Módulo>/
 ```
 
-Identity agrega `Security/` para hash y emisión de JWT.
+Módulos: Identity, Care, Emergency, Communication y Analytics.
 
 ## Persistencia
 
-PostgreSQL ejecuta `infra/postgres/init/001-databases.sql` al crear el volumen.
-Cada API inicializa sus tablas de forma idempotente.
+PostgreSQL 17 ejecuta `infra/postgres/init/001-databases.sql` al crear el
+volumen (`identity_db`, `care_db`, `emergency_db`, `analytics_db`). Cada módulo
+inicializa sus tablas de forma idempotente al arrancar la API.
 
 ## Autenticación
 
 Roles: `admin`, `caregiver`, `resident`, `family`.
 
-Identity API deriva contraseñas con PBKDF2-SHA256, emite JWT y devuelve también
-`panelPath`. Las cuentas `resident` y `family` se vinculan mediante
-`resident_id`. Los servicios aplican políticas desde `SeniorCare.Shared`.
+El módulo Identity deriva contraseñas con PBKDF2-SHA256, emite JWT y devuelve
+también `panelPath`. Las cuentas `resident` y `family` se vinculan mediante
+`resident_id`. Los módulos aplican políticas compartidas desde
+`api/app/Core/Auth`.
 
 ## ETL
 
@@ -63,10 +66,21 @@ Identity API deriva contraseñas con PBKDF2-SHA256, emite JWT y devuelve tambié
 2. Agrupa por fecha y calcula adherencia.
 3. Realiza upsert en `analytics_db.daily_metrics`.
 
+## Pruebas automatizadas
+
+```powershell
+dotnet test .\tests\SeniorCare.Api.Tests\SeniorCare.Api.Tests.csproj
+```
+
+72 pruebas (xUnit + `WebApplicationFactory`) cubren unidad de servicios y
+extremo a extremo de los endpoints con JWT. La prueba de integración manual
+`scripts/prueba-integracion.ps1` valida además el flujo completo por el portal.
+
 ## Observabilidad
 
-Los servicios pueden enviar trazas, métricas y logs por OTLP a Aspire
-Dashboard. El dashboard sin autenticación es solamente para desarrollo.
+La API puede enviar trazas, métricas y logs por OTLP a Aspire Dashboard cuando
+`OTEL_EXPORTER_OTLP_ENDPOINT` está definido (perfil `monitoring`). El dashboard
+sin autenticación es solamente para desarrollo.
 
 ## Backup local
 

@@ -3,10 +3,10 @@
 | Requisito de la guía | Implementación |
 | --- | --- |
 | Aplicación web | Portal público único y paneles por rol (adulto mayor, familiar, cuidador y administrador) |
-| Microservicios | Identity, Care, Emergency, Communication y Analytics |
+| Separación por dominios | API unificada ASP.NET Core con cinco módulos internos: Identity, Care, Emergency, Communication y Analytics |
 | ETL | Worker que extrae cuidados y emergencias y carga `analytics_db` |
 | Aplicación Android e iOS | Proyecto compartido .NET MAUI |
-| Docker | Imágenes por servicio y `docker-compose.yml` |
+| Docker | Imagen única de la API (`seniorcare-api`) más `etl-worker` y `portal-web`; `docker-compose.yml` |
 | Kubernetes | Manifiestos en `deploy/k8s` |
 | Servidor de monitoreo | Aspire Dashboard y OpenTelemetry |
 | Alojamiento en la nube | Manifiestos preparados; requiere proveedor y credenciales |
