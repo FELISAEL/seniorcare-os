@@ -29,6 +29,23 @@ public static class IdentityModule
             options.RejectionStatusCode =
                 StatusCodes.Status429TooManyRequests;
 
+            options.OnRejected = async (context, cancellationToken) =>
+            {
+                var response = context.HttpContext.Response;
+
+                response.StatusCode =
+                    StatusCodes.Status429TooManyRequests;
+                response.ContentType = "application/json";
+
+                await response.WriteAsJsonAsync(
+                    new
+                    {
+                        message =
+                            "Demasiados intentos. Esperá un minuto e intentá nuevamente."
+                    },
+                    cancellationToken);
+            };
+
             options.AddPolicy("login", context =>
             {
                 var forwardedIp =

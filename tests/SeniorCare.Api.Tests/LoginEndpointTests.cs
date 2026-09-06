@@ -149,6 +149,100 @@ public sealed class LoginEndpointTests
                 previousValue);
         }
     }
+
+    [Fact]
+    public async Task Login_WhenRateLimited_Returns429WithJsonBody()
+    {
+        const string variable = "JWT_SECRET";
+        var previousValue =
+            Environment.GetEnvironmentVariable(variable);
+
+        Environment.SetEnvironmentVariable(
+            variable,
+            JwtSecret);
+
+        try
+        {
+            var repository = new FakeIdentityRepository(
+                CreateAdmin());
+
+            await using var factory =
+                new WebApplicationFactory<Program>()
+                    .WithWebHostBuilder(builder =>
+                    {
+                        builder.UseEnvironment("Testing");
+
+                        builder.ConfigureServices(services =>
+                        {
+                            services.RemoveAll<IIdentityRepository>();
+
+                            services.AddSingleton<IIdentityRepository>(
+                                repository);
+                        });
+                    });
+
+            using var client = factory.CreateClient();
+
+            var acceptedCount = 0;
+            HttpResponseMessage? rejected = null;
+
+            for (var attempt = 0; attempt < 11; attempt++)
+            {
+                var response = await client.PostAsJsonAsync(
+                    "/api/identity/login",
+                    new LoginRequest("admin", TestPassword));
+
+                if (response.StatusCode
+                    == HttpStatusCode.TooManyRequests)
+                {
+                    rejected = response;
+                    break;
+                }
+
+                Assert.Equal(
+                    HttpStatusCode.OK,
+                    response.StatusCode);
+
+                acceptedCount++;
+                response.Dispose();
+            }
+
+            Assert.Equal(10, acceptedCount);
+            Assert.NotNull(rejected);
+
+            using (rejected)
+            {
+                Assert.Equal(
+                    HttpStatusCode.TooManyRequests,
+                    rejected!.StatusCode);
+
+                Assert.Equal(
+                    "application/json",
+                    rejected.Content.Headers.ContentType?.MediaType);
+
+                var body =
+                    await rejected.Content.ReadAsStringAsync();
+
+                Assert.False(
+                    string.IsNullOrWhiteSpace(body));
+
+                using var json = JsonDocument.Parse(body);
+
+                Assert.Equal(
+                    "Demasiados intentos. Esperá un minuto e intentá nuevamente.",
+                    json.RootElement
+                        .GetProperty("message")
+                        .GetString());
+            }
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable(
+                variable,
+                previousValue);
+        }
+    }
+
     private static async Task<HttpResponseMessage> SendLoginAsync(
         FakeIdentityRepository repository,
         LoginRequest request)
