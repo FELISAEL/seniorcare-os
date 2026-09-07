@@ -12,7 +12,9 @@ body {
         Arial,
         sans-serif;
 
-    font-size: 16px;
+    /* 1rem = tamaño de la raíz; el panel de accesibilidad
+       escala <html> para agrandar todo el texto. */
+    font-size: 1rem;
 
     line-height: 1.6;
 

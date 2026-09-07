@@ -3,7 +3,7 @@
    Contenido textual del Hero
 
    Responsabilidad:
-   - Etiqueta superior del Hero.
+   - Mensaje de bienvenida.
    - Título principal.
    - Texto destacado.
    - Descripción.
@@ -12,10 +12,10 @@
 
 
 /* ==========================================================
-   ETIQUETA SUPERIOR
+   MENSAJE DE BIENVENIDA
 ========================================================== */
 
-.hero-eyebrow {
+.hero-welcome {
     display: inline-flex;
 
     align-items: center;
@@ -24,68 +24,54 @@
 
     width: fit-content;
 
-    margin-bottom:
-        24px;
+    margin: 0 0 22px;
 
     padding:
         9px
-        14px;
+        16px;
 
     border:
         1px solid
-        rgba(11, 122, 120, 0.11);
+        rgba(11, 122, 120, 0.14);
 
     border-radius:
         var(--sc-radius-pill);
 
     background:
-        rgba(255, 255, 255, 0.88);
+        rgba(255, 255, 255, 0.96);
 
     color:
         var(--sc-primary);
 
     font-size:
-        clamp(0.72rem, 1vw, 0.84rem);
+        clamp(0.82rem, 1vw, 0.96rem);
 
     font-weight:
-        850;
+        800;
 
     letter-spacing:
-        0.055em;
+        0.02em;
 
     line-height:
         1.25;
-
-    text-transform:
-        uppercase;
 
     box-shadow:
         var(--sc-shadow-sm);
 }
 
+.hero-welcome::before {
+    content: "";
 
-/* ==========================================================
-   ICONO DE LA ETIQUETA
-========================================================== */
+    width: 10px;
 
-.hero-eyebrow__icon {
-    width:
-        23px;
+    height: 10px;
 
-    height:
-        23px;
+    flex: 0 0 auto;
 
-    display: inline-flex;
+    border-radius: 50%;
 
-    align-items: center;
-
-    justify-content: center;
-
-    flex:
-        0 0 auto;
-
-    color:
-        var(--sc-primary);
+    background:
+        var(--sc-accent);
 }
 
 
@@ -95,7 +81,7 @@
 
 .hero h1 {
     max-width:
-        760px;
+        620px;
 
     margin:
         0 0 24px;
@@ -104,16 +90,16 @@
         var(--sc-dark);
 
     font-size:
-        clamp(3.2rem, 5.3vw, 5.45rem);
+        clamp(2.8rem, 4.7vw, 4.6rem);
 
     font-weight:
         900;
 
     letter-spacing:
-        -0.058em;
+        -0.05em;
 
     line-height:
-        0.98;
+        1.02;
 }
 
 
@@ -143,7 +129,7 @@
         4px;
 
     margin-top:
-        23px;
+        24px;
 
     border-radius:
         var(--sc-radius-pill);
@@ -159,30 +145,18 @@
 
 .hero-copy {
     max-width:
-        650px;
+        480px;
 
-    margin:
-        0 0 30px;
+    margin: 0;
 
+    /* Texto principal (más oscuro que --sc-text-soft) para
+       contraste AAA sobre el degradado del hero. */
     color:
-        var(--sc-text-soft);
+        var(--sc-text);
 
     font-size:
-        clamp(1.02rem, 1.25vw, 1.15rem);
+        clamp(1.05rem, 1.35vw, 1.25rem);
 
     line-height:
-        1.75;
-}
-
-
-/* ==========================================================
-   TEXTO DESTACADO EN LA DESCRIPCIÓN
-========================================================== */
-
-.hero-copy strong {
-    color:
-        var(--sc-primary);
-
-    font-weight:
-        800;
+        1.7;
 }

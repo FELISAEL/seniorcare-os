@@ -1,106 +1,106 @@
 /* ==========================================================
    SeniorCare OS
    Responsive - Hero
+
+   La fotografía es fondo a sangre completa en todos los
+   tamaños. Se ajustan el encuadre (background-position) y
+   el degradado para no recortar los rostros y mantener el
+   texto legible (AA/AAA).
+
+   Los rostros están en x 48-78% / y 8-52% de la foto.
 ========================================================== */
 
 @media (max-width: 1100px) {
 
     .hero {
-        grid-template-columns:
-            minmax(0, 1.1fr)
-            minmax(340px, 0.9fr);
-
-        gap:
-            32px;
-
         padding:
-            64px 42px;
+            48px 42px;
     }
 
-    .hero h1 {
-        font-size:
-            clamp(3rem, 6vw, 4.8rem);
+    .hero-portrait {
+        background-position:
+            70% 26%;
     }
 }
 
 
-@media (max-width: 850px) {
+@media (max-width: 860px) {
 
     .hero {
         min-height:
-            auto;
-
-        grid-template-columns:
-            1fr;
+            min(84vh, 620px);
 
         padding:
-            60px 28px 90px;
-
-        background-position:
-            68% center;
+            40px 28px;
     }
 
-    .hero {
-        background-image:
+    .hero-content {
+        max-width: 560px;
+    }
 
+    /* En pantallas medianas el texto ya no cabe solo en la
+       izquierda: el degradado cubre más ancho. */
+    .hero::before {
+        background:
             linear-gradient(
-                rgba(248, 251, 251, 0.94),
-                rgba(248, 251, 251, 0.94)
-            ),
-
-            url("/images/public/inicio/hero-seniorcare.webp");
+                108deg,
+                var(--sc-background) 0%,
+                rgba(248, 251, 251, 0.95) 42%,
+                rgba(255, 243, 231, 0.5) 62%,
+                rgba(248, 251, 251, 0.1) 82%,
+                rgba(248, 251, 251, 0) 100%
+            );
     }
 
-    .hero > div {
-        max-width:
-            680px;
-    }
-
-    .hero h1 {
-        max-width:
-            650px;
+    .hero-portrait {
+        background-position:
+            66% 24%;
     }
 }
 
 
-@media (max-width: 520px) {
+@media (max-width: 560px) {
 
     .hero {
+        min-height:
+            min(88vh, 600px);
+
         padding:
-            44px 20px 72px;
+            32px 20px 40px;
+
+        align-items: flex-start;
     }
 
-    .hero .eyebrow {
-        padding:
-            7px 11px;
+    .hero-content {
+        padding-top: 8px;
+    }
 
-        font-size:
-            0.65rem;
+    /* Móvil: el texto ocupa el ancho completo arriba; el
+       degradado es más fuerte en la parte superior y despeja
+       hacia abajo para dejar ver a las dos personas. */
+    .hero::before {
+        background:
+            linear-gradient(
+                178deg,
+                rgba(248, 251, 251, 0.97) 0%,
+                rgba(248, 251, 251, 0.93) 36%,
+                rgba(255, 243, 231, 0.42) 62%,
+                rgba(248, 251, 251, 0.05) 86%,
+                rgba(248, 251, 251, 0) 100%
+            );
+    }
+
+    .hero-portrait {
+        background-position:
+            64% 30%;
     }
 
     .hero h1 {
-        margin-bottom:
-            20px;
-
         font-size:
-            clamp(2.5rem, 13vw, 3.5rem);
+            clamp(2.3rem, 11vw, 3rem);
     }
 
     .hero-copy {
-        font-size:
-            0.96rem;
-
-        line-height:
-            1.65;
-    }
-
-    .hero-actions {
-        width:
-            100%;
-    }
-
-    .hero-actions .button {
-        width:
-            100%;
+        font-size: 1rem;
     }
 }

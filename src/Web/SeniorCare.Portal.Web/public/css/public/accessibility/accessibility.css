@@ -1,0 +1,663 @@
+/* ==========================================================
+   SeniorCare OS
+   Panel de configuración / accesibilidad del Inicio
+
+   Responsabilidad:
+   - Diálogo lateral derecho abierto desde el encabezado.
+   - Interruptores de contraste, texto grande y voz.
+   - Velocidad de la voz y acciones (probar / restaurar).
+   - Preferencias visuales aplicadas sobre <html>.
+========================================================== */
+
+
+/* ==========================================================
+   ICONOS (SVG embebido, sin archivos externos)
+========================================================== */
+
+:root {
+    --sc-icon-gear:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1.08H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 8.6a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9z'/%3E%3C/svg%3E");
+}
+
+
+/* ==========================================================
+   BOTÓN "CONFIGURACIÓN" DEL ENCABEZADO
+========================================================== */
+
+.site-header nav .nav-config {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 44px;
+
+    padding:
+        10px
+        18px;
+
+    border:
+        1.5px solid
+        var(--sc-border-strong);
+
+    border-radius:
+        var(--sc-radius-pill);
+
+    color:
+        var(--sc-dark);
+
+    background:
+        rgba(255, 255, 255, 0.82);
+
+    font-size:
+        0.98rem;
+
+    font-weight:
+        750;
+
+    cursor: pointer;
+
+    transition:
+        color
+        var(--sc-transition),
+        border-color
+        var(--sc-transition),
+        background
+        var(--sc-transition),
+        transform
+        var(--sc-transition);
+}
+
+.site-header nav .nav-config:hover {
+    color:
+        var(--sc-primary);
+
+    border-color:
+        var(--sc-primary);
+
+    transform:
+        translateY(-1px);
+}
+
+.site-header nav .nav-config[aria-expanded="true"] {
+    color:
+        var(--sc-text-white);
+
+    background:
+        var(--sc-primary);
+
+    border-color:
+        var(--sc-primary);
+}
+
+.nav-config__icon {
+    width: 18px;
+
+    height: 18px;
+
+    flex: 0 0 auto;
+
+    background-color:
+        currentColor;
+
+    -webkit-mask:
+        var(--sc-icon-gear)
+        center / contain
+        no-repeat;
+
+    mask:
+        var(--sc-icon-gear)
+        center / contain
+        no-repeat;
+}
+
+
+/* ==========================================================
+   FONDO SUPERPUESTO
+========================================================== */
+
+.config-backdrop {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 290;
+
+    background:
+        rgba(18, 54, 60, 0.28);
+}
+
+
+/* ==========================================================
+   DIÁLOGO LATERAL
+========================================================== */
+
+.config-panel {
+    position: fixed;
+
+    top: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    z-index: 300;
+
+    display: flex;
+
+    flex-direction: column;
+
+    width:
+        min(94vw, 380px);
+
+    background:
+        var(--sc-surface);
+
+    border-left:
+        1px solid
+        var(--sc-border);
+
+    box-shadow:
+        -26px 0 60px
+        rgba(18, 54, 60, 0.18);
+
+    overflow-y: auto;
+}
+
+body.config-open {
+    overflow: hidden;
+}
+
+
+/* ==========================================================
+   ESTADO OCULTO
+
+   .config-panel declara display:flex y .config-panel__* /
+   .config-backdrop otros display, con la misma
+   especificidad que la regla [hidden] del navegador. Sin
+   este bloque, el atributo hidden que fija el JavaScript
+   no oculta el diálogo (la X "no cierra").
+========================================================== */
+
+.config-panel[hidden],
+.config-backdrop[hidden] {
+    display: none;
+}
+
+
+/* ----------------------------------------------------------
+   Encabezado del diálogo
+---------------------------------------------------------- */
+
+.config-panel__header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 14px;
+
+    padding:
+        22px
+        22px
+        18px;
+
+    border-bottom:
+        1px solid
+        var(--sc-border);
+}
+
+.config-panel__title {
+    margin: 0;
+
+    color:
+        var(--sc-dark);
+
+    font-size:
+        1.25rem;
+
+    font-weight:
+        850;
+}
+
+.config-panel__desc {
+    margin:
+        6px 0 0;
+
+    color:
+        var(--sc-text-soft);
+
+    font-size:
+        0.9rem;
+
+    line-height:
+        1.5;
+}
+
+.config-panel__close {
+    display: grid;
+
+    place-items: center;
+
+    width: 44px;
+
+    height: 44px;
+
+    flex: 0 0 auto;
+
+    border:
+        1px solid
+        var(--sc-border-strong);
+
+    border-radius:
+        var(--sc-radius-sm);
+
+    color:
+        var(--sc-dark);
+
+    background:
+        var(--sc-surface);
+
+    font-size:
+        1.5rem;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color
+        var(--sc-transition),
+        border-color
+        var(--sc-transition);
+}
+
+.config-panel__close:hover {
+    color:
+        var(--sc-primary);
+
+    border-color:
+        var(--sc-primary);
+}
+
+
+/* ----------------------------------------------------------
+   Cuerpo del diálogo
+---------------------------------------------------------- */
+
+.config-panel__body {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    padding: 20px 22px;
+}
+
+
+/* ==========================================================
+   INTERRUPTORES
+========================================================== */
+
+.config-switch {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 14px;
+
+    width: 100%;
+
+    min-height: 56px;
+
+    padding:
+        12px 16px;
+
+    border:
+        1px solid
+        var(--sc-border-strong);
+
+    border-radius:
+        var(--sc-radius-md);
+
+    color:
+        var(--sc-text);
+
+    background:
+        var(--sc-surface);
+
+    font-size:
+        0.98rem;
+
+    font-weight:
+        750;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color
+        var(--sc-transition),
+        background
+        var(--sc-transition);
+}
+
+.config-switch:hover {
+    border-color:
+        var(--sc-primary);
+}
+
+.config-switch[disabled] {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+.config-switch__label {
+    flex: 1 1 auto;
+}
+
+.config-switch__track {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    width: 46px;
+
+    height: 26px;
+
+    border-radius:
+        var(--sc-radius-pill);
+
+    background:
+        var(--sc-border-strong);
+
+    transition:
+        background
+        var(--sc-transition);
+}
+
+.config-switch__thumb {
+    position: absolute;
+
+    top: 3px;
+
+    left: 3px;
+
+    width: 20px;
+
+    height: 20px;
+
+    border-radius: 50%;
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 2px 5px
+        rgba(18, 54, 60, 0.28);
+
+    transition:
+        transform
+        var(--sc-transition);
+}
+
+.config-switch[aria-checked="true"] .config-switch__track {
+    background:
+        var(--sc-primary);
+}
+
+.config-switch[aria-checked="true"] .config-switch__thumb {
+    transform:
+        translateX(20px);
+}
+
+
+/* ==========================================================
+   VELOCIDAD
+========================================================== */
+
+.config-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 4px;
+}
+
+.config-group__label {
+    color:
+        var(--sc-text-soft);
+
+    font-size:
+        0.86rem;
+
+    font-weight:
+        700;
+}
+
+.config-speed {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+}
+
+.config-speed__option {
+    min-height: 44px;
+
+    border:
+        1px solid
+        var(--sc-border-strong);
+
+    border-radius:
+        var(--sc-radius-sm);
+
+    color:
+        var(--sc-primary);
+
+    background:
+        var(--sc-surface-soft);
+
+    font-weight:
+        800;
+
+    cursor: pointer;
+
+    transition:
+        color
+        var(--sc-transition),
+        background
+        var(--sc-transition),
+        border-color
+        var(--sc-transition);
+}
+
+.config-speed__option:hover {
+    border-color:
+        var(--sc-primary);
+}
+
+.config-speed__option[aria-checked="true"] {
+    color:
+        var(--sc-text-white);
+
+    background:
+        var(--sc-primary);
+
+    border-color:
+        var(--sc-primary);
+}
+
+
+/* ==========================================================
+   ACCIONES
+========================================================== */
+
+.config-action {
+    min-height: 48px;
+
+    margin-top: 4px;
+
+    padding:
+        12px 16px;
+
+    border:
+        1.5px solid
+        var(--sc-primary);
+
+    border-radius:
+        var(--sc-radius-sm);
+
+    color:
+        var(--sc-text-white);
+
+    background:
+        var(--sc-primary);
+
+    font-size:
+        0.96rem;
+
+    font-weight:
+        800;
+
+    cursor: pointer;
+
+    transition:
+        background
+        var(--sc-transition),
+        color
+        var(--sc-transition),
+        opacity
+        var(--sc-transition);
+}
+
+.config-action:hover {
+    background:
+        var(--sc-primary-hover);
+}
+
+.config-action[disabled] {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+.config-action--muted {
+    color:
+        var(--sc-primary);
+
+    background:
+        var(--sc-surface);
+}
+
+.config-action--muted:hover {
+    background:
+        var(--sc-surface-soft);
+}
+
+
+/* ==========================================================
+   ESTADO / ANUNCIOS
+========================================================== */
+
+.config-panel__status {
+    margin: 0;
+
+    padding:
+        0 22px 22px;
+
+    min-height:
+        1.2em;
+
+    color:
+        var(--sc-text-soft);
+
+    font-size:
+        0.86rem;
+
+    line-height:
+        1.4;
+}
+
+
+/* ==========================================================
+   PREFERENCIA: TEXTO GRANDE
+   Se escala la raíz; el resto usa unidades rem.
+========================================================== */
+
+html.sc-text-lg {
+    font-size: 115%;
+}
+
+
+/* ==========================================================
+   PREFERENCIA: ALTO CONTRASTE
+========================================================== */
+
+html.sc-hc {
+    --sc-background: #ffffff;
+    --sc-surface: #ffffff;
+    --sc-surface-soft: #ffffff;
+
+    --sc-text: #000000;
+    --sc-text-soft: #161616;
+    --sc-text-white: #ffffff;
+
+    --sc-dark: #000000;
+    --sc-dark-soft: #000000;
+
+    --sc-primary: #04524f;
+    --sc-primary-hover: #033d3b;
+    --sc-primary-light: #ffffff;
+
+    --sc-accent: #7a3d00;
+
+    --sc-border: #000000;
+    --sc-border-strong: #000000;
+}
+
+html.sc-hc body {
+    background: #ffffff;
+}
+
+html.sc-hc .hero {
+    background: #ffffff;
+}
+
+/* En alto contraste se retira la fotografía y el degradado:
+   el texto queda sobre blanco sólido para máximo contraste. */
+html.sc-hc .hero::before,
+html.sc-hc .hero-portrait {
+    display: none;
+}
+
+html.sc-hc .hero-highlight {
+    color: #04524f;
+}
+
+html.sc-hc .site-header,
+html.sc-hc .nav-login,
+html.sc-hc .nav-config {
+    background: #ffffff;
+}
+
+html.sc-hc .config-panel,
+html.sc-hc .config-panel__close {
+    box-shadow: none;
+}
+
+html.sc-hc .config-backdrop {
+    background:
+        rgba(0, 0, 0, 0.5);
+}

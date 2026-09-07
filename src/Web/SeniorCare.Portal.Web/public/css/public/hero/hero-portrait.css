@@ -1,0 +1,30 @@
+/* ==========================================================
+   SeniorCare OS
+   Fotografía familiar del Hero
+
+   Responsabilidad:
+   - Fondo fotográfico amplio e integrado del Hero
+     (una persona adulta mayor acompañada de un familiar).
+   - Archivo local: /assets/public/hero-seniorcare-familia.png
+     (funciona sin Internet; sin recursos remotos).
+   - Cubre el centro y el lado derecho de la portada.
+   - background-position responsive para no recortar los
+     rostros. background-size: cover -> nunca deforma.
+========================================================== */
+
+.hero-portrait {
+    background-image:
+        url("/assets/public/hero-seniorcare-familia.png");
+
+    background-repeat:
+        no-repeat;
+
+    background-size:
+        cover;
+
+    /* Los rostros están en la mitad centro-derecha y en el
+       tercio superior de la foto: se ancla a la derecha y
+       ligeramente arriba. */
+    background-position:
+        72% 28%;
+}

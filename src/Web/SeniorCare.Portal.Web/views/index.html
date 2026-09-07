@@ -69,10 +69,9 @@
     <!-- ===================================================
          NAVEGACIÓN PÚBLICA
 
-         Funciones, Perfiles y Seguridad todavía
-         no tienen navegación.
-
-         Iniciar sesión ya abre su propia pantalla.
+         "Configuración" abre el panel de accesibilidad.
+         "Iniciar sesión" es la única acción para entrar
+         al sistema.
     ==================================================== -->
     <nav
       class="public-navigation"
@@ -91,6 +90,24 @@
         Seguridad
       </span>
 
+      <button
+        class="nav-config"
+        id="configToggle"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="false"
+        aria-controls="configPanel"
+      >
+
+        <span
+          class="nav-config__icon"
+          aria-hidden="true"
+        ></span>
+
+        Configuración
+
+      </button>
+
       <a
         class="nav-login"
         href="/iniciar-sesion/"
@@ -106,7 +123,7 @@
   <!-- =====================================================
        CONTENIDO PRINCIPAL
   ====================================================== -->
-  <main>
+  <main class="home">
 
 
     <!-- ===================================================
@@ -116,27 +133,18 @@
 
 
       <!-- =================================================
-           CONTENIDO PRINCIPAL
+           CONTENIDO
            Columna izquierda
       ================================================== -->
       <div class="hero-content">
 
 
         <!-- ===============================================
-             ETIQUETA SUPERIOR
+             MENSAJE DE BIENVENIDA
         ================================================ -->
-        <div class="hero-eyebrow">
-
-          <span
-            class="hero-eyebrow__icon"
-            aria-hidden="true"
-          ></span>
-
-          <span>
-            Sistema especializado para personas adultas mayores
-          </span>
-
-        </div>
+        <p class="hero-welcome">
+          Bienvenido a SeniorCare
+        </p>
 
 
         <!-- ===============================================
@@ -144,16 +152,12 @@
         ================================================ -->
         <h1>
 
-          Tecnología
-
-          <br>
-
-          sencilla cuando
+          Cuidarte y acompañarte,
 
           <br>
 
           <span class="hero-highlight">
-            más importa.
+            todos los días.
           </span>
 
         </h1>
@@ -163,15 +167,8 @@
              DESCRIPCIÓN
         ================================================ -->
         <p class="hero-copy">
-
-          SeniorCare OS reúne medicamentos, asistencia, SOS,
-          comunicación familiar y seguimiento profesional
-          en una experiencia
-
-          <strong>
-            clara, segura y accesible.
-          </strong>
-
+          Medicamentos, asistencia y comunicación
+          en un solo lugar.
         </p>
 
       </div>
@@ -179,257 +176,246 @@
 
 
       <!-- =================================================
-           ÁREA VISUAL
-           Columna derecha
+           COMPOSICIÓN FAMILIAR
 
-           Aquí agregaremos posteriormente la fotografía.
+           Fotografía local usada como fondo amplio e
+           integrado del hero (no va dentro de tarjeta).
+           Archivo: /assets/public/hero-seniorcare-familia.png
+           role="img" + aria-label aportan el texto
+           alternativo, ya que la técnica es background-image.
       ================================================== -->
       <div
-        class="hero-visual"
-        aria-hidden="true"
+        class="hero-portrait"
+        role="img"
+        aria-label="Una mujer adulta mayor sonríe, abrazada por una familiar más joven, en la sala de su casa."
       ></div>
-
-
-      <!-- =================================================
-           TARJETA
-           UN SOLO ACCESO
-      ================================================== -->
-      <aside
-        class="hero-card"
-        aria-label="Acceso de SeniorCare OS"
-      >
-
-
-        <!-- ===============================================
-             ICONO PRINCIPAL
-        ================================================ -->
-        <span
-          class="access-card__icon"
-          aria-hidden="true"
-        ></span>
-
-
-        <!-- ===============================================
-             TÍTULO
-        ================================================ -->
-        <strong>
-          Un solo acceso
-        </strong>
-
-
-        <!-- ===============================================
-             SEPARADOR
-        ================================================ -->
-        <span
-          class="access-card__separator"
-          aria-hidden="true"
-        ></span>
-
-
-        <!-- ===============================================
-             DESCRIPCIÓN
-        ================================================ -->
-        <p>
-          El sistema reconoce tu rol y abre automáticamente
-          el panel que te corresponde.
-        </p>
-
-
-        <!-- ===============================================
-             ROLES
-        ================================================ -->
-        <div class="role-pills">
-
-
-          <!-- ADULTO MAYOR -->
-          <span class="role-pill">
-
-            <span
-              class="role-pill__icon role-pill__icon--senior"
-              aria-hidden="true"
-            ></span>
-
-            <span>
-              Adulto mayor
-            </span>
-
-          </span>
-
-
-          <!-- FAMILIAR -->
-          <span class="role-pill">
-
-            <span
-              class="role-pill__icon role-pill__icon--family"
-              aria-hidden="true"
-            ></span>
-
-            <span>
-              Familiar
-            </span>
-
-          </span>
-
-
-          <!-- CUIDADOR -->
-          <span class="role-pill">
-
-            <span
-              class="role-pill__icon role-pill__icon--caregiver"
-              aria-hidden="true"
-            ></span>
-
-            <span>
-              Cuidador
-            </span>
-
-          </span>
-
-
-          <!-- ADMINISTRADOR -->
-          <span class="role-pill">
-
-            <span
-              class="role-pill__icon role-pill__icon--admin"
-              aria-hidden="true"
-            ></span>
-
-            <span>
-              Administrador
-            </span>
-
-          </span>
-
-        </div>
-        <!-- FIN .role-pills -->
-
-      </aside>
-      <!-- FIN .hero-card -->
 
 
     </section>
     <!-- FIN .hero -->
 
 
-    <!-- ===================================================
-         BENEFICIOS
-    ==================================================== -->
-    <section
-      class="benefits"
-      aria-label="Beneficios de SeniorCare OS"
-    >
-
-      <div class="benefits-grid">
+  </main>
 
 
-        <!-- ===============================================
-             SEGURO Y CONFIABLE
-        ================================================ -->
-        <article class="benefit-card">
+  <!-- =====================================================
+       PANEL DE CONFIGURACIÓN
 
-          <span
-            class="benefit-card__icon benefit-card__icon--security"
-            aria-hidden="true"
-          ></span>
+       Diálogo lateral derecho de accesibilidad.
+       Se abre con el botón "Configuración" del encabezado.
+  ====================================================== -->
+  <div
+    class="config-backdrop"
+    id="configBackdrop"
+    hidden
+  ></div>
 
-          <div class="benefit-card__content">
+  <aside
+    class="config-panel"
+    id="configPanel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="configTitle"
+    aria-describedby="configDesc"
+    hidden
+  >
 
-            <h3>
-              Seguro y confiable
-            </h3>
+    <div class="config-panel__header">
 
-            <p>
-              Protegemos tu información con los más altos estándares.
-            </p>
+      <div>
 
-          </div>
+        <h2
+          class="config-panel__title"
+          id="configTitle"
+        >
+          Configuración
+        </h2>
 
-        </article>
-
-
-        <!-- ===============================================
-             PRIVACIDAD
-        ================================================ -->
-        <article class="benefit-card">
-
-          <span
-            class="benefit-card__icon benefit-card__icon--privacy"
-            aria-hidden="true"
-          ></span>
-
-          <div class="benefit-card__content">
-
-            <h3>
-              Privacidad garantizada
-            </h3>
-
-            <p>
-              Tus datos siempre seguros, tú tienes el control.
-            </p>
-
-          </div>
-
-        </article>
-
-
-        <!-- ===============================================
-             DISEÑADO PARA CUIDAR
-        ================================================ -->
-        <article class="benefit-card">
-
-          <span
-            class="benefit-card__icon benefit-card__icon--care"
-            aria-hidden="true"
-          ></span>
-
-          <div class="benefit-card__content">
-
-            <h3>
-              Diseñado para cuidar
-            </h3>
-
-            <p>
-              Herramientas pensadas para mejorar la calidad de vida.
-            </p>
-
-          </div>
-
-        </article>
-
-
-        <!-- ===============================================
-             ACOMPAÑAMIENTO
-        ================================================ -->
-        <article class="benefit-card">
-
-          <span
-            class="benefit-card__icon benefit-card__icon--support"
-            aria-hidden="true"
-          ></span>
-
-          <div class="benefit-card__content">
-
-            <h3>
-              Acompañamiento real
-            </h3>
-
-            <p>
-              Soporte humano cuando lo necesitas.
-            </p>
-
-          </div>
-
-        </article>
-
+        <p
+          class="config-panel__desc"
+          id="configDesc"
+        >
+          Ajustá la experiencia a tus necesidades
+        </p>
 
       </div>
-      <!-- FIN .benefits-grid -->
 
-    </section>
-    <!-- FIN .benefits -->
+      <button
+        class="config-panel__close"
+        id="configClose"
+        type="button"
+        aria-label="Cerrar configuración"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+    </div>
 
 
-  </main>
+    <div class="config-panel__body">
+
+
+      <!-- INTERRUPTORES INDEPENDIENTES -->
+      <button
+        class="config-switch"
+        id="optContrast"
+        type="button"
+        role="switch"
+        aria-checked="false"
+      >
+        <span class="config-switch__label">
+          Alto contraste
+        </span>
+
+        <span
+          class="config-switch__track"
+          aria-hidden="true"
+        >
+          <span class="config-switch__thumb"></span>
+        </span>
+      </button>
+
+
+      <button
+        class="config-switch"
+        id="optLargeText"
+        type="button"
+        role="switch"
+        aria-checked="false"
+      >
+        <span class="config-switch__label">
+          Texto grande
+        </span>
+
+        <span
+          class="config-switch__track"
+          aria-hidden="true"
+        >
+          <span class="config-switch__thumb"></span>
+        </span>
+      </button>
+
+
+      <button
+        class="config-switch"
+        id="optVoice"
+        type="button"
+        role="switch"
+        aria-checked="false"
+      >
+        <span class="config-switch__label">
+          Modo voz
+        </span>
+
+        <span
+          class="config-switch__track"
+          aria-hidden="true"
+        >
+          <span class="config-switch__thumb"></span>
+        </span>
+      </button>
+
+
+      <button
+        class="config-switch"
+        id="optReadOptions"
+        type="button"
+        role="switch"
+        aria-checked="false"
+        disabled
+        aria-disabled="true"
+      >
+        <span class="config-switch__label">
+          Leer opciones en voz alta
+        </span>
+
+        <span
+          class="config-switch__track"
+          aria-hidden="true"
+        >
+          <span class="config-switch__thumb"></span>
+        </span>
+      </button>
+
+
+      <!-- VELOCIDAD DE LA VOZ -->
+      <div
+        class="config-group"
+        role="radiogroup"
+        aria-label="Velocidad de la voz"
+      >
+
+        <span class="config-group__label">
+          Velocidad
+        </span>
+
+        <div class="config-speed">
+
+          <button
+            class="config-speed__option"
+            type="button"
+            role="radio"
+            data-rate="slow"
+            aria-checked="false"
+          >
+            Lenta
+          </button>
+
+          <button
+            class="config-speed__option"
+            type="button"
+            role="radio"
+            data-rate="normal"
+            aria-checked="true"
+          >
+            Normal
+          </button>
+
+          <button
+            class="config-speed__option"
+            type="button"
+            role="radio"
+            data-rate="fast"
+            aria-checked="false"
+          >
+            Rápida
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- ACCIONES -->
+      <button
+        class="config-action"
+        id="optTestVoice"
+        type="button"
+        disabled
+        aria-disabled="true"
+      >
+        Probar voz
+      </button>
+
+      <button
+        class="config-action config-action--muted"
+        id="optReset"
+        type="button"
+      >
+        Restaurar configuración
+      </button>
+
+    </div>
+
+
+    <p
+      class="config-panel__status"
+      id="configStatus"
+      role="status"
+      aria-live="polite"
+    ></p>
+
+  </aside>
 
 
   <!-- =====================================================
@@ -438,14 +424,26 @@
   <footer class="site-footer">
 
     <strong>
-      SeniorCare OS 2026
+      SeniorCare OS
     </strong>
 
     <span>
-      Linux + .NET + experiencia accesible
+      Cuidado, seguridad y acompañamiento
     </span>
 
   </footer>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+
+       Solo controla el panel de configuración /
+       accesibilidad de la portada.
+  ====================================================== -->
+  <script
+    src="/js/public/inicio.js"
+    defer
+  ></script>
 
 
 </body>

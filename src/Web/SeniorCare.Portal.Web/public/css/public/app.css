@@ -18,16 +18,10 @@
 @import url("./hero/hero.css");
 @import url("./hero/hero-content.css");
 @import url("./hero/hero-image.css");
-@import url("./hero/hero-actions.css");
+@import url("./hero/hero-portrait.css");
 
-/* Tarjeta de acceso */
-@import url("./access/access-card.css");
-@import url("./access/role-pills.css");
-
-/* Beneficios */
-@import url("./benefits/benefits.css");
-@import url("./benefits/benefit-card.css");
-@import url("./benefits/benefit-icons.css");
+/* Accesibilidad */
+@import url("./accessibility/accessibility.css");
 
 /* Footer */
 @import url("./footer/footer.css");
@@ -35,6 +29,5 @@
 /* Responsive */
 @import url("./responsive/header.css");
 @import url("./responsive/hero.css");
-@import url("./responsive/access.css");
-@import url("./responsive/benefits.css");
+@import url("./responsive/accessibility.css");
 @import url("./responsive/footer.css");

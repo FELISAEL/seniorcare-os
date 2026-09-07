@@ -1,0 +1,45 @@
+/* ==========================================================
+   SeniorCare OS
+   Responsive - Panel de configuración / accesibilidad
+========================================================== */
+
+@media (max-width: 900px) {
+
+    .site-header nav .nav-config {
+        padding:
+            9px 14px;
+
+        font-size:
+            0.9rem;
+    }
+}
+
+
+@media (max-width: 680px) {
+
+    .site-header nav .nav-config {
+        flex: 0 0 auto;
+
+        min-height: 38px;
+
+        padding:
+            8px 12px;
+
+        font-size:
+            0.8rem;
+    }
+}
+
+
+/* ==========================================================
+   MÓVIL: el diálogo ocupa todo el ancho disponible
+========================================================== */
+
+@media (max-width: 560px) {
+
+    .config-panel {
+        width: 100%;
+
+        border-left: 0;
+    }
+}
