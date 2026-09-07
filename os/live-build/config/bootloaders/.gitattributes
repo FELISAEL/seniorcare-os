@@ -1,0 +1,2 @@
+# Los cargadores de arranque (isolinux/SYSLINUX y GRUB) exigen finales de línea LF.
+*.cfg text eol=lf
