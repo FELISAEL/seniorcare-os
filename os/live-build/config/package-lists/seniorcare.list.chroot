@@ -8,4 +8,5 @@ xserver-xorg
 dbus-x11
 ca-certificates
 fonts-noto-core
+network-manager
 

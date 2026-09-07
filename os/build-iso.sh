@@ -130,7 +130,7 @@ lb config \
   --architectures amd64 \
   --archive-areas "main contrib non-free-firmware" \
   --binary-images iso-hybrid \
-  --bootappend-live "boot=live components quiet splash username=seniorcare hostname=seniorcare" \
+  --bootappend-live "boot=live components username=seniorcare hostname=seniorcare" \
   --debian-installer live \
   --distribution trixie \
   --iso-application "SeniorCare OS" \

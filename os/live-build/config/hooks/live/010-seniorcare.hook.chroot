@@ -16,8 +16,15 @@ chown seniorcare:seniorcare /home/seniorcare/.config/openbox/autostart
 chmod 750 /home/seniorcare/.config/openbox/autostart
 
 chmod 750 /usr/local/lib/seniorcare/health-check
+
 systemctl enable lightdm.service
 systemctl enable seniorcare-health.timer
+systemctl enable NetworkManager.service
+
+systemctl disable getty@tty1.service
+
+systemctl disable apt-daily.timer apt-daily-upgrade.timer
+systemctl mask apt-daily.timer apt-daily-upgrade.timer
 
 cat >/etc/issue <<'EOF'
 SeniorCare OS

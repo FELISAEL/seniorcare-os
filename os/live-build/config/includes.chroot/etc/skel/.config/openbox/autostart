@@ -1,27 +1,52 @@
 #!/bin/sh
 set -u
 
+KIOSK_DIR="$HOME/.local/share/seniorcare-kiosk"
+PROFILE_DIR="$KIOSK_DIR/chromium"
+LOG_FILE="$KIOSK_DIR/chromium.log"
+
 if [ -r /etc/seniorcare/kiosk.env ]; then
   . /etc/seniorcare/kiosk.env
 fi
 
 SENIORCARE_URL="${SENIORCARE_URL:-http://localhost:8088}"
 
+# Esperar de forma limitada a que el servidor X esté disponible.
+_i=0
+while [ "$_i" -lt 30 ]; do
+  if [ -n "${DISPLAY:-}" ] && xset q >/dev/null 2>&1; then
+    break
+  fi
+  _i=$((_i + 1))
+  sleep 1
+done
+
+mkdir -p "$PROFILE_DIR"
+
+# Protector de pantalla y ahorro de energía desactivados durante la sesión.
 xset s off
 xset -dpms
 xset s noblank
 unclutter -idle 0.5 -root &
 
-while true; do
-  chromium \
-    --kiosk \
-    --no-first-run \
-    --disable-session-crashed-bubble \
-    --disable-infobars \
-    --noerrdialogs \
-    --disable-translate \
-    --disable-pinch \
-    --overscroll-history-navigation=0 \
-    "${SENIORCARE_URL}"
-  sleep 2
-done
+# Kiosco: relanzar Chromium si el proceso termina, con una pausa mínima para
+# evitar un bucle agresivo. El bucle corre en segundo plano para no bloquear
+# el resto del autostart de Openbox.
+(
+  while true; do
+    chromium \
+      --kiosk \
+      --disable-gpu \
+      --no-first-run \
+      --disable-session-crashed-bubble \
+      --disable-infobars \
+      --disable-translate \
+      --noerrdialogs \
+      --disable-pinch \
+      --overscroll-history-navigation=0 \
+      --check-for-update-interval=31536000 \
+      --user-data-dir="$PROFILE_DIR" \
+      "$SENIORCARE_URL" >>"$LOG_FILE" 2>&1
+    sleep 2
+  done
+) &

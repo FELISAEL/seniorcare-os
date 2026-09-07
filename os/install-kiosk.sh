@@ -26,7 +26,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   xserver-xorg \
   dbus-x11 \
   ca-certificates \
-  fonts-noto-core
+  fonts-noto-core \
+  network-manager
 
 cp -a "${OVERLAY_DIR}/." /
 

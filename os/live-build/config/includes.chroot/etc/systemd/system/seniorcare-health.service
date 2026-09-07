@@ -1,7 +1,5 @@
 [Unit]
 Description=Comprobar disponibilidad de la interfaz SeniorCare
-After=network-online.target
-Wants=network-online.target
 
 [Service]
 Type=oneshot
