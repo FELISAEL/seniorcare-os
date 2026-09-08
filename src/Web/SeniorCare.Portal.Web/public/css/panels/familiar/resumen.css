@@ -2,3 +2,185 @@
 .family-hero h2 { margin: 0 0 8px; font-size: clamp(1.7rem, 3vw, 2.5rem); }
 .family-hero p { margin: 0; color: #61758a; }
 @media (max-width: 760px) { .family-hero { align-items: stretch; flex-direction: column; } }
+
+/* --- Rediseño teal, con foto real del proyecto --- */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap");
+
+:root {
+  --navy: #ffffff;
+  --navy-light: #e5f5f2;
+  --blue: #1f8a7a;
+  --blue-soft: #e5f5f2;
+  --green: #1f8a7a;
+  --green-soft: #e5f5f2;
+  --amber: #1f8a7a;
+  --amber-soft: #e5f5f2;
+  --ink: #16281d;
+  --muted: #6b7d78;
+  --line: #e2efec;
+  --background: #faf7f1;
+  --shadow: 0 14px 34px rgba(31, 138, 122, 0.1);
+}
+
+body {
+  background: var(--background);
+  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Sidebar con degradado teal + patrón sutil de puntos */
+.sidebar {
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 1px, transparent 0) 0 0/16px 16px,
+    linear-gradient(180deg, #1f8a7a, #145e54);
+  border-right: none;
+}
+.sidebar-brand strong { color: #fff; }
+.sidebar-brand span { color: #bfe6de; }
+.logo {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-weight: 900;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+.nav-link { color: #d6f0ea; }
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--blue);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+.logout {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-weight: 800;
+}
+.logout:hover { background: #fff; color: var(--blue); }
+
+/* Header animado — solo tonos teal, con espacio debajo */
+.page-header {
+  position: relative;
+  padding: 1.6rem 1.8rem;
+  border-radius: 24px;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #1f8a7a, #2fb39f, #145e54, #1f8a7a);
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite;
+  margin-bottom: 1.5rem;
+}
+.page-header h1,
+.page-header .eyebrow,
+.page-header p:last-child { color: #fff !important; position: relative; z-index: 1; }
+.page-header .eyebrow { background: rgba(255,255,255,0.25); }
+.system-status { background: rgba(255,255,255,0.2); color: #fff; border: none; position: relative; z-index: 1; }
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Tarjeta principal: foto real del proyecto (misma del login) */
+.family-hero {
+  position: relative;
+  min-height: 220px;
+  padding: 2rem;
+  border-radius: 26px;
+  border: none;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background:
+    linear-gradient(90deg, #ffffff 38%, rgba(255,255,255,0.55) 65%, rgba(255,255,255,0) 85%),
+    url("/assets/public/hero-seniorcare-familia.png") right center / cover no-repeat;
+}
+.family-hero h2 {
+  font-weight: 800;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+}
+.family-hero > div:first-child {
+  position: relative;
+  z-index: 1;
+  max-width: 60%;
+}
+.family-hero button {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 760px) {
+  .family-hero {
+    background:
+      linear-gradient(180deg, #ffffff 55%, rgba(255,255,255,0.6) 80%, rgba(255,255,255,0) 100%),
+      url("/assets/public/hero-seniorcare-familia.png") center 20% / cover no-repeat;
+    min-height: 280px;
+  }
+  .family-hero > div:first-child {
+    max-width: 100%;
+  }
+}
+
+/* Tarjetas con leve elevación al pasar el mouse */
+.stat-card,
+.panel {
+  border-radius: 24px;
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.stat-card:hover,
+.panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px rgba(31, 138, 122, 0.15);
+}
+
+.eyebrow {
+  display: inline-flex;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--blue);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  font-weight: 800;
+}
+
+/* Medicamentos con acento e ícono */
+.schedule-item {
+  border-radius: 16px;
+  border-left: 4px solid var(--blue);
+  background: #fff;
+  padding: 1rem 1.1rem;
+}
+.schedule-item h3::before { content: "💊  "; }
+.schedule-status { border-radius: 999px; }
+
+/* Videollamada con ícono */
+.video-item { border-radius: 16px; background: #fff; }
+.video-item h3::before,
+.video-list p::before { content: "🎥  "; }
+.video-item a {
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1f8a7a, #2fb39f);
+}
+
+/* Alertas vacías con ícono amigable */
+.empty-state {
+  border-radius: 16px;
+  background: var(--navy-light);
+  color: var(--blue);
+}
+.empty-state::before { content: "✅  "; }
+
+/* Botones */
+.button { border-radius: 999px; font-weight: 800; }
+.button--primary {
+  background: linear-gradient(135deg, var(--blue), #2fb39f);
+  box-shadow: 0 10px 22px rgba(31, 138, 122, 0.3);
+}
+.button--secondary {
+  color: var(--blue);
+  background: var(--blue-soft);
+  border: none;
+}
+.button--secondary:hover { background: var(--blue); color: #fff; }
