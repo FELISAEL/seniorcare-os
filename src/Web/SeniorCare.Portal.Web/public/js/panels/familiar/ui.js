@@ -1,3 +1,49 @@
+function initializeFamilyNavigation() {
+  const tablist = $(".family-tabs");
+  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+  const mobileLayout = window.matchMedia("(max-width: 1050px)");
+  const updateOrientation = () => tablist.setAttribute(
+    "aria-orientation", mobileLayout.matches ? "horizontal" : "vertical"
+  );
+
+  updateOrientation();
+  mobileLayout.addEventListener("change", updateOrientation);
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => selectFamilyView(tab, tabs));
+    tab.addEventListener("keydown", (event) => navigateFamilyTabs(event, tabs));
+  });
+  selectFamilyView(tabs[0], tabs);
+}
+
+function selectFamilyView(selectedTab, tabs) {
+  tabs.forEach((tab) => {
+    const selected = tab === selectedTab;
+    tab.classList.toggle("is-active", selected);
+    tab.setAttribute("aria-selected", String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    document.getElementById(tab.getAttribute("aria-controls")).hidden = !selected;
+  });
+  $(".content").scrollTop = 0;
+}
+
+function navigateFamilyTabs(event, tabs) {
+  const vertical = event.currentTarget.parentElement.getAttribute("aria-orientation") === "vertical";
+  const previousKey = vertical ? "ArrowUp" : "ArrowLeft";
+  const nextKey = vertical ? "ArrowDown" : "ArrowRight";
+  const currentIndex = tabs.indexOf(event.currentTarget);
+  let nextIndex;
+
+  if (event.key === "Home") nextIndex = 0;
+  else if (event.key === "End") nextIndex = tabs.length - 1;
+  else if (event.key === previousKey) nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+  else if (event.key === nextKey) nextIndex = (currentIndex + 1) % tabs.length;
+  else return;
+
+  event.preventDefault();
+  tabs[nextIndex].focus({ preventScroll: true });
+  selectFamilyView(tabs[nextIndex], tabs);
+}
+
 function showToast(message, isError = false) {
   const toast = $("#toast");
   toast.textContent = message;

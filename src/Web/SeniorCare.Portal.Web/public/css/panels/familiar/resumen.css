@@ -4,7 +4,6 @@
 @media (max-width: 760px) { .family-hero { align-items: stretch; flex-direction: column; } }
 
 /* --- Rediseño teal, con foto real del proyecto --- */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap");
 
 :root {
   --navy: #ffffff;
@@ -24,7 +23,7 @@
 
 body {
   background: var(--background);
-  font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 /* Sidebar con degradado teal + patrón sutil de puntos */
@@ -184,3 +183,118 @@ body {
   border: none;
 }
 .button--secondary:hover { background: var(--blue); color: #fff; }
+
+/* Navegación estable; solo el contenido seleccionado se desplaza. */
+.family-dashboard .dashboard {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.family-dashboard .sidebar {
+  position: static;
+  height: 100%;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.family-dashboard .content {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.family-dashboard .family-tabs {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.family-dashboard .nav-link {
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.family-dashboard .nav-link:hover,
+.family-dashboard .nav-link.is-active {
+  background: #fff;
+}
+
+.family-dashboard .family-views {
+  min-width: 0;
+}
+
+.family-dashboard [role="tabpanel"] {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.family-dashboard [role="tabpanel"][hidden] {
+  display: none !important;
+}
+
+.family-dashboard [role="tabpanel"]:focus-visible {
+  outline: 4px solid #ffca3a;
+  outline-offset: 3px;
+}
+
+@media (max-width: 1050px) {
+  .family-dashboard .dashboard {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .family-dashboard .sidebar {
+    height: auto;
+    max-height: 45vh;
+    max-height: 45dvh;
+    padding: 0.75rem;
+  }
+
+  .family-dashboard .sidebar-brand {
+    padding-bottom: 0.5rem;
+  }
+
+  .family-dashboard .sidebar nav {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  .family-dashboard .family-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .family-dashboard .nav-link {
+    min-height: 44px;
+    padding: 0.6rem 0.4rem;
+    text-align: center;
+  }
+
+  .family-dashboard .logout {
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .family-dashboard .family-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .family-dashboard .video-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .family-dashboard .page-header {
+    animation: none;
+  }
+
+  .family-dashboard .stat-card,
+  .family-dashboard .panel {
+    transition: none;
+    transform: none;
+  }
+}

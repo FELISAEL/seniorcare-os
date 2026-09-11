@@ -8,40 +8,48 @@
   <title>Familia | SeniorCare OS</title>
   <link rel="stylesheet" href="/css/panels/familiar/app.css">
 </head>
-<body>
+<body class="family-dashboard">
   <div class="dashboard">
     <aside class="sidebar">
       <div class="sidebar-brand"><span class="logo" aria-hidden="true">SC</span><div><strong>SeniorCare</strong><span>Familia</span></div></div>
-      <nav aria-label="Navegación principal"><a class="nav-link is-active" href="#overview">Resumen</a><a class="nav-link" href="#medications">Medicamentos</a><a class="nav-link" href="#alerts">Alertas</a><a class="nav-link" href="#communication">Comunicación</a></nav>
+      <nav aria-label="Navegación principal">
+        <div class="family-tabs" role="tablist" aria-label="Opciones del panel Familiar" aria-orientation="vertical">
+          <button class="nav-link is-active" id="tab-overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Resumen</button>
+          <button class="nav-link" id="tab-medications" type="button" role="tab" aria-controls="medications" aria-selected="false" tabindex="-1">Medicamentos</button>
+          <button class="nav-link" id="tab-alerts" type="button" role="tab" aria-controls="alerts" aria-selected="false" tabindex="-1">Alertas</button>
+          <button class="nav-link" id="tab-communication" type="button" role="tab" aria-controls="communication" aria-selected="false" tabindex="-1">Comunicación</button>
+        </div>
+      </nav>
       <button class="logout" id="logoutButton" type="button">Cerrar sesión</button>
     </aside>
 
     <main class="content">
-      <header class="page-header" id="overview">
+      <header class="page-header">
         <div><p class="eyebrow">Acompañamiento familiar</p><h1>Hola, <span id="familyName">Familiar</span></h1><p id="residentSummary">Cargando información vinculada…</p></div>
         <div class="system-status"><span class="status-dot"></span>Conectado</div>
       </header>
 
-      <section class="family-hero panel">
-        <div><p class="eyebrow">Persona vinculada</p><h2 id="residentName">Adulto mayor</h2><p id="residentContact"></p></div>
-        <button class="button button--primary" id="videoButton" type="button">Iniciar videollamada</button>
-      </section>
+      <div class="family-views">
+        <section class="family-hero panel" id="overview" role="tabpanel" aria-labelledby="tab-overview" tabindex="0">
+          <div><p class="eyebrow">Persona vinculada</p><h2 id="residentName">Adulto mayor</h2><p id="residentContact"></p></div>
+          <button class="button button--primary" id="videoButton" type="button">Iniciar videollamada</button>
+        </section>
 
-      <section class="two-columns">
-        <article class="panel" id="medications">
+        <article class="panel" id="medications" role="tabpanel" aria-labelledby="tab-medications" tabindex="0" hidden>
           <div class="panel-heading"><div><p class="eyebrow">Hoy</p><h2>Medicamentos</h2></div></div>
           <div class="schedule-list" id="scheduleList"></div>
         </article>
-        <article class="panel" id="communication">
+
+        <section class="panel panel--alerts" id="alerts" role="tabpanel" aria-labelledby="tab-alerts" tabindex="0" hidden>
+          <div class="panel-heading"><div><p class="eyebrow">Seguimiento</p><h2>Alertas recientes</h2></div><button class="button button--secondary" id="refreshButton" type="button">Actualizar</button></div>
+          <div class="alert-list" id="alertList"></div>
+        </section>
+
+        <article class="panel" id="communication" role="tabpanel" aria-labelledby="tab-communication" tabindex="0" hidden>
           <div class="panel-heading"><div><p class="eyebrow">Comunicación</p><h2>Videollamada activa</h2></div></div>
           <div class="video-list" id="videoList"></div>
         </article>
-      </section>
-
-      <section class="panel panel--alerts" id="alerts">
-        <div class="panel-heading"><div><p class="eyebrow">Seguimiento</p><h2>Alertas recientes</h2></div><button class="button button--secondary" id="refreshButton" type="button">Actualizar</button></div>
-        <div class="alert-list" id="alertList"></div>
-      </section>
+      </div>
     </main>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>

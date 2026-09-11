@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => SeniorCareErrors.run(initialize, { context: "panel-familiar" }));
 
 async function initialize() {
+  initializeFamilyNavigation();
   state.session = await SeniorCareAuth.requireRole(["family"]);
   if (!state.session) return;
 
