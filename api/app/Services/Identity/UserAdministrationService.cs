@@ -83,4 +83,46 @@ public sealed class UserAdministrationService(IIdentityRepository users)
         var created = await users.CreateAsync(normalized, cancellationToken);
         return new UserCreationResult(true, "Usuario creado correctamente.", created);
     }
+
+    public async Task<UserUpdateResult> UpdateAsync(
+        Guid id,
+        UpdateUserRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var displayName = request.DisplayName?.Trim() ?? string.Empty;
+        var role = request.Role?.Trim().ToLowerInvariant() ?? string.Empty;
+
+        if (displayName.Length < 3 || displayName.Length > 160)
+        {
+            return new UserUpdateResult(
+                false,
+                "Revisá el nombre completo.",
+                null);
+        }
+
+        if (!SeniorCareRoles.IsSupported(role))
+        {
+            return new UserUpdateResult(
+                false,
+                "El rol indicado no existe en SeniorCare.",
+                null);
+        }
+
+        var updated = await users.UpdateAsync(id, displayName, role, cancellationToken);
+
+        return updated is not null
+            ? new UserUpdateResult(true, "Usuario actualizado correctamente.", updated)
+            : new UserUpdateResult(false, "No se encontró el usuario.", null);
+    }
+
+    public async Task<UserDeletionResult> DeleteAsync(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        var deleted = await users.DeleteAsync(id, cancellationToken);
+
+        return deleted
+            ? new UserDeletionResult(true, "Usuario eliminado correctamente.")
+            : new UserDeletionResult(false, "No se encontró el usuario.");
+    }
 }

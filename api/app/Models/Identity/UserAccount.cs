@@ -47,3 +47,16 @@ public sealed record UserCreationResult(
     bool IsSuccess,
     string Message,
     PublicUser? User);
+
+public sealed record UpdateUserRequest(
+    string DisplayName,
+    string Role);
+
+public sealed record UserUpdateResult(
+    bool IsSuccess,
+    string Message,
+    PublicUser? User);
+
+public sealed record UserDeletionResult(
+    bool IsSuccess,
+    string Message);

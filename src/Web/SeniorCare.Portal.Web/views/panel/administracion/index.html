@@ -8,18 +8,58 @@
       <button class="logout" id="logoutButton" type="button">Cerrar sesión</button>
     </aside>
     <main class="content">
-      <header class="page-header" id="overview"><div><p class="eyebrow">Centro de administración</p><h1>Hola, <span id="operatorName">Usuario</span></h1><p>Estado general de personas adultas mayores, medicamentos y alertas.</p></div><div class="system-status"><span class="status-dot"></span>Sistema conectado</div></header>
-      <section class="stat-grid" aria-label="Indicadores principales"><article class="stat-card"><span>Adultos mayores</span><strong id="residentCount">0</strong><small>perfiles registrados</small></article><article class="stat-card stat-card--warning"><span>Alertas activas</span><strong id="alertCount">0</strong><small>requieren seguimiento</small></article><article class="stat-card stat-card--success"><span>Adherencia hoy</span><strong id="adherence">0%</strong><small id="doseSummary">0 de 0 tomas</small></article><article class="stat-card stat-card--info"><span>Último ETL</span><strong class="stat-time" id="etlTime">Pendiente</strong><small>actualización analítica</small></article></section>
-      <section class="panel panel--alerts" id="alerts"><div class="panel-heading"><div><p class="eyebrow">Atención rápida</p><h2>Alertas activas</h2></div><button class="button button--secondary" id="refreshButton" type="button">Actualizar</button></div><div class="empty-state is-hidden" id="noAlerts">No hay alertas activas en este momento.</div><div class="alert-list" id="alertList"></div></section>
-      <section class="two-columns" id="residents"><article class="panel"><div class="panel-heading"><div><p class="eyebrow">Personas adultas mayores</p><h2>Residentes</h2></div></div><div class="resident-list" id="residentList"></div></article><article class="panel"><div class="panel-heading"><div><p class="eyebrow">Plan de cuidado</p><h2 id="selectedResidentTitle">Medicamentos</h2></div></div><div class="schedule-list" id="scheduleList"></div><details class="medication-form-wrapper"><summary>Agregar medicamento</summary><form id="medicationForm"><label for="medicineName">Nombre</label><input id="medicineName" name="name" type="text" required><label for="dosage">Dosis</label><input id="dosage" name="dosage" type="text" placeholder="Ej. 50 mg" required><label for="instructions">Indicaciones</label><textarea id="instructions" name="instructions" rows="3" required></textarea><label for="medicineTime">Horario diario</label><input id="medicineTime" name="time" type="time" required><button class="button button--primary" type="submit">Guardar medicamento</button><p class="form-message" id="medicationMessage" role="status"></p></form></details></article></section>
-      <section class="two-columns" id="analytics"><article class="panel"><div class="panel-heading"><div><p class="eyebrow">ETL</p><h2>Métricas recientes</h2></div></div><div class="metrics-list" id="metricsList"></div></article><article class="panel"><div class="panel-heading"><div><p class="eyebrow">Comunicación</p><h2>Videollamadas activas</h2></div></div><div class="video-list" id="videoList"></div></article></section>
-      
-      <section class="two-columns" id="users">
-        <article class="panel">
+      <header class="page-header" id="overview" data-view="overview"><div><p class="eyebrow">Centro de administración</p><h1>Hola, <span id="operatorName">Usuario</span></h1><p>Estado general de personas adultas mayores, medicamentos y alertas.</p></div><div class="system-status"><span class="status-dot"></span>Sistema conectado</div></header>
+      <section class="stat-grid" aria-label="Indicadores principales" data-view="overview"><article class="stat-card"><span>Adultos mayores</span><strong id="residentCount">0</strong><small>perfiles registrados</small></article><article class="stat-card stat-card--warning"><span>Alertas activas</span><strong id="alertCount">0</strong><small>requieren seguimiento</small></article><article class="stat-card stat-card--success"><span>Adherencia hoy</span><strong id="adherence">0%</strong><small id="doseSummary">0 de 0 tomas</small></article><article class="stat-card stat-card--info"><span>Último ETL</span><strong class="stat-time" id="etlTime">Pendiente</strong><small>actualización analítica</small></article></section>
+
+      <section class="panel panel--alerts is-hidden" id="alerts" data-view="alerts"><div class="panel-heading"><div><p class="eyebrow">Atención rápida</p><h2>Alertas activas</h2></div><button class="button button--secondary" id="refreshButton" type="button">Actualizar</button></div><div class="empty-state is-hidden" id="noAlerts">No hay alertas activas en este momento.</div><div class="alert-list" id="alertList"></div></section>
+
+      <section class="is-hidden" id="residents" data-view="residents">
+        <div class="subtabs" role="tablist" aria-label="Adultos mayores">
+          <button type="button" class="subtab-link is-active" data-subtab="list">Residentes</button>
+          <button type="button" class="subtab-link" data-subtab="care">Plan de cuidado</button>
+        </div>
+
+        <article class="panel subtab-panel" data-subtab-panel="list">
+          <div class="panel-heading"><div><p class="eyebrow">Personas adultas mayores</p><h2>Residentes</h2></div></div>
+          <div class="resident-list" id="residentList"></div>
+        </article>
+
+        <article class="panel subtab-panel is-hidden" data-subtab-panel="care">
+          <div class="panel-heading"><div><p class="eyebrow">Plan de cuidado</p><h2 id="selectedResidentTitle">Medicamentos</h2></div></div>
+          <div class="schedule-list" id="scheduleList"></div>
+          <details class="medication-form-wrapper"><summary>Agregar medicamento</summary><form id="medicationForm"><label for="medicineName">Nombre</label><input id="medicineName" name="name" type="text" required><label for="dosage">Dosis</label><input id="dosage" name="dosage" type="text" placeholder="Ej. 50 mg" required><label for="instructions">Indicaciones</label><textarea id="instructions" name="instructions" rows="3" required></textarea><label for="medicineTime">Horario diario</label><input id="medicineTime" name="time" type="time" required><button class="button button--primary" type="submit">Guardar medicamento</button><p class="form-message" id="medicationMessage" role="status"></p></form></details>
+        </article>
+      </section>
+
+      <section class="is-hidden" id="analytics" data-view="analytics">
+        <div class="subtabs" role="tablist" aria-label="Analítica">
+          <button type="button" class="subtab-link is-active" data-subtab="metrics">Métricas</button>
+          <button type="button" class="subtab-link" data-subtab="video">Videollamadas</button>
+        </div>
+
+        <article class="panel subtab-panel" data-subtab-panel="metrics">
+          <div class="panel-heading"><div><p class="eyebrow">ETL</p><h2>Métricas recientes</h2></div></div>
+          <div class="metrics-list" id="metricsList"></div>
+        </article>
+
+        <article class="panel subtab-panel is-hidden" data-subtab-panel="video">
+          <div class="panel-heading"><div><p class="eyebrow">Comunicación</p><h2>Videollamadas activas</h2></div></div>
+          <div class="video-list" id="videoList"></div>
+        </article>
+      </section>
+
+      <section class="is-hidden" id="users" data-view="users">
+        <div class="subtabs" role="tablist" aria-label="Gestión de usuarios">
+          <button type="button" class="subtab-link is-active" data-subtab="security">Seguridad</button>
+          <button type="button" class="subtab-link" data-subtab="admin">Administración</button>
+        </div>
+
+        <article class="panel subtab-panel" data-subtab-panel="security">
           <div class="panel-heading"><div><p class="eyebrow">Seguridad</p><h2>Usuarios y roles</h2></div></div>
           <div class="user-list" id="userList"></div>
         </article>
-        <article class="panel">
+
+        <article class="panel subtab-panel is-hidden" data-subtab-panel="admin">
           <div class="panel-heading"><div><p class="eyebrow">Administración</p><h2>Crear usuario</h2></div></div>
           <form id="userForm" class="admin-user-form">
             <label for="newUsername">Usuario</label><input id="newUsername" name="username" type="text" required>
@@ -37,6 +77,29 @@
       </section>
     </main>
   </div>
+
+  <dialog class="confirm-dialog" id="deleteUserDialog">
+    <form method="dialog">
+      <div class="dialog-icon" aria-hidden="true">🗑️</div>
+      <h2>¿Eliminar este usuario?</h2>
+      <p id="deleteUserMessage">Esta acción no se puede deshacer.</p>
+      <div class="dialog-actions">
+        <button class="button button--secondary" type="submit" value="cancel">Cancelar</button>
+        <button class="button button--danger" id="confirmDeleteUser" type="submit" value="default">Sí, eliminar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="plan-dialog" id="residentPlanDialog">
+    <form method="dialog">
+      <div class="plan-dialog-heading">
+        <div><p class="eyebrow">Plan de cuidado</p><h2 id="planDialogName">Residente</h2><p id="planDialogContact"></p></div>
+        <button class="icon-button icon-button--close" type="submit" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="schedule-list" id="planDialogSchedule"></div>
+    </form>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="/js/shared/error-handler.js" defer></script>
   <script src="/js/auth/session.js" defer></script>
@@ -49,4 +112,6 @@
   <script src="/js/panels/care-team/usuarios.js" defer></script>
   <script src="/js/panels/care-team/ui.js" defer></script>
   <script src="/js/panels/care-team/app.js" defer></script>
+  <script src="/js/panels/administracion/vistas.js" defer></script>
+  <script src="/js/panels/administracion/plan-residente.js" defer></script>
 </body></html>

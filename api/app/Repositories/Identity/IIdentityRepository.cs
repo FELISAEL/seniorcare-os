@@ -17,6 +17,16 @@ public interface IIdentityRepository
         CreateUserRequest request,
         CancellationToken cancellationToken = default);
 
+    Task<PublicUser?> UpdateAsync(
+        Guid id,
+        string displayName,
+        string role,
+        CancellationToken cancellationToken = default);
+
+    Task<bool> DeleteAsync(
+        Guid id,
+        CancellationToken cancellationToken = default);
+
     Task<DateTimeOffset> UpdateLastLoginAsync(
         Guid userId,
         CancellationToken cancellationToken = default);

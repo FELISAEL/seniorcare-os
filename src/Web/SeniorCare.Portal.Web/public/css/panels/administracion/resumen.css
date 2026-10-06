@@ -1,0 +1,45 @@
+/* Tarjetas de "Resumen" en cuadrícula 2x2, cuadradas y más grandes.
+   Solo aplica al panel de Administración (body[data-expected-role="admin"]),
+   sin tocar el .stat-grid compartido con el panel de Cuidador. */
+
+body[data-expected-role="admin"] .stat-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem;
+  max-width: 720px;
+}
+
+body[data-expected-role="admin"] .stat-card {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  border-top-width: 7px;
+  border-radius: 20px;
+}
+
+body[data-expected-role="admin"] .stat-card span {
+  font-size: 1.05rem;
+}
+
+body[data-expected-role="admin"] .stat-card > strong {
+  margin: 0.6rem 0 0.3rem;
+  font-size: 3.4rem;
+}
+
+body[data-expected-role="admin"] .stat-card .stat-time {
+  font-size: 1.6rem;
+}
+
+body[data-expected-role="admin"] .stat-card small {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 720px) {
+  body[data-expected-role="admin"] .stat-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+  }
+}
