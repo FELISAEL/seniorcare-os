@@ -249,6 +249,65 @@ public sealed class IdentityRepository : IIdentityRepository, IAsyncDisposable
         return TokenService.ToPublic(user);
     }
 
+    public async Task<PublicUser?> UpdateAsync(
+        Guid id,
+        string displayName,
+        string role,
+        CancellationToken cancellationToken = default)
+    {
+        const string sql =
+            """
+            UPDATE users
+            SET display_name = @display_name,
+                role = @role
+            WHERE id = @id
+            RETURNING id,
+                      username,
+                      display_name,
+                      password_hash,
+                      role,
+                      resident_id,
+                      is_active,
+                      created_at,
+                      last_login_at;
+            """;
+
+        await using var command =
+            _dataSource.CreateCommand(sql);
+
+        command.Parameters.AddWithValue("id", id);
+        command.Parameters.AddWithValue("display_name", displayName);
+        command.Parameters.AddWithValue("role", role);
+
+        await using var reader =
+            await command.ExecuteReaderAsync(cancellationToken);
+
+        return await reader.ReadAsync(cancellationToken)
+            ? TokenService.ToPublic(ReadUser(reader))
+            : null;
+    }
+
+    public async Task<bool> DeleteAsync(
+        Guid id,
+        CancellationToken cancellationToken = default)
+    {
+        const string sql =
+            """
+            DELETE FROM users
+            WHERE id = @id;
+            """;
+
+        await using var command =
+            _dataSource.CreateCommand(sql);
+
+        command.Parameters.AddWithValue("id", id);
+
+        var affected =
+            await command.ExecuteNonQueryAsync(cancellationToken);
+
+        return affected > 0;
+    }
+
     public async Task<DateTimeOffset> UpdateLastLoginAsync(
         Guid userId,
         CancellationToken cancellationToken = default)

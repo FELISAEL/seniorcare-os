@@ -3,3 +3,119 @@
 .user-item p { margin: 5px 0 0; color: #61758a; }
 .admin-user-form { display: grid; gap: 8px; }
 .admin-user-form select { min-height: 44px; border: 1px solid #c7d4df; border-radius: 8px; padding: 0 10px; font: inherit; }
+
+/* Tarjeta de usuario: cuerpo (nombre/edición) + estado + acciones. */
+.user-item-body { flex: 1; min-width: 0; }
+.user-item-status { flex-shrink: 0; color: var(--muted); font-weight: 700; }
+
+.user-item-edit { display: grid; gap: 8px; max-width: 360px; }
+.user-item-edit .user-edit-name {
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid #c7d4df;
+  border-radius: 8px;
+  font: inherit;
+}
+.user-item-edit .user-edit-role {
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid #c7d4df;
+  border-radius: 8px;
+  font: inherit;
+}
+
+/* Botones de acción (editar / guardar / eliminar) dentro de cada tarjeta. */
+.user-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+.icon-button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 9px;
+  place-items: center;
+  font-size: 1.05rem;
+  line-height: 1;
+  transition: filter 0.15s ease;
+}
+
+.icon-button:hover { filter: brightness(0.93); }
+
+.icon-button--edit {
+  color: #fff;
+  background: var(--amber);
+}
+
+.icon-button--save {
+  color: #fff;
+  background: var(--green);
+}
+
+.icon-button--delete {
+  color: #fff;
+  background: var(--red);
+}
+
+/* Botón rojo de peligro (usado en el diálogo de confirmar eliminación). */
+.button--danger {
+  color: #fff;
+  background: var(--red);
+}
+
+/* Diálogo nativo de confirmación (reemplaza a window.confirm del navegador). */
+.confirm-dialog {
+  width: min(92vw, 480px);
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(16, 42, 67, 0.55);
+}
+
+.confirm-dialog form {
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+  text-align: center;
+}
+
+.confirm-dialog .dialog-icon {
+  display: grid;
+  width: 84px;
+  height: 84px;
+  margin: 0 auto 1rem;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  place-items: center;
+  color: #fff;
+  background: var(--red);
+  box-shadow: 0 0 0 6px var(--red-soft);
+  font-size: 1.6rem;
+}
+
+.confirm-dialog h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: var(--ink);
+}
+
+.confirm-dialog p {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.confirm-dialog .dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0.7rem;
+  margin-top: 1.3rem;
+}
+
+@media (max-width: 480px) {
+  .confirm-dialog .dialog-actions {
+    grid-template-columns: 1fr;
+  }
+}

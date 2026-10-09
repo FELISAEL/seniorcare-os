@@ -1,0 +1,52 @@
+/* Diálogo del plan de cuidado de un residente específico (botón "Ver plan"). */
+.plan-dialog {
+  width: min(92vw, 560px);
+  max-height: 85vh;
+  padding: 0;
+  border: 0;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+}
+
+.plan-dialog::backdrop {
+  background: rgba(16, 42, 67, 0.55);
+}
+
+.plan-dialog form {
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  padding: clamp(1.2rem, 4vw, 1.8rem);
+}
+
+.plan-dialog-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.plan-dialog-heading h2 {
+  margin: 2px 0 4px;
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.plan-dialog-heading p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.plan-dialog .schedule-list {
+  overflow-y: auto;
+}
+
+.icon-button--close {
+  color: var(--muted);
+  background: var(--background);
+  flex-shrink: 0;
+}

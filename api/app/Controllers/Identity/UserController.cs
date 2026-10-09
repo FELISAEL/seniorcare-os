@@ -29,6 +29,29 @@ public static class UserController
                 : Results.BadRequest(new { message = result.Message });
         });
 
+        group.MapPut("/{id:guid}", async (
+            Guid id,
+            UpdateUserRequest request,
+            UserAdministrationService users,
+            CancellationToken cancellationToken) =>
+        {
+            var result = await users.UpdateAsync(id, request, cancellationToken);
+            return result.IsSuccess && result.User is not null
+                ? Results.Ok(result.User)
+                : Results.BadRequest(new { message = result.Message });
+        });
+
+        group.MapDelete("/{id:guid}", async (
+            Guid id,
+            UserAdministrationService users,
+            CancellationToken cancellationToken) =>
+        {
+            var result = await users.DeleteAsync(id, cancellationToken);
+            return result.IsSuccess
+                ? Results.NoContent()
+                : Results.BadRequest(new { message = result.Message });
+        });
+
         return endpoints;
     }
 }
