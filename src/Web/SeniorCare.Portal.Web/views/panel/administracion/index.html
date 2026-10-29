@@ -17,6 +17,7 @@
         <div class="subtabs" role="tablist" aria-label="Adultos mayores">
           <button type="button" class="subtab-link is-active" data-subtab="list">Residentes</button>
           <button type="button" class="subtab-link" data-subtab="care">Plan de cuidado</button>
+          <button type="button" class="subtab-link" data-subtab="register">Registrar</button>
         </div>
 
         <article class="panel subtab-panel" data-subtab-panel="list">
@@ -28,6 +29,25 @@
           <div class="panel-heading"><div><p class="eyebrow">Plan de cuidado</p><h2 id="selectedResidentTitle">Medicamentos</h2></div></div>
           <div class="schedule-list" id="scheduleList"></div>
           <details class="medication-form-wrapper"><summary>Agregar medicamento</summary><form id="medicationForm"><label for="medicineName">Nombre</label><input id="medicineName" name="name" type="text" required><label for="dosage">Dosis</label><input id="dosage" name="dosage" type="text" placeholder="Ej. 50 mg" required><label for="instructions">Indicaciones</label><textarea id="instructions" name="instructions" rows="3" required></textarea><label for="medicineTime">Horario diario</label><input id="medicineTime" name="time" type="time" required><button class="button button--primary" type="submit">Guardar medicamento</button><p class="form-message" id="medicationMessage" role="status"></p></form></details>
+        </article>
+
+        <article class="panel subtab-panel is-hidden" data-subtab-panel="register">
+          <div class="panel-heading"><div><p class="eyebrow">Alta</p><h2>Registrar adulto mayor</h2></div></div>
+          <form id="residentForm" class="admin-user-form" novalidate>
+            <label for="resUsername">Usuario del adulto mayor</label><input id="resUsername" name="username" type="text" minlength="3" maxlength="80" required>
+            <label for="resFullName">Nombre completo</label><input id="resFullName" name="fullName" type="text" required>
+            <label for="resBirthDate">Fecha de nacimiento (opcional)</label><input id="resBirthDate" name="birthDate" type="date">
+            <label for="resContactName">Contacto de emergencia</label><input id="resContactName" name="emergencyContactName" type="text" required>
+            <label for="resContactPhone">Teléfono del contacto</label><input id="resContactPhone" name="emergencyContactPhone" type="tel" required>
+            <label for="resFamilyEmail">Correo del familiar (opcional)</label>
+            <input id="resFamilyEmail" name="familyEmail" type="email" maxlength="254" placeholder="familiar@correo.com">
+            <small class="field-hint">A este correo llegarán los avisos: medicamentos tomados, alertas SOS y otras acciones del adulto mayor y del cuidador.</small>
+            <button class="button button--primary" type="submit">Registrar adulto mayor</button>
+            <p class="form-message" id="residentFormMessage" role="status"></p>
+          </form>
+
+          <div class="panel-heading panel-heading--section"><div><p class="eyebrow">Notificaciones</p><h2>Correo del familiar por residente</h2></div></div>
+          <div class="family-email-list" id="familyEmailList"></div>
         </article>
       </section>
 
@@ -114,4 +134,5 @@
   <script src="/js/panels/care-team/app.js" defer></script>
   <script src="/js/panels/administracion/vistas.js" defer></script>
   <script src="/js/panels/administracion/plan-residente.js" defer></script>
+  <script src="/js/panels/administracion/registro-residente.js" defer></script>
 </body></html>

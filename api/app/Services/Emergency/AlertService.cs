@@ -1,9 +1,12 @@
 using SeniorCare.Api.App.Models.Emergency;
 using SeniorCare.Api.App.Repositories.Emergency;
+using SeniorCare.Api.App.Services.Notifications;
 
 namespace SeniorCare.Api.App.Services.Emergency;
 
-public sealed class AlertService(IEmergencyRepository alerts)
+public sealed class AlertService(
+    IEmergencyRepository alerts,
+    FamilyNotificationService? notifier = null)
 {
     private static readonly string[] AllowedTypes = ["assistance", "emergency"];
     private static readonly string[] AllowedStatuses = ["acknowledged", "resolved"];
@@ -16,7 +19,7 @@ public sealed class AlertService(IEmergencyRepository alerts)
         !string.IsNullOrWhiteSpace(status)
         && AllowedStatuses.Contains(status.Trim(), StringComparer.OrdinalIgnoreCase);
 
-    public Task<Alert> CreateAsync(
+    public async Task<Alert> CreateAsync(
         CreateAlertRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -27,9 +30,13 @@ public sealed class AlertService(IEmergencyRepository alerts)
                 : "La persona adulta mayor solicitó asistencia."
             : request.Message.Trim();
 
-        return alerts.CreateAsync(
+        var created = await alerts.CreateAsync(
             request with { Type = normalizedType, Message = message },
             cancellationToken);
+
+        notifier?.AlertCreated(created);
+
+        return created;
     }
 
     public Task<IReadOnlyList<Alert>> ListActiveAsync(
@@ -41,14 +48,23 @@ public sealed class AlertService(IEmergencyRepository alerts)
         CancellationToken cancellationToken = default) =>
         alerts.ListForResidentAsync(residentId, cancellationToken);
 
-    public Task<Alert?> UpdateStatusAsync(
+    public async Task<Alert?> UpdateStatusAsync(
         Guid alertId,
         string status,
         string updatedBy,
-        CancellationToken cancellationToken = default) =>
-        alerts.UpdateStatusAsync(
+        CancellationToken cancellationToken = default)
+    {
+        var updated = await alerts.UpdateStatusAsync(
             alertId,
             status.Trim().ToLowerInvariant(),
             updatedBy,
             cancellationToken);
+
+        if (updated is not null)
+        {
+            notifier?.AlertStatusChanged(updated);
+        }
+
+        return updated;
+    }
 }

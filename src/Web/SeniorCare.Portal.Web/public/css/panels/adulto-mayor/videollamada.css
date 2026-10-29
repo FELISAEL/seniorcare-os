@@ -1,0 +1,127 @@
+.call-panel {
+  display: flex;
+  min-height: 60vh;
+  padding: 2rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #8759cf, var(--video));
+  box-shadow: var(--shadow);
+  color: #fff;
+  text-align: center;
+}
+
+.call-panel.is-hidden { display: none; }
+
+.main-content.in-call > :not(.call-panel) { display: none; }
+
+.call-panel h2 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
+.call-panel p { margin: 0; max-width: 34rem; font-size: 1.25rem; }
+
+.call-icon {
+  display: grid;
+  width: 92px;
+  height: 92px;
+  border: 5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  place-items: center;
+  font-size: 3.2rem;
+  font-weight: 900;
+}
+
+.call-open {
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.call-end {
+  min-height: 72px;
+  padding: 0.9rem 2.2rem;
+  border: 0;
+  border-radius: 22px;
+  background: #fff;
+  color: #4b2a8f;
+  font-size: 1.5rem;
+  font-weight: 800;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.call-end:focus-visible, .call-open:focus-visible {
+  outline: 4px solid #ffe14d;
+  outline-offset: 4px;
+}
+
+.call-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.call-resend {
+  min-height: 72px;
+  padding: 0.9rem 1.8rem;
+  border: 3px solid #fff;
+  border-radius: 22px;
+  background: transparent;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.call-resend:disabled { opacity: 0.65; cursor: not-allowed; }
+.call-resend:focus-visible { outline: 4px solid #ffe14d; outline-offset: 4px; }
+
+.call-enter {
+  min-height: 84px;
+  padding: 0.9rem 2.2rem;
+  border: 0;
+  border-radius: 22px;
+  background: #ffe14d;
+  color: #2a1a5e;
+  font-size: 1.7rem;
+  font-weight: 900;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+
+.call-enter.is-hidden, .call-open.is-hidden { display: none; }
+.call-enter:focus-visible { outline: 4px solid #fff; outline-offset: 4px; }
+
+/* Llamada incrustada (Jitsi) dentro del panel */
+.call-frame {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 60vh;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #000;
+}
+
+.call-frame.is-hidden { display: none; }
+.call-jaas { width: 100%; height: 100%; min-height: 60vh; }
+.call-jaas iframe { border: 0; }
+.call-frame iframe { width: 100%; height: 100%; min-height: 60vh; border: 0; }
+
+.call-panel--embedded {
+  min-height: 80vh;
+  padding: 1rem;
+  gap: 0.8rem;
+  justify-content: flex-start;
+}
+
+.call-panel--embedded .call-icon,
+.call-panel--embedded #callHint,
+.call-panel--embedded .call-open { display: none; }
+
+.call-panel--embedded h2 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+.call-panel--embedded .call-actions { order: -1; }
+.call-panel--embedded .call-end { min-height: 60px; font-size: 1.25rem; }
+.call-panel--embedded .call-resend { min-height: 60px; font-size: 1.1rem; }
+.call-panel--embedded h2 { order: -2; }

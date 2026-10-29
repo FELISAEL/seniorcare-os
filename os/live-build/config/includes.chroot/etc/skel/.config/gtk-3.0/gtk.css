@@ -1,0 +1,12 @@
+/* Nombres de los iconos del escritorio en blanco con sombra suave, para que se
+   lean sobre el fondo verde azulado oscuro de SeniorCare. */
+XfdesktopIconView.view,
+XfdesktopIconView.view .label {
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+}
+
+XfdesktopIconView.view:selected,
+XfdesktopIconView.view .label:selected {
+  color: #ffffff;
+}

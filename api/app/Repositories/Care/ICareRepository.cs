@@ -21,6 +21,11 @@ public interface ICareRepository
         CreateResidentRequest request,
         CancellationToken cancellationToken = default);
 
+    Task<Resident?> UpdateFamilyEmailAsync(
+        Guid residentId,
+        string? familyEmail,
+        CancellationToken cancellationToken = default);
+
     Task<IReadOnlyList<MedicationScheduleView>> GetTodayAsync(
         Guid residentId,
         DateOnly localDate,

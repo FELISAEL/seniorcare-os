@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=SeniorCare
+Comment=Portal de cuidado del adulto mayor
+Exec=/usr/local/bin/seniorcare-app
+Icon=/usr/share/icons/hicolor/scalable/apps/seniorcare.svg
+Terminal=false
+Categories=Utility;
+StartupWMClass=seniorcare

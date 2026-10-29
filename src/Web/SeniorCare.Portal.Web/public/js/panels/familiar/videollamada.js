@@ -2,7 +2,7 @@ async function loadVideoRooms() {
   const rooms = await SeniorCareAuth.api(`/api/communication/residents/${state.resident.id}/video-rooms/active`);
   $("#videoList").innerHTML = rooms.length === 0
     ? "<p>No hay una videollamada activa.</p>"
-    : rooms.map((room) => `<article class="video-item"><div><strong>${escapeHtml(state.resident.fullName)}</strong><p>Disponible desde ${escapeHtml(formatDateTime(room.createdAt))}</p></div><a href="${escapeAttribute(room.roomUrl)}" target="_blank" rel="noopener">Unirse</a></article>`).join("");
+    : rooms.map((room) => `<article class="video-item"><div><strong>${escapeHtml(state.resident.fullName)}</strong><p>${room.familyJoined === false ? "Te está esperando · " : ""}Disponible desde ${escapeHtml(formatDateTime(room.createdAt))}</p></div><a href="${escapeAttribute(room.roomUrl)}" target="_blank" rel="noopener">Unirse</a></article>`).join("");
 }
 
 async function startVideoCall() {

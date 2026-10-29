@@ -13,6 +13,7 @@ builder.Services.AddIdentityModule();
 builder.Services.AddCareModule();
 builder.Services.AddEmergencyModule();
 builder.Services.AddCommunicationModule();
+builder.Services.AddNotificationsModule();
 builder.Services.AddAnalyticsModule();
 
 var app = builder.Build();
@@ -32,6 +33,7 @@ app.MapIdentityModule();
 app.MapCareModule();
 app.MapEmergencyModule();
 app.MapCommunicationModule();
+app.MapNotificationsModule();
 app.MapAnalyticsModule();
 
 app.Run();

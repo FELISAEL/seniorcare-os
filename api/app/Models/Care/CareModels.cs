@@ -7,14 +7,18 @@ public sealed record Resident(
     DateOnly? BirthDate,
     string EmergencyContactName,
     string EmergencyContactPhone,
-    DateTimeOffset CreatedAt);
+    DateTimeOffset CreatedAt,
+    string? FamilyEmail = null);
 
 public sealed record CreateResidentRequest(
     string Username,
     string FullName,
     DateOnly? BirthDate,
     string EmergencyContactName,
-    string EmergencyContactPhone);
+    string EmergencyContactPhone,
+    string? FamilyEmail = null);
+
+public sealed record UpdateFamilyEmailRequest(string? FamilyEmail);
 
 public sealed record MedicationScheduleView(
     Guid ScheduleId,

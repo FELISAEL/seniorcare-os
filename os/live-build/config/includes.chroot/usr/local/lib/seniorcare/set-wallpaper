@@ -1,0 +1,37 @@
+#!/bin/sh
+# Pone el fondo de SeniorCare (el mismo del inicio de sesión) como fondo de
+# escritorio, ajustado para cubrir toda la pantalla. Solo se aplica la primera
+# vez que el usuario inicia sesión: si luego cambia el fondo, se respeta.
+IMG=/usr/share/backgrounds/seniorcare/seniorcare-wallpaper.png
+MARK="$HOME/.config/seniorcare/wallpaper-set"
+[ -r "$IMG" ] || exit 0
+[ -e "$MARK" ] && exit 0
+command -v xfconf-query >/dev/null 2>&1 || exit 0
+
+sleep 3   # deja que el escritorio (xfdesktop) cree sus propiedades
+
+poner() {
+  base="/backdrop/screen0/$1/workspace0"
+  xfconf-query -c xfce4-desktop -p "$base/last-image" -s "$IMG" 2>/dev/null \
+    || xfconf-query -c xfce4-desktop -p "$base/last-image" -n -t string -s "$IMG"
+  # 5 = "Ampliado": rellena toda la pantalla sin deformar la imagen.
+  xfconf-query -c xfce4-desktop -p "$base/image-style" -s 5 2>/dev/null \
+    || xfconf-query -c xfce4-desktop -p "$base/image-style" -n -t int -s 5
+}
+
+# Propiedades que el escritorio ya creó (su nombre depende del monitor).
+xfconf-query -c xfce4-desktop -l 2>/dev/null | grep '/last-image$' | while read -r prop; do
+  xfconf-query -c xfce4-desktop -p "$prop" -s "$IMG"
+  xfconf-query -c xfce4-desktop -p "${prop%/last-image}/image-style" -s 5 2>/dev/null \
+    || xfconf-query -c xfce4-desktop -p "${prop%/last-image}/image-style" -n -t int -s 5
+done
+
+# Y los monitores que X reporta, por si todavía no existían.
+if command -v xrandr >/dev/null 2>&1; then
+  xrandr --listmonitors 2>/dev/null | awk 'NR>1 {print $NF}' | while read -r mon; do
+    [ -n "$mon" ] && poner "monitor$mon"
+  done
+fi
+poner monitor0
+
+mkdir -p "$(dirname "$MARK")" && : > "$MARK"

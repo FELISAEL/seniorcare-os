@@ -1,0 +1,38 @@
+/* Registro de adultos mayores y correo del familiar (panel de administración). */
+.admin-user-form .field-hint { color: var(--muted); line-height: 1.4; }
+.admin-user-form input[type="date"],
+.admin-user-form input[type="email"],
+.admin-user-form input[type="tel"] { font: inherit; }
+
+.panel-heading--section { margin-top: 28px; padding-top: 20px; border-top: 1px solid #e2efec; }
+
+.family-email-list { display: grid; gap: 12px; }
+.family-email-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) minmax(200px, 2fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid #e2efec;
+  border-radius: 12px;
+  background: #ffffff;
+}
+.family-email-row strong { display: block; }
+.family-email-row small { color: var(--muted); }
+.family-email-row input {
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid #c7d4df;
+  border-radius: 8px;
+  font: inherit;
+  width: 100%;
+}
+.family-email-row .family-email-status { grid-column: 1 / -1; margin: 0; min-height: 1em; font-size: 0.9rem; }
+.family-email-status.is-ok { color: #1f8a7a; }
+.family-email-status.is-error { color: #c82d34; }
+
+@media (max-width: 720px) {
+  .family-email-row { grid-template-columns: 1fr; }
+}
+
+.form-message.is-ok { color: #1f8a7a; }

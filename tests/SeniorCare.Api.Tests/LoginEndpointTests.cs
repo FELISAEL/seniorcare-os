@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -332,6 +332,17 @@ public sealed class LoginEndpointTests
             CancellationToken cancellationToken = default) =>
             throw new NotSupportedException();
 
+        public Task<PublicUser?> UpdateAsync(
+            Guid id,
+            string displayName,
+            string role,
+            CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException();
+
+        public Task<bool> DeleteAsync(
+            Guid id,
+            CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException();
         public Task<DateTimeOffset> UpdateLastLoginAsync(
             Guid userId,
             CancellationToken cancellationToken = default)

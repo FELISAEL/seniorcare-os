@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Carpetas
+Exec=thunar
+Icon=system-file-manager
+Terminal=false

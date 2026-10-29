@@ -19,8 +19,8 @@ OUTPUT_DIR="${SCRIPT_DIR}/../artifacts"
 # Se puede sobrescribir exportando SENIORCARE_URL antes del build, por ejemplo
 # para apuntar a un portal accesible desde la máquina de destino:
 #   sudo SENIORCARE_URL=http://portal.local:8088 bash build-iso.sh
-# Si la variable no se define, se usa el mismo valor por defecto que el kiosco.
-DEFAULT_SENIORCARE_URL="http://localhost:8088"
+# Si la variable no se define, se usa el valor por defecto.
+DEFAULT_SENIORCARE_URL="http://10.0.2.2:8088"
 
 if [[ -n "${SENIORCARE_URL+definida}" ]]; then
   SENIORCARE_URL_ORIGEN="variable de entorno"
@@ -122,7 +122,26 @@ cp -a "${SCRIPT_DIR}/live-build/config" "${BUILD_DIR}/config"
 # del directorio ignorado os/.build. El kiosk.env versionado no se toca.
 BUILD_KIOSK_ENV="${BUILD_DIR}/config/includes.chroot/etc/seniorcare/kiosk.env"
 mkdir -p "$(dirname -- "${BUILD_KIOSK_ENV}")"
-printf 'SENIORCARE_URL=%s\n' "${SENIORCARE_URL}" > "${BUILD_KIOSK_ENV}"
+# Puerto del portal (el de la URL, o 8088) y nombre del equipo anfitrión. Con
+# ellos, SeniorCare busca sola el servidor al abrirse (ver seniorcare-app).
+SENIORCARE_PORT="$(printf '%s' "${SENIORCARE_URL}" | sed -n 's|^[a-z]*://[^/:]*:\([0-9][0-9]*\).*|\1|p')"
+SENIORCARE_PORT="${SENIORCARE_PORT:-8088}"
+
+SENIORCARE_HOSTNAME="${SENIORCARE_HOSTNAME:-}"
+if [[ -z "${SENIORCARE_HOSTNAME}" ]] && command -v powershell.exe >/dev/null 2>&1; then
+  # Dentro de WSL se puede preguntar a Windows cómo se llama la laptop.
+  SENIORCARE_HOSTNAME="$(powershell.exe -NoProfile -Command '$env:COMPUTERNAME' 2>/dev/null | tr -d '\r\n' || true)"
+fi
+if ! [[ "${SENIORCARE_HOSTNAME}" =~ ^[A-Za-z0-9]([A-Za-z0-9-]*[A-Za-z0-9])?$ ]]; then
+  SENIORCARE_HOSTNAME=""
+fi
+echo "SeniorCare OS: puerto ${SENIORCARE_PORT}, equipo anfitrión '${SENIORCARE_HOSTNAME:-no detectado}'."
+
+{
+  printf 'SENIORCARE_URL=%s\n' "${SENIORCARE_URL}"
+  printf 'SENIORCARE_PORT=%s\n' "${SENIORCARE_PORT}"
+  printf 'SENIORCARE_HOSTNAME=%s\n' "${SENIORCARE_HOSTNAME}"
+} > "${BUILD_KIOSK_ENV}"
 
 cd "${BUILD_DIR}"
 
@@ -130,7 +149,7 @@ lb config \
   --architectures amd64 \
   --archive-areas "main contrib non-free-firmware" \
   --binary-images iso-hybrid \
-  --bootappend-live "boot=live components username=seniorcare hostname=seniorcare" \
+  --bootappend-live "boot=live components username=seniorcare hostname=seniorcare keyboard-layouts=latam timezone=America/Guatemala" \
   --debian-installer live \
   --distribution trixie \
   --iso-application "SeniorCare OS" \

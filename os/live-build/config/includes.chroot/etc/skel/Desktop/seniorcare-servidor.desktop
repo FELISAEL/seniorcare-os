@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Configurar servidor
+Comment=Cambiar la dirección del portal SeniorCare
+Exec=/usr/local/bin/seniorcare-set-url
+Icon=preferences-system-network
+Terminal=false
+Categories=Settings;

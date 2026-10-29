@@ -178,6 +178,12 @@ public sealed class ResidentServiceTests
                     DateTimeOffset.UtcNow));
         }
 
+        public Task<Resident?> UpdateFamilyEmailAsync(
+            Guid residentId,
+            string? familyEmail,
+            CancellationToken cancellationToken = default) =>
+            Task.FromResult<Resident?>(null);
+
         public Task<IReadOnlyList<MedicationScheduleView>> GetTodayAsync(
             Guid residentId,
             DateOnly localDate,

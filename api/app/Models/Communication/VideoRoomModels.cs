@@ -2,7 +2,8 @@ namespace SeniorCare.Api.App.Models.Communication;
 
 public sealed record CreateVideoRoomRequest(
     Guid ResidentId,
-    string ResidentName);
+    string ResidentName,
+    string? Provider = null);
 
 public sealed record VideoRoom(
     Guid Id,
@@ -11,4 +12,10 @@ public sealed record VideoRoom(
     string RoomCode,
     string RoomUrl,
     string Status,
-    DateTimeOffset CreatedAt);
+    DateTimeOffset CreatedAt,
+    string Provider = "jitsi",
+    string? ProviderSpace = null,
+    bool FamilyJoined = true,
+    string? JaasAppId = null,
+    string? JaasToken = null,
+    int NotifyRetryAfterSeconds = 0);

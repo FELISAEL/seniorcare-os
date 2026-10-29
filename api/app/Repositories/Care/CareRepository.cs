@@ -33,6 +33,9 @@ public sealed class CareRepository : ICareRepository, IAsyncDisposable
                 created_at timestamptz NOT NULL DEFAULT now()
             );
 
+            ALTER TABLE residents
+                ADD COLUMN IF NOT EXISTS family_email varchar(254) NULL;
+
             CREATE TABLE IF NOT EXISTS medications (
                 id uuid PRIMARY KEY,
                 resident_id uuid NOT NULL REFERENCES residents(id),
@@ -75,7 +78,8 @@ public sealed class CareRepository : ICareRepository, IAsyncDisposable
         const string sql =
             """
             SELECT id, username, full_name, birth_date,
-                   emergency_contact_name, emergency_contact_phone, created_at
+                   emergency_contact_name, emergency_contact_phone, created_at,
+                   family_email
             FROM residents
             ORDER BY full_name;
             """;
@@ -98,7 +102,8 @@ public sealed class CareRepository : ICareRepository, IAsyncDisposable
         const string sql =
             """
             SELECT id, username, full_name, birth_date,
-                   emergency_contact_name, emergency_contact_phone, created_at
+                   emergency_contact_name, emergency_contact_phone, created_at,
+                   family_email
             FROM residents
             WHERE lower(username) = lower($1)
             LIMIT 1;
@@ -119,7 +124,8 @@ public sealed class CareRepository : ICareRepository, IAsyncDisposable
         const string sql =
             """
             SELECT id, username, full_name, birth_date,
-                   emergency_contact_name, emergency_contact_phone, created_at
+                   emergency_contact_name, emergency_contact_phone, created_at,
+                   family_email
             FROM residents
             WHERE id = $1
             LIMIT 1;
@@ -144,33 +150,73 @@ public sealed class CareRepository : ICareRepository, IAsyncDisposable
             request.BirthDate,
             request.EmergencyContactName.Trim(),
             request.EmergencyContactPhone.Trim(),
-            DateTimeOffset.UtcNow);
+            DateTimeOffset.UtcNow,
+            NormalizeEmail(request.FamilyEmail));
 
         const string sql =
             """
             INSERT INTO residents (
                 id, username, full_name, birth_date,
-                emergency_contact_name, emergency_contact_phone, created_at
+                emergency_contact_name, emergency_contact_phone, created_at,
+                family_email
             )
-            VALUES ($1, $2, $3, $4, $5, $6, $7);
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8);
             """;
 
         await using var command = _dataSource.CreateCommand(sql);
         command.Parameters.AddWithValue(resident.Id);
         command.Parameters.AddWithValue(resident.Username);
         command.Parameters.AddWithValue(resident.FullName);
-        var birthDateParameter = command.Parameters.Add(
-            "birth_date",
-            NpgsqlDbType.Date);
-        birthDateParameter.Value = resident.BirthDate is null
-            ? DBNull.Value
-            : resident.BirthDate.Value;
+        command.Parameters.AddWithValue(
+            NpgsqlDbType.Date,
+            resident.BirthDate is null
+                ? DBNull.Value
+                : resident.BirthDate.Value);
         command.Parameters.AddWithValue(resident.EmergencyContactName);
         command.Parameters.AddWithValue(resident.EmergencyContactPhone);
         command.Parameters.AddWithValue(resident.CreatedAt);
+        command.Parameters.AddWithValue(
+            NpgsqlDbType.Varchar,
+            resident.FamilyEmail is null
+                ? DBNull.Value
+                : resident.FamilyEmail);
         await command.ExecuteNonQueryAsync(cancellationToken);
         return resident;
     }
+
+    public async Task<Resident?> UpdateFamilyEmailAsync(
+        Guid residentId,
+        string? familyEmail,
+        CancellationToken cancellationToken = default)
+    {
+        const string sql =
+            """
+            UPDATE residents
+            SET family_email = $2
+            WHERE id = $1
+            RETURNING id, username, full_name, birth_date,
+                      emergency_contact_name, emergency_contact_phone, created_at,
+                      family_email;
+            """;
+
+        await using var command = _dataSource.CreateCommand(sql);
+        command.Parameters.AddWithValue(residentId);
+        var normalized = NormalizeEmail(familyEmail);
+        command.Parameters.AddWithValue(
+            NpgsqlDbType.Varchar,
+            normalized is null
+                ? DBNull.Value
+                : normalized);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        return await reader.ReadAsync(cancellationToken)
+            ? ReadResident(reader)
+            : null;
+    }
+
+    private static string? NormalizeEmail(string? email) =>
+        string.IsNullOrWhiteSpace(email)
+            ? null
+            : email.Trim().ToLowerInvariant();
 
     public async Task<IReadOnlyList<MedicationScheduleView>> GetTodayAsync(
         Guid residentId,
@@ -416,7 +462,10 @@ public sealed class CareRepository : ICareRepository, IAsyncDisposable
                 : reader.GetFieldValue<DateOnly>(3),
             reader.GetString(4),
             reader.GetString(5),
-            reader.GetFieldValue<DateTimeOffset>(6));
+            reader.GetFieldValue<DateTimeOffset>(6),
+            reader.IsDBNull(7)
+                ? null
+                : reader.GetString(7));
 
     public ValueTask DisposeAsync() => _dataSource.DisposeAsync();
 }

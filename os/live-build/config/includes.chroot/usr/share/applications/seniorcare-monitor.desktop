@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Monitor de rendimiento
+Comment=CPU, memoria, disco y consumo por aplicación
+Exec=/usr/local/bin/seniorcare-monitor
+Icon=utilities-system-monitor
+Terminal=false
+Categories=System;Monitor;

@@ -1,0 +1,9 @@
+#!/bin/sh
+# XFCE pide confirmación para lanzadores del escritorio salvo que tengan el
+# checksum de confianza; lo registramos para los que trae el sistema.
+for f in "$HOME"/Desktop/*.desktop; do
+  [ -f "$f" ] || continue
+  chmod +x "$f"
+  gio set -t string "$f" metadata::xfce-exe-checksum \
+    "$(sha256sum "$f" | cut -d' ' -f1)" 2>/dev/null
+done

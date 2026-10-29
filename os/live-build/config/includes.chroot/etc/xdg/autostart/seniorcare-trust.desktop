@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Confiar en lanzadores de SeniorCare
+Exec=/usr/local/lib/seniorcare/trust-launchers
+NoDisplay=true
+X-GNOME-Autostart-Delay=2

@@ -234,7 +234,7 @@ public sealed class CareEndpointTests
                 previousValue);
         }
     }
-    private sealed class FakeCareRepository(
+    public sealed class FakeCareRepository(
         IReadOnlyList<Resident> residents) : ICareRepository
     {
         public Task InitializeAsync(
@@ -261,6 +261,12 @@ public sealed class CareEndpointTests
             CreateResidentRequest request,
             CancellationToken cancellationToken = default) =>
             throw new NotSupportedException();
+
+        public Task<Resident?> UpdateFamilyEmailAsync(
+            Guid residentId,
+            string? familyEmail,
+            CancellationToken cancellationToken = default) =>
+            Task.FromResult<Resident?>(null);
 
         public Task<IReadOnlyList<MedicationScheduleView>> GetTodayAsync(
             Guid residentId,

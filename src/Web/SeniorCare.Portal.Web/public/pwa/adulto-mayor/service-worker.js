@@ -1,4 +1,4 @@
-const CACHE_NAME = "seniorcare-resident-v3";
+const CACHE_NAME = "seniorcare-resident-v5";
 const BASE = "/panel/adulto-mayor/";
 const STATIC_ASSETS = [
   BASE,

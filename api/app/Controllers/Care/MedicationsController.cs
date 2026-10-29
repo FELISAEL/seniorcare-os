@@ -117,7 +117,8 @@ public static class MedicationsController
             residentId,
             scheduleId,
             localDate,
-            cancellationToken);
+            cancellationToken,
+            principal.Identity?.Name);
 
         return confirmation is null
             ? Results.NotFound(new

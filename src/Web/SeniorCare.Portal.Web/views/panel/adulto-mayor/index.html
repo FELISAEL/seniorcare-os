@@ -36,7 +36,20 @@
       </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="mainContent">
+      <section class="call-panel is-hidden" id="callPanel" aria-live="polite" aria-labelledby="callTitle">
+        <div class="call-icon" aria-hidden="true">▣</div>
+        <h2 id="callTitle">Videollamada en curso</h2>
+        <p id="callHint">La llamada se abrió en otra ventana. Cuando termines, vuelve aquí.</p>
+        <button class="call-enter is-hidden" id="callEnter" type="button">¡Tu familia ya está! Entrar a la llamada</button>
+        <div class="call-frame is-hidden" id="callFrameWrap"><iframe id="callFrame" title="Videollamada con tu familia" allow="camera; microphone; display-capture; autoplay; fullscreen"></iframe></div>
+        <a class="call-open" id="callOpen" href="#" target="_blank" rel="noopener">Abrir la videollamada otra vez</a>
+        <div class="call-actions">
+          <button class="call-end" id="endCall" type="button">Terminé · Volver al menú principal</button>
+          <button class="call-resend" id="resendNotice" type="button">Reenviar notificación</button>
+        </div>
+      </section>
+
       <section class="action-grid" aria-label="Acciones principales">
         <button class="action-card action-card--medicine" data-action="medications" type="button">
           <span class="action-icon" aria-hidden="true">✚</span>

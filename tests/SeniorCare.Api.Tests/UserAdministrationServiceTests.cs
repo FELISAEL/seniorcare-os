@@ -1,4 +1,4 @@
-﻿using SeniorCare.Api.App.Core.Auth;
+using SeniorCare.Api.App.Core.Auth;
 using SeniorCare.Api.App.Models.Identity;
 using SeniorCare.Api.App.Repositories.Identity;
 using SeniorCare.Api.App.Services.Identity;
@@ -194,6 +194,17 @@ public sealed class UserAdministrationServiceTests
                     null));
         }
 
+        public Task<PublicUser?> UpdateAsync(
+            Guid id,
+            string displayName,
+            string role,
+            CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException();
+
+        public Task<bool> DeleteAsync(
+            Guid id,
+            CancellationToken cancellationToken = default) =>
+            throw new NotSupportedException();
         public Task<DateTimeOffset> UpdateLastLoginAsync(
             Guid userId,
             CancellationToken cancellationToken = default) =>

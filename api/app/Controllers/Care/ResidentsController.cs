@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using System.Security.Claims;
 using Npgsql;
 using SeniorCare.Api.App.Models.Care;
@@ -61,6 +62,30 @@ public static class ResidentsController
         group.MapPost("/residents", CreateResidentAsync)
             .RequireAuthorization(SeniorCarePolicies.AdminOnly);
 
+        group.MapPut("/residents/{residentId:guid}/family-email", async (
+            Guid residentId,
+            UpdateFamilyEmailRequest request,
+            ResidentService residents,
+            CancellationToken cancellationToken) =>
+        {
+            if (!IsValidOptionalEmail(request.FamilyEmail))
+            {
+                return Results.BadRequest(new
+                {
+                    message = "El correo del familiar no es válido."
+                });
+            }
+
+            var updated = await residents.UpdateFamilyEmailAsync(
+                residentId,
+                request.FamilyEmail,
+                cancellationToken);
+
+            return updated is null
+                ? Results.NotFound(new { message = "No se encontró la persona adulta mayor." })
+                : Results.Ok(updated);
+        }).RequireAuthorization(SeniorCarePolicies.AdminOnly);
+
         return endpoints;
     }
 
@@ -80,6 +105,14 @@ public static class ResidentsController
             });
         }
 
+        if (!IsValidOptionalEmail(request.FamilyEmail))
+        {
+            return Results.BadRequest(new
+            {
+                message = "El correo del familiar no es válido."
+            });
+        }
+
         try
         {
             var created = await residents.CreateAsync(request, cancellationToken);
@@ -93,5 +126,25 @@ public static class ResidentsController
                 message = "El usuario de la persona adulta mayor ya existe."
             });
         }
+    }
+
+    /// <summary>El correo es opcional: vacío es válido; si se envía, debe tener forma de correo.</summary>
+    private static bool IsValidOptionalEmail(string? email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return true;
+        }
+
+        var value = email.Trim();
+        if (value.Length > 254
+            || !MailAddress.TryCreate(value, out var parsed)
+            || !string.Equals(parsed.Address, value, StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        var domain = parsed.Host;
+        return domain.Contains('.') && !domain.StartsWith('.') && !domain.EndsWith('.');
     }
 }

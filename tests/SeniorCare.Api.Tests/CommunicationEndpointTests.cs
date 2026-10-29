@@ -1,4 +1,8 @@
-﻿using System.Net;
+using SeniorCare.Api.App.Repositories.Care;
+using SeniorCare.Api.App.Models.Care;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +37,14 @@ public sealed class CommunicationEndpointTests
                     .WithWebHostBuilder(builder =>
                     {
                         builder.UseEnvironment("Testing");
+
+                        builder.ConfigureServices(services =>
+                        {
+                            services.RemoveAll<ICareRepository>();
+                            services.AddSingleton<ICareRepository>(
+                                new CareEndpointTests.FakeCareRepository(
+                                    Array.Empty<Resident>()));
+                        });
                     });
 
             using var client = factory.CreateClient();

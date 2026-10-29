@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Fondo de SeniorCare
+Comment=Aplica el fondo de escritorio de SeniorCare la primera vez
+Exec=/usr/local/lib/seniorcare/set-wallpaper
+Terminal=false
+NoDisplay=true
+OnlyShowIn=XFCE;

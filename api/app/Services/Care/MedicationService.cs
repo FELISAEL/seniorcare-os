@@ -1,9 +1,12 @@
 using SeniorCare.Api.App.Models.Care;
 using SeniorCare.Api.App.Repositories.Care;
+using SeniorCare.Api.App.Services.Notifications;
 
 namespace SeniorCare.Api.App.Services.Care;
 
-public sealed class MedicationService(ICareRepository care)
+public sealed class MedicationService(
+    ICareRepository care,
+    FamilyNotificationService? notifier = null)
 {
     public Task<IReadOnlyList<MedicationScheduleView>> GetTodayAsync(
         Guid residentId,
@@ -17,10 +20,29 @@ public sealed class MedicationService(ICareRepository care)
         CancellationToken cancellationToken = default) =>
         care.CreateMedicationAsync(residentId, request, cancellationToken);
 
-    public Task<DoseConfirmation?> ConfirmDoseAsync(
+    public async Task<DoseConfirmation?> ConfirmDoseAsync(
         Guid residentId,
         Guid scheduleId,
         DateOnly date,
-        CancellationToken cancellationToken = default) =>
-        care.ConfirmDoseAsync(residentId, scheduleId, date, cancellationToken);
+        CancellationToken cancellationToken = default,
+        string? confirmedBy = null)
+    {
+        var confirmation = await care.ConfirmDoseAsync(
+            residentId,
+            scheduleId,
+            date,
+            cancellationToken);
+
+        if (confirmation is not null)
+        {
+            notifier?.DoseConfirmed(
+                residentId,
+                scheduleId,
+                date,
+                confirmation.ConfirmedAt,
+                confirmedBy);
+        }
+
+        return confirmation;
+    }
 }

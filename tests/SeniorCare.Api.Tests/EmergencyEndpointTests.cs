@@ -1,4 +1,6 @@
-﻿using System.Net;
+using SeniorCare.Api.App.Repositories.Care;
+using SeniorCare.Api.App.Models.Care;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
@@ -50,6 +52,14 @@ public sealed class EmergencyEndpointTests
                     .WithWebHostBuilder(builder =>
                     {
                         builder.UseEnvironment("Testing");
+
+                        builder.ConfigureServices(services =>
+                        {
+                            services.RemoveAll<ICareRepository>();
+                            services.AddSingleton<ICareRepository>(
+                                new CareEndpointTests.FakeCareRepository(
+                                    Array.Empty<Resident>()));
+                        });
 
                         builder.ConfigureServices(services =>
                         {

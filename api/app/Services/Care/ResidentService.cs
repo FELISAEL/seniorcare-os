@@ -45,6 +45,12 @@ public sealed class ResidentService(ICareRepository residents)
         CancellationToken cancellationToken = default) =>
         residents.FindResidentByUsernameAsync(username, cancellationToken);
 
+    public Task<Resident?> UpdateFamilyEmailAsync(
+        Guid residentId,
+        string? familyEmail,
+        CancellationToken cancellationToken = default) =>
+        residents.UpdateFamilyEmailAsync(residentId, familyEmail, cancellationToken);
+
     public Task<Resident> CreateAsync(
         CreateResidentRequest request,
         CancellationToken cancellationToken = default) =>
