@@ -1,0 +1,69 @@
+/* ---------- Indicadores del resumen ----------
+   Tarjetas compactas en una fila: etiqueta con su color de módulo, cifra protagonista
+   y detalle. El color queda en un acento pequeño, no en un borde grueso. */
+
+.stat-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.stat-card {
+  --accent: var(--brand);
+
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.stat-card--warning {
+  --accent: var(--red);
+}
+
+.stat-card--success {
+  --accent: var(--green);
+}
+
+.stat-card--info {
+  --accent: var(--brand-2);
+}
+
+.stat-card span {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.stat-card span::before {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--accent);
+  content: "";
+}
+
+.stat-card > strong {
+  margin: 0.4rem 0 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-card .stat-time {
+  font-size: 1.5rem;
+  line-height: 1.5;
+}
+
+.stat-card small {
+  color: var(--muted);
+  font-size: 0.88rem;
+}

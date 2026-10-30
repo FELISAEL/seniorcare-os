@@ -1,4 +1,13 @@
+/* SeniorCare OS · Panel del cuidador
+   Base compartida del equipo de cuidado y vistas por pestañas; encima, el diseño propio
+   del cuidador (archivos de esta carpeta), que no afecta a Administración ni a Familia. */
 @import url("../care-team/app.css");
 @import url("../administracion/vistas.css");
 @import url("../administracion/plan-residente.css");
-@import url("../administracion/resumen.css");
+@import url("./base.css");
+@import url("./layout.css");
+@import url("./resumen.css");
+@import url("./alertas.css");
+@import url("./adultos-mayores.css");
+@import url("./analitica.css");
+@import url("./responsive.css");
