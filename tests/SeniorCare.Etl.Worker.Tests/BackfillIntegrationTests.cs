@@ -34,6 +34,24 @@ public sealed class BackfillIntegrationTests
     }
 
     [PostgresFact]
+    public async Task TomaConFechaInvalida_NoAdelantaElInicioNiInventaDias()
+    {
+        // Caso de la auditoría: una confirmación fechada en 2020 (antes de existir el residente)
+        // y otra en el futuro no deben extender la recuperación a días sin actividad real.
+        await using var db = await SeededAsync();
+        await db.AddTakenDoseAsync(Resident, new DateOnly(2020, 1, 1));
+        await db.AddTakenDoseAsync(Resident, new DateOnly(2099, 1, 1));
+
+        var (processor, store) = Create(db);
+        await using var _ = store;
+        Assert.Equal(Oct28, await store.FindDataStartAsync(CancellationToken.None));
+
+        var result = await processor.RunBackfillAsync(Oct30, CancellationToken.None);
+
+        Assert.Equal([Oct28, Oct29], result.Written);
+    }
+
+    [PostgresFact]
     public async Task DiaConMetricasExistentes_NoSeModifica()
     {
         await using var db = await SeededAsync();

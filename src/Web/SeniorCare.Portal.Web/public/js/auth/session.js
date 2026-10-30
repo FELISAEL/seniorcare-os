@@ -49,10 +49,13 @@
       const response = await fetch("/api/identity/me", {
         headers: { Authorization: `Bearer ${session.token}` }
       });
-      if (!response.ok) {
+      // Solo una respuesta del servidor sobre el token (4xx) cierra la sesión. Si la API está
+      // caída (5xx, p. ej. 502 de Nginx) se conserva la sesión local para poder reintentar.
+      if (response.status >= 400 && response.status < 500) {
         clear();
         return null;
       }
+      if (!response.ok) return session;
 
       const profile = await response.json();
       sessionStorage.setItem(keys.user, JSON.stringify(profile));
@@ -107,18 +110,25 @@
 
     if (response.status === 401) {
       redirectToLogin("expirada");
-      throw new Error("Tu sesión terminó.");
+      throw httpError(401, "Tu sesión terminó.");
     }
 
     if (response.status === 403) {
-      throw new Error("Tu rol no tiene permiso para realizar esta operación.");
+      throw httpError(403, "Tu rol no tiene permiso para realizar esta operación.");
     }
 
     if (!response.ok) {
-      throw new Error(payload?.message || "No se pudo completar la operación.");
+      throw httpError(response.status, payload?.message || "No se pudo completar la operación.");
     }
 
     return payload;
+  }
+
+  // El código HTTP permite distinguir una caída del servidor (reintentar) de un rechazo.
+  function httpError(status, message) {
+    const error = new Error(message);
+    error.status = status;
+    return error;
   }
 
   async function logout() {

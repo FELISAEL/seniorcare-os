@@ -49,6 +49,7 @@ function bindEvents() {
   document.querySelector("#logoutButton").addEventListener("click", SeniorCareAuth.logout);
   window.addEventListener("online", () => {
     updateConnectionStatus();
+    flushSosQueue({ force: true });
     flushOfflineQueue();
     loadMedications();
   });

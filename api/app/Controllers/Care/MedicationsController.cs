@@ -103,6 +103,7 @@ public static class MedicationsController
         ClaimsPrincipal principal,
         ResidentAccessService access,
         MedicationService medications,
+        IConfiguration configuration,
         CancellationToken cancellationToken)
     {
         if (!access.CanConfirmDose(principal, residentId))
@@ -110,8 +111,18 @@ public static class MedicationsController
             return Results.Forbid();
         }
 
-        var localDate =
-            date ?? DateOnly.FromDateTime(DateTime.Now);
+        var today = DateOnly.FromDateTime(DateTime.Now);
+        var localDate = date ?? today;
+
+        var invalidDate = DoseConfirmationPolicy.Validate(
+            localDate,
+            today,
+            DoseConfirmationPolicy.ReadMaxDaysLate(configuration));
+
+        if (invalidDate is not null)
+        {
+            return Results.BadRequest(new { message = invalidDate });
+        }
 
         var confirmation = await medications.ConfirmDoseAsync(
             residentId,
@@ -123,7 +134,7 @@ public static class MedicationsController
         return confirmation is null
             ? Results.NotFound(new
             {
-                message = "No se encontró el horario indicado."
+                message = "No se encontró el horario indicado para esa fecha."
             })
             : Results.Ok(confirmation);
     }

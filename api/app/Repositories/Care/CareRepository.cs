@@ -348,16 +348,29 @@ public sealed class CareRepository : ICareRepository, IAsyncDisposable
             INNER JOIN medications m ON m.id = s.medication_id
             WHERE s.id = $2
               AND m.resident_id = $3
+              AND m.is_active = true
+              -- No se registran tomas de días anteriores a que existiera el medicamento.
+              AND m.created_at < $5
             ON CONFLICT (schedule_id, scheduled_date)
-            DO UPDATE SET status = 'taken', confirmed_at = now()
+            -- Repetir la confirmación (p. ej. un reintento de la cola) conserva la hora original.
+            DO UPDATE SET status = 'taken',
+                          confirmed_at = CASE WHEN dose_events.status = 'taken'
+                                              THEN dose_events.confirmed_at
+                                              ELSE now() END
             RETURNING schedule_id, resident_id, scheduled_date, status, confirmed_at;
             """;
+
+        // Fin del día local pedido, como instante UTC (Npgsql exige UTC en timestamptz).
+        var nextDay = localDate.AddDays(1).ToDateTime(TimeOnly.MinValue);
+        var dayEnd = new DateTimeOffset(nextDay, TimeZoneInfo.Local.GetUtcOffset(nextDay))
+            .ToUniversalTime();
 
         await using var command = _dataSource.CreateCommand(sql);
         command.Parameters.AddWithValue(Guid.NewGuid());
         command.Parameters.AddWithValue(scheduleId);
         command.Parameters.AddWithValue(residentId);
         command.Parameters.AddWithValue(localDate);
+        command.Parameters.AddWithValue(dayEnd);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
 
         return await reader.ReadAsync(cancellationToken)

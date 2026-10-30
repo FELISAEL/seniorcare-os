@@ -138,8 +138,9 @@ public sealed class EmergencyEndpointTests
             CancellationToken cancellationToken = default) =>
             Task.CompletedTask;
 
-        public Task<Alert> CreateAsync(
-            CreateAlertRequest request,
+        public Task<AlertCreationResult> CreateAsync(
+            Alert alert,
+            DateTimeOffset? reportedAt,
             CancellationToken cancellationToken = default) =>
             throw new NotSupportedException();
 

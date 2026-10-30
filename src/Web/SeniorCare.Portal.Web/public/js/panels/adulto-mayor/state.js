@@ -16,5 +16,6 @@ const elements = {
   medicationList: document.querySelector("#medicationList"),
   emergencyDialog: document.querySelector("#emergencyDialog"),
   toast: document.querySelector("#toast"),
+  sosStatus: document.querySelector("#sosStatus"),
   toggleVoice: document.querySelector("#toggleVoice")
 };

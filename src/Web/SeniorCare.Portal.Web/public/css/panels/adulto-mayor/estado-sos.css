@@ -1,0 +1,107 @@
+/* Estado de entrega de emergencias: visible mientras un SOS no esté confirmado por el servidor. */
+
+.sos-status {
+  display: grid;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem 1.4rem;
+  border: 3px solid var(--emergency);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--ink);
+}
+
+.sos-status[hidden] {
+  display: none;
+}
+
+.sos-status h2 {
+  margin: 0;
+  color: var(--emergency-strong);
+  font-size: 1.35rem;
+}
+
+.sos-status p {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.sos-status__list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sos-status__list li {
+  padding: 0.7rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface-soft);
+}
+
+.sos-status__detail {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.sos-status__retry,
+.sos-status__dismiss {
+  min-height: 48px;
+  padding: 0.6rem 1.2rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sos-status__retry {
+  justify-self: start;
+  background: var(--emergency);
+  color: #fff;
+}
+
+.sos-status__retry:hover {
+  background: var(--emergency-strong);
+}
+
+.sos-status__dismiss {
+  margin-top: 0.5rem;
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.sos-status__retry:focus-visible,
+.sos-status__dismiss:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--focus-halo);
+}
+
+.sos-status--confirmed {
+  border-color: var(--medicine);
+}
+
+.sos-status--confirmed h2 {
+  color: var(--medicine-strong);
+}
+
+body.high-contrast .sos-status {
+  border-color: #000;
+  box-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .sos-status {
+    padding: 1rem;
+  }
+
+  .sos-status__retry {
+    justify-self: stretch;
+  }
+}

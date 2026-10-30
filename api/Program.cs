@@ -4,6 +4,8 @@ using SeniorCare.Api.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
+InsecureSecretGuard.EnsureSafe(builder.Configuration);
+
 builder.AddSeniorCareServiceDefaults("seniorcare-api");
 
 builder.Services.AddSeniorCareAuthentication(

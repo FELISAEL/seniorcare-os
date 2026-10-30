@@ -52,8 +52,21 @@ public static class AlertsController
             return Results.Forbid();
         }
 
-        var created = await alerts.CreateAsync(request, cancellationToken);
-        return Results.Created($"/api/emergencies/alerts/{created.Id}", created);
+        var result = await alerts.CreateAsync(request, cancellationToken);
+
+        // El identificador del dispositivo pertenece a otro residente: no se revela ese aviso.
+        if (result.Alert.ResidentId != request.ResidentId)
+        {
+            return Results.Conflict(new
+            {
+                message = "El identificador del aviso ya fue utilizado."
+            });
+        }
+
+        // 201 si es nuevo; 200 con el mismo aviso si es un reintento ya registrado.
+        return result.Created
+            ? Results.Created($"/api/emergencies/alerts/{result.Alert.Id}", result.Alert)
+            : Results.Ok(result.Alert);
     }
 
     private static async Task<IResult> ListForResidentAsync(

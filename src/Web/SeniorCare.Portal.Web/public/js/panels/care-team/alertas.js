@@ -6,7 +6,7 @@ async function loadAlerts() {
     const typeLabel = alert.type === "emergency" ? "SOS" : "Asistencia";
     return `<article class="alert-item ${alert.type === "assistance" ? "alert-item--assistance" : ""}">
       <span class="alert-badge">${typeLabel}</span>
-      <div class="alert-copy"><h3>${escapeHtml(alert.residentName)}</h3><p>${escapeHtml(alert.message)} · ${escapeHtml(formatDateTime(alert.createdAt))}</p></div>
+      <div class="alert-copy"><h3>${escapeHtml(alert.residentName)}</h3><p>${escapeHtml(alert.message)} · ${escapeHtml(formatDateTime(alert.createdAt))}${alert.delayed ? ` · <strong>Llegó con retraso: recibida ${escapeHtml(formatDateTime(alert.receivedAt))}</strong>` : ""}</p></div>
       <div class="alert-actions">${alert.status === "active" ? `<button data-alert-action="acknowledged" data-alert-id="${alert.id}">Atender</button>` : ""}<button data-alert-action="resolved" data-alert-id="${alert.id}">Resolver</button></div>
     </article>`;
   }).join("");

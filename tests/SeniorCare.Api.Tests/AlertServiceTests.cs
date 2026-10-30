@@ -94,23 +94,20 @@ public sealed class AlertServiceTests
             CancellationToken cancellationToken = default) =>
             Task.CompletedTask;
 
-        public Task<Alert> CreateAsync(
-            CreateAlertRequest request,
+        public Task<AlertCreationResult> CreateAsync(
+            Alert alert,
+            DateTimeOffset? reportedAt,
             CancellationToken cancellationToken = default)
         {
-            LastCreateRequest = request;
+            LastCreateRequest = new CreateAlertRequest(
+                alert.ResidentId,
+                alert.ResidentName,
+                alert.Type,
+                alert.Message,
+                alert.ClientRequestId,
+                alert.CreatedAt);
 
-            return Task.FromResult(
-                new Alert(
-                    Guid.NewGuid(),
-                    request.ResidentId,
-                    request.ResidentName,
-                    request.Type,
-                    request.Message,
-                    "active",
-                    DateTimeOffset.UtcNow,
-                    null,
-                    null));
+            return Task.FromResult(new AlertCreationResult(alert, true));
         }
 
         public Task<IReadOnlyList<Alert>> ListActiveAsync(

@@ -51,11 +51,24 @@ function openMedications() {
 
 async function confirmDose(scheduleId) {
   try {
-    await api(`/api/care/residents/${state.resident.id}/medications/${scheduleId}/confirm`, { method: "POST", queueWhenOffline: true });
+    // La fecha local del momento en que se tocó viaja con la confirmación: si queda en cola
+    // y se envía después de medianoche, se registra en el día correcto.
+    const date = localDateIso(new Date());
+    const result = await api(`/api/care/residents/${state.resident.id}/medications/${scheduleId}/confirm?date=${date}`, { method: "POST", queueWhenOffline: true });
+    if (result?.queued) {
+      showToast("Confirmación guardada en este equipo. Se enviará cuando vuelva la conexión.");
+      speak("Confirmación guardada. Se enviará cuando vuelva la conexión.");
+      return;
+    }
     showToast("Medicamento confirmado. Gracias.");
     speak("Medicamento confirmado.");
     await loadMedications();
   } catch (error) {
     showToast(error.message, true);
   }
+}
+
+function localDateIso(date) {
+  const pad = (value) => String(value).padStart(2, "0");
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
 }

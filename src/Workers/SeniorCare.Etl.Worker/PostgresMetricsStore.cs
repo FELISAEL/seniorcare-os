@@ -190,7 +190,13 @@ public sealed class PostgresMetricsStore : IMetricsStore, IAsyncDisposable
             """
             SELECT LEAST(
                 (SELECT MIN((created_at AT TIME ZONE $1)::date) FROM residents),
-                (SELECT MIN(scheduled_date) FROM dose_events)
+                -- Una toma fechada antes de que existiera su residente, o después de haberse
+                -- confirmado, es inválida: no puede adelantar el inicio de la recuperación.
+                (SELECT MIN(d.scheduled_date)
+                 FROM dose_events d
+                 INNER JOIN residents r ON r.id = d.resident_id
+                 WHERE d.scheduled_date >= (r.created_at AT TIME ZONE $1)::date
+                   AND d.scheduled_date <= (d.confirmed_at AT TIME ZONE $1)::date)
             );
             """;
         const string emergencySql =

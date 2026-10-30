@@ -19,6 +19,14 @@ async function initialize() {
   if (localStorage.getItem("seniorcare.highContrast") === "on") document.body.classList.add("high-contrast");
 
   updateVoiceButton();
+
+  // Las emergencias pendientes se muestran y reintentan aunque no cargue el resto del panel.
+  bindSosStatusEvents();
+  recoverInterruptedSos();
+  migrateLegacyAlerts();
+  renderSosStatus();
+  flushSosQueue();
+
   await showApplication();
   await flushOfflineQueue();
 }

@@ -1,4 +1,6 @@
-name: seniorcare-os
+# Proyecto Docker de esta versión. "seniorcare-os" es el sistema anterior (mismos puertos,
+# otro volumen): un "docker compose up" sin -p no debe volver a iniciarlo.
+name: seniorcare-nuevo
 
 x-dotnet-service: &dotnet-service
   restart: unless-stopped
@@ -77,6 +79,9 @@ services:
       SEED_FAMILY_PASSWORD: ${SEED_FAMILY_PASSWORD:?Defina SEED_FAMILY_PASSWORD en .env}
 
       VIDEO_PROVIDER_BASE_URL: ${VIDEO_PROVIDER_BASE_URL:-https://meet.jit.si/}
+
+      # Días anteriores a hoy que se aceptan al confirmar una dosis (0–7). Ver docs/ejecucion-local.md.
+      DOSE_CONFIRMATION_MAX_DAYS_LATE: ${DOSE_CONFIRMATION_MAX_DAYS_LATE:-1}
 
       SMTP_ENABLED: ${SMTP_ENABLED:-false}
       SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}

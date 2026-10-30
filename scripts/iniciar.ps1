@@ -1,4 +1,10 @@
+﻿param(
+    # Solo comprueba proyecto, configuración y secretos; no construye ni inicia nada.
+    [switch]$SoloVerificar
+)
+
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'comun.ps1')
 
 $projectRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 Push-Location $projectRoot
@@ -13,13 +19,29 @@ try {
         throw 'Docker Desktop está instalado, pero no está iniciado.'
     }
 
-    if (-not (Test-Path '.env')) {
-        Copy-Item '.env.example' '.env'
-        Write-Host 'Se creó la configuración local .env.' -ForegroundColor Cyan
+    $project = Get-SeniorCareProject
+    Write-Host "Proyecto Docker: $project" -ForegroundColor Cyan
+
+    # El sistema anterior usa los mismos puertos. No se toca: solo se avisa y se detiene el inicio.
+    $legacyRunning = docker ps --quiet --filter "label=com.docker.compose.project=$($script:LegacyProject)"
+    if ($legacyRunning) {
+        throw "El sistema anterior ('$($script:LegacyProject)') está en ejecución y usa los mismos puertos. Este script no lo detiene; detenelo desde su propia instalación y volvé a intentar."
     }
 
+    if ($SoloVerificar) {
+        if (-not (Test-Path '.env')) { throw 'Falta .env: ejecutá scripts/configurar-entorno.ps1.' }
+        $insecure = Get-InsecureSecretKeys (Read-EnvLines (Join-Path $projectRoot '.env'))
+        if ($insecure.Count -gt 0) { throw ("Secretos de ejemplo o publicados en .env: " + ($insecure -join ', ')) }
+        docker compose -p $project config --quiet
+        if ($LASTEXITCODE -ne 0) { throw 'La configuración de Docker Compose no es válida.' }
+        Write-Host "Verificación correcta: se iniciaría el proyecto '$project' con secretos propios." -ForegroundColor Green
+        return
+    }
+
+    & (Join-Path $PSScriptRoot 'configurar-entorno.ps1') -Directorio $projectRoot -Proyecto $project
+
     Write-Host 'Construyendo e iniciando SeniorCare OS...' -ForegroundColor Cyan
-    docker compose up --build --detach
+    docker compose -p $project up --build --detach
     if ($LASTEXITCODE -ne 0) {
         throw 'Docker no pudo iniciar los servicios.'
     }
@@ -42,7 +64,7 @@ try {
         Write-Host 'SeniorCare OS está listo.' -ForegroundColor Green
     }
     else {
-        Write-Host 'Los contenedores iniciaron; revisá docker compose ps si una API continúa inicializando.' -ForegroundColor Yellow
+        Write-Host "Los contenedores iniciaron; revisá docker compose -p $project ps si la API continúa inicializando (docker compose -p $project logs seniorcare-api)." -ForegroundColor Yellow
         exit 1
     }
 
