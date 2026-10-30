@@ -34,3 +34,6 @@ Thumbs.db
 # SeniorCare OS: artefactos de construcción de la ISO
 /os/.build/
 /artifacts/
+
+# Respaldos locales de bases de datos (nunca se publican)
+backups/

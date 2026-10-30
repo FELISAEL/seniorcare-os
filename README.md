@@ -77,10 +77,31 @@ Portal público y login único:
 - <http://localhost:7000/health> (salud de la API unificada)
 - Monitoreo (perfil `monitoring`): <http://localhost:18888>
 
-Componentes opcionales por perfil de Docker Compose:
+El ETL de analítica (`etl-worker`) se inicia junto con el resto del sistema y
+actualiza las métricas cada 30 segundos (`ETL_INTERVAL_SECONDS`).
+
+Recuperación histórica (días sin métricas), desactivada por defecto:
+
+| Variable | Valor por defecto | Uso |
+| --- | --- | --- |
+| `ETL_BACKFILL_ENABLED` | `false` | Activa la recuperación de días anteriores sin métricas. |
+| `ETL_BACKFILL_DAYS` | `30` | Ventana hacia atrás (máximo 365). |
+| `ETL_BACKFILL_BATCH_DAYS` | `7` | Días procesados por ciclo, para no cargar PostgreSQL. |
+| `ETL_TIME_ZONE` | `America/Guatemala` | Zona con la que se asigna cada evento a su fecha. |
+
+Un día recuperado se guarda como `partial`: tomas confirmadas y alertas creadas ese día
+son datos reales, pero las tomas programadas quedan vacías porque el plan de medicamentos
+no conserva historial. Los paneles muestran «plan no disponible» y la adherencia como «—».
+Solo se escriben fechas sin métricas (nunca se reescribe una existente) y nunca días
+anteriores al primer dato de origen.
+
+Las pruebas de integración del ETL necesitan un PostgreSQL aislado (nunca el del sistema):
+`SENIORCARE_ETL_TEST_POSTGRES="Host=127.0.0.1;Port=<puerto>;Username=postgres;Password=<clave>;Database=postgres"`.
+Sin esa variable se omiten; con ella se niegan a usar un servidor que tenga las bases de SeniorCare.
+
+Componente opcional por perfil de Docker Compose:
 
 ```powershell
-docker compose --profile analytics up -d etl-worker
 docker compose --profile monitoring up -d aspire-dashboard
 ```
 

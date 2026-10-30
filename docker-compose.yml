@@ -98,8 +98,9 @@ services:
     ports:
       - "7000:8080"
 
+  # Forma parte del arranque normal: los paneles de Administración y Cuidador muestran
+  # sus métricas (adherencia, último ETL). Una sola instancia; escribe solo en analytics_db.
   etl-worker:
-    profiles: ["analytics"]
     restart: unless-stopped
     build:
       context: .
@@ -112,6 +113,11 @@ services:
       ConnectionStrings__EmergencyDatabase: Host=postgres;Port=5432;Database=emergency_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
       ConnectionStrings__AnalyticsDatabase: Host=postgres;Port=5432;Database=analytics_db;Username=${POSTGRES_USER:-seniorcare};Password=${POSTGRES_PASSWORD:?Defina POSTGRES_PASSWORD en .env}
       ETL_INTERVAL_SECONDS: ${ETL_INTERVAL_SECONDS:-30}
+      ETL_TIME_ZONE: ${ETL_TIME_ZONE:-America/Guatemala}
+      # Recuperación histórica (días sin métricas): apagada hasta aprobarla sobre la base real.
+      ETL_BACKFILL_ENABLED: ${ETL_BACKFILL_ENABLED:-false}
+      ETL_BACKFILL_DAYS: ${ETL_BACKFILL_DAYS:-30}
+      ETL_BACKFILL_BATCH_DAYS: ${ETL_BACKFILL_BATCH_DAYS:-7}
       TZ: America/Guatemala
     depends_on:
       postgres:

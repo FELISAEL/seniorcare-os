@@ -28,6 +28,9 @@ public sealed class AnalyticsRepository : IAnalyticsRepository, IAsyncDisposable
                 resolved_alerts integer NOT NULL,
                 etl_run_at timestamptz NOT NULL
             );
+            ALTER TABLE daily_metrics ALTER COLUMN scheduled_doses DROP NOT NULL;
+            ALTER TABLE daily_metrics
+                ADD COLUMN IF NOT EXISTS data_quality varchar(16) NOT NULL DEFAULT 'complete';
             """;
 
         await using var command = _dataSource.CreateCommand(sql);
@@ -41,7 +44,8 @@ public sealed class AnalyticsRepository : IAnalyticsRepository, IAsyncDisposable
         const string sql =
             """
             SELECT metric_date, scheduled_doses, taken_doses,
-                   assistance_alerts, emergency_alerts, resolved_alerts, etl_run_at
+                   assistance_alerts, emergency_alerts, resolved_alerts, etl_run_at,
+                   data_quality
             FROM daily_metrics
             WHERE metric_date = $1;
             """;
@@ -61,7 +65,8 @@ public sealed class AnalyticsRepository : IAnalyticsRepository, IAsyncDisposable
         const string sql =
             """
             SELECT metric_date, scheduled_doses, taken_doses,
-                   assistance_alerts, emergency_alerts, resolved_alerts, etl_run_at
+                   assistance_alerts, emergency_alerts, resolved_alerts, etl_run_at,
+                   data_quality
             FROM daily_metrics
             ORDER BY metric_date DESC
             LIMIT $1;
@@ -82,12 +87,13 @@ public sealed class AnalyticsRepository : IAnalyticsRepository, IAsyncDisposable
     private static DailyMetric ReadMetric(NpgsqlDataReader reader) =>
         new(
             reader.GetFieldValue<DateOnly>(0),
-            reader.GetInt32(1),
+            reader.IsDBNull(1) ? null : reader.GetInt32(1),
             reader.GetInt32(2),
             reader.GetInt32(3),
             reader.GetInt32(4),
             reader.GetInt32(5),
-            reader.GetFieldValue<DateTimeOffset>(6));
+            reader.GetFieldValue<DateTimeOffset>(6),
+            reader.GetString(7));
 
     public ValueTask DisposeAsync() => _dataSource.DisposeAsync();
 }

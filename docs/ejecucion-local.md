@@ -28,10 +28,11 @@ devuelve el panel correspondiente al rol.
 .\DETENER_SENIORCARE.cmd   # o: powershell -File .\scripts\detener.ps1
 ```
 
-Perfiles opcionales de Docker Compose:
+El ETL de analítica (`etl-worker`) se inicia junto con el resto del sistema.
+
+Perfil opcional de Docker Compose:
 
 ```powershell
-docker compose --profile analytics up -d etl-worker
 docker compose --profile monitoring up -d aspire-dashboard
 ```
 

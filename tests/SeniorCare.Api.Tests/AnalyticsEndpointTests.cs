@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
-using System.Net.Http.Json;
+using System.Text.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +21,66 @@ public sealed class AnalyticsEndpointTests
     [Fact]
     public async Task Recent_WithAdminRole_ReturnsMetrics()
     {
+        var metric = new DailyMetric(
+            new DateOnly(2026, 9, 2),
+            10,
+            8,
+            2,
+            1,
+            1,
+            DateTimeOffset.UtcNow);
+
+        var (status, body) = await GetRecentAsync([metric]);
+
+        Assert.Equal(HttpStatusCode.OK, status);
+
+        var metrics = JsonSerializer.Deserialize<List<DailyMetric>>(
+            body,
+            JsonSerializerOptions.Web);
+
+        Assert.NotNull(metrics);
+        Assert.Single(metrics!);
+
+        Assert.Equal(
+            new DateOnly(2026, 9, 2),
+            metrics[0].MetricDate);
+
+        Assert.Equal(10, metrics[0].ScheduledDoses);
+        Assert.Equal(8, metrics[0].TakenDoses);
+        Assert.Equal(80m, metrics[0].AdherencePercentage);
+        Assert.Equal("complete", metrics[0].DataQuality);
+    }
+
+    [Fact]
+    public async Task Recent_WithPartialDay_ReturnsNullPlanAndAdherence()
+    {
+        var metric = new DailyMetric(
+            new DateOnly(2026, 10, 29),
+            null,
+            0,
+            1,
+            1,
+            0,
+            DateTimeOffset.UtcNow,
+            "partial");
+
+        var (status, body) = await GetRecentAsync([metric]);
+
+        Assert.Equal(HttpStatusCode.OK, status);
+
+        using var json = JsonDocument.Parse(body);
+        var item = json.RootElement[0];
+
+        Assert.Equal(JsonValueKind.Null, item.GetProperty("scheduledDoses").ValueKind);
+        Assert.Equal(JsonValueKind.Null, item.GetProperty("adherencePercentage").ValueKind);
+        Assert.Equal(0, item.GetProperty("takenDoses").GetInt32());
+        Assert.Equal(1, item.GetProperty("emergencyAlerts").GetInt32());
+        Assert.Equal("partial", item.GetProperty("dataQuality").GetString());
+    }
+
+    private static async Task<(HttpStatusCode Status, string Body)> GetRecentAsync(
+        IReadOnlyList<DailyMetric> metrics)
+    {
         const string variable = "JWT_SECRET";
         var previousValue =
             Environment.GetEnvironmentVariable(variable);
@@ -31,17 +91,8 @@ public sealed class AnalyticsEndpointTests
 
         try
         {
-            var metric = new DailyMetric(
-                new DateOnly(2026, 9, 2),
-                10,
-                8,
-                2,
-                1,
-                1,
-                DateTimeOffset.UtcNow);
-
             var repository =
-                new FakeAnalyticsRepository([metric]);
+                new FakeAnalyticsRepository(metrics);
 
             await using var factory =
                 new WebApplicationFactory<Program>()
@@ -92,23 +143,7 @@ public sealed class AnalyticsEndpointTests
             using var response = await client.GetAsync(
                 "/api/analytics/recent?days=7");
 
-            Assert.Equal(
-                HttpStatusCode.OK,
-                response.StatusCode);
-
-            var metrics = await response.Content
-                .ReadFromJsonAsync<List<DailyMetric>>();
-
-            Assert.NotNull(metrics);
-            Assert.Single(metrics!);
-
-            Assert.Equal(
-                new DateOnly(2026, 9, 2),
-                metrics[0].MetricDate);
-
-            Assert.Equal(10, metrics[0].ScheduledDoses);
-            Assert.Equal(8, metrics[0].TakenDoses);
-            Assert.Equal(80m, metrics[0].AdherencePercentage);
+            return (response.StatusCode, await response.Content.ReadAsStringAsync());
         }
         finally
         {

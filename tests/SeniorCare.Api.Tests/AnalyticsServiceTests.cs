@@ -55,9 +55,34 @@ public sealed class AnalyticsServiceTests
         Assert.Equal(0m, metric.AdherencePercentage);
     }
 
+    [Fact]
+    public void AdherencePercentage_PartialDayWithoutPlan_ReturnsNullInsteadOfZero()
+    {
+        var metric = CreateMetric(
+            scheduledDoses: null,
+            takenDoses: 2,
+            dataQuality: "partial");
+
+        Assert.Null(metric.ScheduledDoses);
+        Assert.Null(metric.AdherencePercentage);
+        Assert.Equal(2, metric.TakenDoses);
+        Assert.Equal("partial", metric.DataQuality);
+    }
+
+    [Fact]
+    public void DataQuality_DefaultsToComplete()
+    {
+        var metric = CreateMetric(
+            scheduledDoses: 2,
+            takenDoses: 2);
+
+        Assert.Equal("complete", metric.DataQuality);
+    }
+
     private static DailyMetric CreateMetric(
-        int scheduledDoses,
-        int takenDoses) =>
+        int? scheduledDoses,
+        int takenDoses,
+        string dataQuality = "complete") =>
         new(
             new DateOnly(2026, 9, 2),
             scheduledDoses,
@@ -65,7 +90,8 @@ public sealed class AnalyticsServiceTests
             0,
             0,
             0,
-            DateTimeOffset.UtcNow);
+            DateTimeOffset.UtcNow,
+            dataQuality);
 
     private sealed class FakeAnalyticsRepository : IAnalyticsRepository
     {
