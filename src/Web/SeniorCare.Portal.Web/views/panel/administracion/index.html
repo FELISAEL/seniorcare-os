@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#102a43"><title>Administración | SeniorCare OS</title><link rel="stylesheet" href="/css/panels/administracion/app.css"></head>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0f3f37"><title>Administración | SeniorCare OS</title><link rel="stylesheet" href="/css/panels/administracion/app.css"></head>
 <body data-expected-role="admin">
   <div class="dashboard" id="dashboard">
-    <aside class="sidebar">
+    <div class="mobile-bar">
+      <div class="mobile-brand"><span class="logo" aria-hidden="true">SC</span><div><strong>SeniorCare</strong><span>Administración</span></div></div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="adminSidebar">
+        <svg class="menu-toggle__open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="menu-toggle__close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <aside class="sidebar" id="adminSidebar">
       <div class="sidebar-brand"><span class="logo" aria-hidden="true">SC</span><div><strong>SeniorCare</strong><span>Administración</span></div></div>
       <nav aria-label="Navegación principal"><a class="nav-link is-active" href="#overview">Resumen</a><a class="nav-link" href="#alerts">Alertas</a><a class="nav-link" href="#residents">Adultos mayores</a><a class="nav-link" href="#analytics">Analítica</a><a class="nav-link" href="#users">Usuarios</a></nav>
       <button class="logout" id="logoutButton" type="button">Cerrar sesión</button>
     </aside>
+    <div class="drawer-overlay" id="menuOverlay" hidden></div>
     <main class="content">
       <header class="page-header" id="overview" data-view="overview"><div><p class="eyebrow">Centro de administración</p><h1>Hola, <span id="operatorName">Usuario</span></h1><p>Estado general de personas adultas mayores, medicamentos y alertas.</p></div><div class="system-status"><span class="status-dot"></span>Sistema conectado</div></header>
       <section class="stat-grid" aria-label="Indicadores principales" data-view="overview"><article class="stat-card"><span>Adultos mayores</span><strong id="residentCount">0</strong><small>perfiles registrados</small></article><article class="stat-card stat-card--warning"><span>Alertas activas</span><strong id="alertCount">0</strong><small>requieren seguimiento</small></article><article class="stat-card stat-card--success"><span>Adherencia hoy</span><strong id="adherence">0%</strong><small id="doseSummary">0 de 0 tomas</small></article><article class="stat-card stat-card--info"><span>Último ETL</span><strong class="stat-time" id="etlTime">Pendiente</strong><small>actualización analítica</small></article></section>
@@ -100,7 +108,7 @@
 
   <dialog class="confirm-dialog" id="deleteUserDialog">
     <form method="dialog">
-      <div class="dialog-icon" aria-hidden="true">🗑️</div>
+      <div class="dialog-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v5M14 11v5"/></svg></div>
       <h2>¿Eliminar este usuario?</h2>
       <p id="deleteUserMessage">Esta acción no se puede deshacer.</p>
       <div class="dialog-actions">
@@ -135,4 +143,5 @@
   <script src="/js/panels/administracion/vistas.js" defer></script>
   <script src="/js/panels/administracion/plan-residente.js" defer></script>
   <script src="/js/panels/administracion/registro-residente.js" defer></script>
+  <script src="/js/panels/administracion/menu.js" defer></script>
 </body></html>

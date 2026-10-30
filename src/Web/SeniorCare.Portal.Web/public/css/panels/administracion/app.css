@@ -1,6 +1,18 @@
+/* SeniorCare OS · Panel de Administración
+   Base compartida del equipo de cuidado y las vistas por pestañas (vistas.css y
+   plan-residente.css también los usa el Cuidador, por eso no se modifican); encima,
+   el diseño propio de Administración, separado por componentes. */
 @import url("../care-team/app.css");
-@import url("./usuarios.css");
 @import url("./vistas.css");
 @import url("./plan-residente.css");
+@import url("./base.css");
+@import url("./layout.css");
 @import url("./resumen.css");
+@import url("./alertas.css");
+@import url("./adultos-mayores.css");
+@import url("./formularios.css");
 @import url("./registro-residente.css");
+@import url("./analitica.css");
+@import url("./usuarios.css");
+@import url("./navegacion-movil.css");
+@import url("./responsive.css");

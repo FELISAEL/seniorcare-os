@@ -1,0 +1,186 @@
+/* ---------- Residentes ---------- */
+
+.resident-list {
+  gap: 0.75rem;
+}
+
+.resident-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+/* Ícono de persona en lugar de un avatar con iniciales (el nombre llega como texto libre). */
+.resident-item::before {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--icon-person) center / 24px no-repeat, var(--brand-soft);
+  content: "";
+}
+
+.resident-item.is-selected {
+  border-color: var(--brand-line);
+  background: var(--brand-tint);
+}
+
+.resident-item h3 {
+  font-size: 1.1rem;
+}
+
+.resident-item p {
+  margin-top: 0.15rem;
+  font-size: 0.95rem;
+}
+
+/* "Ver plan": botón secundario, integrado a la tarjeta. */
+.resident-item button {
+  min-height: 44px;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--brand-line);
+  border-radius: var(--radius-sm);
+  color: var(--brand-strong);
+  background: var(--surface);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.resident-item button:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+/* ---------- Plan de cuidado (vista y diálogo "Ver plan") ---------- */
+
+.plan-dialog::backdrop {
+  background: rgba(15, 63, 55, 0.55);
+}
+
+.schedule-list {
+  gap: 0.6rem;
+}
+
+.schedule-item {
+  grid-template-columns: 6.5rem minmax(0, 1fr) auto;
+  gap: 1.1rem;
+  padding: 0.9rem 1.1rem 0.9rem 0.9rem;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+/* La hora no se parte: «8:00 a. m.» queda en una sola línea dentro de su ficha. */
+.schedule-time {
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--brand-strong);
+  background: var(--brand-soft);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.schedule-item h3 {
+  font-size: 1rem;
+}
+
+.schedule-item p {
+  margin-top: 0.15rem;
+  font-size: 0.95rem;
+}
+
+.schedule-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  color: var(--amber-ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.schedule-status::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+  content: "";
+}
+
+.schedule-status.is-taken::before {
+  background: var(--green);
+}
+
+/* ---------- Agregar medicamento ---------- */
+
+.medication-form-wrapper {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+}
+
+/* El resumen del desplegable se presenta como botón secundario con ícono «+». */
+.medication-form-wrapper summary {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0.6rem 1.1rem 0.6rem 0.9rem;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--brand-line);
+  border-radius: var(--radius-sm);
+  color: var(--brand-strong);
+  background: var(--surface);
+  font-weight: 600;
+  list-style: none;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.medication-form-wrapper summary::-webkit-details-marker {
+  display: none;
+}
+
+.medication-form-wrapper summary::before {
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  content: "";
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.medication-form-wrapper summary:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.medication-form-wrapper[open] summary {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.medication-form-wrapper form {
+  max-width: 640px;
+  margin-top: 1rem;
+  padding: 0.25rem 1.25rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-soft);
+}
+
+.medication-form-wrapper label {
+  font-weight: 600;
+}
+
+.medication-form-wrapper input,
+.medication-form-wrapper textarea {
+  border-color: var(--field-border);
+}
+
+.medication-form-wrapper .button {
+  width: auto;
+  margin-top: 1.25rem;
+}

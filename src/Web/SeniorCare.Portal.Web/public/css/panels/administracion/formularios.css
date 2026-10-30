@@ -1,0 +1,61 @@
+/* ---------- Formularios de Administración ----------
+   «Registrar adulto mayor» y «Crear usuario» comparten la clase .admin-user-form:
+   etiqueta sobre campo, una sola columna de lectura cómoda y botón principal al final.
+   Los campos usan un borde de 3.2:1 sobre blanco, visible para todas las personas. */
+
+.admin-user-form {
+  display: grid;
+  max-width: 560px;
+  gap: 0;
+  margin-top: 1.25rem;
+}
+
+.admin-user-form label {
+  margin: 1rem 0 0.4rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.admin-user-form > label:first-child {
+  margin-top: 0.25rem;
+}
+
+.admin-user-form input,
+.admin-user-form select,
+.family-email-row input,
+.user-item-edit input,
+.user-item-edit select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--field-border);
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+}
+
+.admin-user-form select,
+.user-item-edit select {
+  padding-right: 2.25rem;
+}
+
+.admin-user-form .field-hint {
+  margin-top: 0.4rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.admin-user-form .button {
+  justify-self: start;
+  margin-top: 1.5rem;
+}
+
+.admin-user-form .form-message {
+  margin-top: 0.75rem;
+}
+
+.form-message.is-ok {
+  color: var(--brand);
+}

@@ -1,44 +1,69 @@
-/* Tarjetas de "Resumen" en cuadrícula 2x2, cuadradas y más grandes.
-   Aplica a los paneles de Administración y de Cuidador. */
+/* ---------- Indicadores del resumen ----------
+   Tarjetas compactas en una fila: etiqueta con su color de módulo, cifra protagonista
+   y detalle. El color queda en un acento pequeño, no en un borde grueso. */
 
-:is(body[data-expected-role="admin"], body[data-expected-role="caregiver"]) .stat-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1.4rem;
-  max-width: 720px;
+.stat-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-:is(body[data-expected-role="admin"], body[data-expected-role="caregiver"]) .stat-card {
-  aspect-ratio: 1 / 1;
+.stat-card {
+  --accent: var(--brand);
+
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  padding: 1.25rem 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.stat-card--warning {
+  --accent: var(--red);
+}
+
+.stat-card--success {
+  --accent: var(--green);
+}
+
+.stat-card--info {
+  --accent: var(--brand-2);
+}
+
+.stat-card span {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  border-top-width: 7px;
-  border-radius: 20px;
+  gap: 0.55rem;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
-:is(body[data-expected-role="admin"], body[data-expected-role="caregiver"]) .stat-card span {
-  font-size: 1.05rem;
+.stat-card span::before {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--accent);
+  content: "";
 }
 
-:is(body[data-expected-role="admin"], body[data-expected-role="caregiver"]) .stat-card > strong {
-  margin: 0.6rem 0 0.3rem;
-  font-size: 3.4rem;
+.stat-card > strong {
+  margin: 0.4rem 0 0;
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
-:is(body[data-expected-role="admin"], body[data-expected-role="caregiver"]) .stat-card .stat-time {
-  font-size: 1.6rem;
+.stat-card .stat-time {
+  font-size: 1.5rem;
+  line-height: 1.5;
 }
 
-:is(body[data-expected-role="admin"], body[data-expected-role="caregiver"]) .stat-card small {
-  font-size: 0.95rem;
-}
-
-@media (max-width: 720px) {
-  :is(body[data-expected-role="admin"], body[data-expected-role="caregiver"]) .stat-grid {
-    grid-template-columns: 1fr;
-    max-width: 420px;
-  }
+.stat-card small {
+  color: var(--muted);
+  font-size: 0.88rem;
 }
