@@ -1,14 +1,30 @@
-@media (max-width: 1050px) {
-  .topbar {
-    grid-template-columns: 1fr 1fr;
+@media (max-width: 1100px) {
+  /* La cápsula pasa debajo del residente para que el nombre conserve todo el ancho. */
+  .topbar__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+    padding: 1rem 0;
   }
 
-  .brand {
-    display: none;
+  .time-panel {
+    justify-self: start;
   }
 
   .action-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .action-card {
+    min-height: 230px;
+  }
+
+  .accessibility-bar button {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .bar-label {
+    text-align: center;
   }
 }
 
@@ -17,13 +33,63 @@
     font-size: 16px;
   }
 
-  .topbar {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
+  :root:has(body.large-text) {
+    font-size: 19px;
+  }
+
+  /* Residente y cápsula comparten fila cuando caben; si no (nombre largo, texto grande),
+     la cápsula pasa debajo, ocupa todo el ancho y sus datos vuelven a una sola fila. */
+  .topbar__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 0.6rem;
+    padding: 0.85rem 0;
+  }
+
+  .resident-summary {
+    flex: 999 1 auto;
+    gap: 0.85rem;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    font-size: 1rem;
+  }
+
+  .greeting {
+    font-size: 0.9rem;
+    line-height: 1.25;
+  }
+
+  .resident-summary h1 {
+    margin-top: 0;
+    font-size: 1.65rem;
+    line-height: 1.15;
   }
 
   .time-panel {
-    align-items: flex-start;
+    flex: 1 0 auto;
+    width: min-content;
+    justify-content: space-between;
+    gap: 0.2rem 0.6rem;
+    padding: 0.45rem 0.55rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .time-panel strong {
+    font-size: 1rem;
+  }
+
+  .current-date {
+    font-size: 0.85rem;
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .connection-status {
+    padding: 0.15rem 0.5rem;
+    font-size: 0.78rem;
   }
 
   .action-grid {
@@ -31,30 +97,64 @@
   }
 
   .action-card {
-    min-height: 220px;
+    min-height: 0;
+    padding: 1.5rem 1.25rem;
   }
 
-  .today-panel,
+  .action-icon,
+  .sos-icon {
+    width: 76px;
+    height: 76px;
+  }
+
+  .action-icon {
+    padding: 17px;
+  }
+
+  .today-panel {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .today-icon {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .today-button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .medication-panel {
+    padding: 1.25rem;
+  }
+
   .section-heading {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .today-summary {
-    text-align: left;
   }
 
   .medication-item {
     grid-template-columns: 1fr;
   }
 
+  .medication-time {
+    justify-self: start;
+  }
+
   .accessibility-bar {
     position: static;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    box-shadow: none;
   }
 
   .accessibility-bar button {
-    min-height: 68px;
+    min-height: 76px;
   }
 
   .app-shell {
@@ -74,4 +174,3 @@
     transition: none !important;
   }
 }
-

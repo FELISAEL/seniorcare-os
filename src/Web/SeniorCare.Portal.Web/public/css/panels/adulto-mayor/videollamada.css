@@ -6,8 +6,8 @@
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
-  border-radius: 30px;
-  background: linear-gradient(145deg, #8759cf, var(--video));
+  border-radius: var(--radius-lg);
+  background: var(--video);
   box-shadow: var(--shadow);
   color: #fff;
   text-align: center;
@@ -17,43 +17,26 @@
 
 .main-content.in-call > :not(.call-panel) { display: none; }
 
-.call-panel h2 { margin: 0; font-size: clamp(2rem, 4vw, 3rem); }
-.call-panel p { margin: 0; max-width: 34rem; font-size: 1.25rem; }
+.call-panel h2 { margin: 0; font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 700; }
+.call-panel p { margin: 0; max-width: 34rem; color: rgba(255, 255, 255, 0.92); font-size: 1.2rem; line-height: 1.5; }
 
 .call-icon {
   display: grid;
   width: 92px;
   height: 92px;
-  border: 5px solid rgba(255, 255, 255, 0.95);
-  border-radius: 28px;
+  padding: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 26px;
   place-items: center;
-  font-size: 3.2rem;
-  font-weight: 900;
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .call-open {
   color: #fff;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: underline;
-}
-
-.call-end {
-  min-height: 72px;
-  padding: 0.9rem 2.2rem;
-  border: 0;
-  border-radius: 22px;
-  background: #fff;
-  color: #4b2a8f;
-  font-size: 1.5rem;
-  font-weight: 800;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-}
-
-.call-end:focus-visible, .call-open:focus-visible {
-  outline: 4px solid #ffe14d;
-  outline-offset: 4px;
+  text-underline-offset: 4px;
 }
 
 .call-actions {
@@ -63,36 +46,55 @@
   justify-content: center;
 }
 
+.call-end,
+.call-resend,
+.call-enter {
+  min-height: 68px;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.call-end {
+  border: 0;
+  background: #fff;
+  color: var(--video-strong);
+  font-size: 1.4rem;
+  box-shadow: var(--shadow);
+}
+
+.call-end:hover { background: #e8f0fa; }
+
 .call-resend {
-  min-height: 72px;
-  padding: 0.9rem 1.8rem;
-  border: 3px solid #fff;
-  border-radius: 22px;
+  border: 2px solid #fff;
   background: transparent;
   color: #fff;
-  font-size: 1.3rem;
-  font-weight: 800;
-  cursor: pointer;
+  font-size: 1.25rem;
 }
 
+.call-resend:hover:not(:disabled) { background: rgba(255, 255, 255, 0.14); }
 .call-resend:disabled { opacity: 0.65; cursor: not-allowed; }
-.call-resend:focus-visible { outline: 4px solid #ffe14d; outline-offset: 4px; }
 
 .call-enter {
-  min-height: 84px;
-  padding: 0.9rem 2.2rem;
+  min-height: 80px;
   border: 0;
-  border-radius: 22px;
-  background: #ffe14d;
-  color: #2a1a5e;
-  font-size: 1.7rem;
-  font-weight: 900;
-  box-shadow: var(--shadow);
-  cursor: pointer;
+  background: #fff;
+  color: var(--video-strong);
+  font-size: 1.6rem;
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.3), var(--shadow-lg);
 }
 
+.call-enter:hover { background: #e8f0fa; }
+
 .call-enter.is-hidden, .call-open.is-hidden { display: none; }
-.call-enter:focus-visible { outline: 4px solid #fff; outline-offset: 4px; }
+
+/* Panel azul: anillo de foco blanco con halo oscuro. */
+.call-panel :focus-visible {
+  outline-color: #fff;
+  box-shadow: 0 0 0 3px var(--video-strong);
+}
 
 /* Llamada incrustada (Jitsi) dentro del panel */
 .call-frame {
@@ -100,8 +102,8 @@
   flex: 1 1 auto;
   min-height: 60vh;
   overflow: hidden;
-  border-radius: 20px;
-  background: #000;
+  border-radius: var(--radius-md);
+  background: var(--video-strong);
 }
 
 .call-frame.is-hidden { display: none; }
@@ -120,8 +122,7 @@
 .call-panel--embedded #callHint,
 .call-panel--embedded .call-open { display: none; }
 
-.call-panel--embedded h2 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+.call-panel--embedded h2 { order: -2; font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
 .call-panel--embedded .call-actions { order: -1; }
 .call-panel--embedded .call-end { min-height: 60px; font-size: 1.25rem; }
 .call-panel--embedded .call-resend { min-height: 60px; font-size: 1.1rem; }
-.call-panel--embedded h2 { order: -2; }

@@ -1,0 +1,88 @@
+/* ---------- Confirmación de emergencia ---------- */
+
+.confirm-dialog {
+  width: min(92vw, 600px);
+  padding: 0;
+  border: 0;
+  border-top: 8px solid var(--emergency);
+  border-radius: var(--radius-lg);
+  color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 24px 64px rgba(22, 50, 47, 0.3);
+}
+
+.confirm-dialog::backdrop {
+  background: rgba(22, 50, 47, 0.62);
+}
+
+.confirm-dialog form {
+  padding: clamp(1.6rem, 5vw, 2.75rem);
+  text-align: center;
+}
+
+.dialog-icon {
+  display: grid;
+  width: 104px;
+  height: 104px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  place-items: center;
+  color: #fff;
+  background: var(--emergency);
+  box-shadow: 0 0 0 8px #f7d6d8;
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.confirm-dialog h2 {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+}
+
+.confirm-dialog p {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+
+.dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 0.8rem;
+  margin-top: 1.75rem;
+}
+
+.dialog-actions button {
+  min-height: 64px;
+  font-size: 1.05rem;
+}
+
+/* ---------- Avisos ---------- */
+
+/* El color de fondo lo asigna ui.js (informativo o error); aquí solo la forma. */
+.toast {
+  position: fixed;
+  z-index: 30;
+  top: 1rem;
+  left: 50%;
+  width: min(90vw, 620px);
+  padding: 1rem 1.4rem;
+  border-radius: var(--radius-md);
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -20px);
+  transition: 180ms ease;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

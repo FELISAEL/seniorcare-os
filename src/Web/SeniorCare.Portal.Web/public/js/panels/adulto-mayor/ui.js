@@ -1,6 +1,6 @@
 function showToast(message, isError = false) {
   elements.toast.textContent = message;
-  elements.toast.style.background = isError ? "#9d1f25" : "#102033";
+  elements.toast.style.background = isError ? "#9d1f25" : "#16322f";
   elements.toast.classList.add("is-visible");
   window.clearTimeout(showToast.timeout);
   showToast.timeout = window.setTimeout(() => elements.toast.classList.remove("is-visible"), 5_000);

@@ -1,35 +1,76 @@
+/* ---------- Recordatorios ---------- */
+
+.today-panel,
 .medication-panel {
   margin-top: 1.5rem;
-  border: 2px solid var(--line);
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 12px 32px rgba(13, 34, 59, 0.1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
 
 .today-panel {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.25rem;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1.5rem 1.8rem;
+  padding: 1.5rem 1.75rem;
+  border-left: 6px solid var(--brand);
+}
+
+.today-icon {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  padding: 16px;
+  border-radius: 18px;
+  place-items: center;
+  color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.today-body {
+  min-width: 0;
 }
 
 .today-panel h2,
 .medication-panel h2 {
   margin: 0;
-  font-size: 1.45rem;
+  color: var(--ink);
+  font-size: 1.4rem;
+  font-weight: 600;
 }
 
 .today-summary {
-  margin: 0;
-  color: #1d527e;
-  font-size: 1.15rem;
-  font-weight: 900;
-  text-align: right;
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.45;
 }
 
+.today-button,
+.confirm-dose {
+  min-height: 56px;
+  padding: 0.75rem 1.5rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  background: var(--brand);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 150ms ease;
+}
+
+.today-button:hover,
+.confirm-dose:hover {
+  background: var(--brand-strong);
+}
+
+/* ---------- Horarios de medicamentos ---------- */
+
 .medication-panel {
-  padding: 1.5rem;
+  padding: 1.5rem 1.75rem 1.75rem;
 }
 
 .section-heading {
@@ -37,57 +78,57 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .medication-list {
   display: grid;
-  gap: 1rem;
-  margin-top: 1.3rem;
+  gap: 0.85rem;
+  margin-top: 1.25rem;
 }
 
 .medication-item {
   display: grid;
-  grid-template-columns: 110px 1fr auto;
-  gap: 1.2rem;
+  grid-template-columns: 9rem 1fr auto;
+  gap: 1.25rem;
   align-items: center;
-  padding: 1.2rem;
-  border: 2px solid var(--line);
-  border-radius: 18px;
-  background: #f8fbfd;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-soft);
 }
 
 .medication-time {
-  color: #1d527e;
-  font-size: 1.35rem;
-  font-weight: 950;
+  padding: 0.55rem 0.6rem;
+  border-radius: var(--radius-sm);
+  color: var(--brand-strong);
+  background: var(--brand-soft);
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .medication-name {
   margin: 0;
   font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .medication-details {
-  margin: 0.35rem 0 0;
+  margin: 0.3rem 0 0;
   color: var(--muted);
   line-height: 1.45;
 }
 
 .taken-badge {
-  padding: 0.7rem 1rem;
-  border-radius: 12px;
-  color: #174b26;
-  background: #cfead5;
-  font-weight: 900;
-}
-
-.confirm-dose {
-  min-height: 52px;
   padding: 0.65rem 1rem;
-  border: 0;
-  border-radius: 12px;
-  color: #fff;
-  background: #237944;
-  font-weight: 900;
+  border: 1px solid #a9d8c3;
+  border-radius: var(--radius-sm);
+  color: var(--medicine-strong);
+  background: #e3f4ec;
+  font-weight: 600;
+  white-space: nowrap;
 }
-

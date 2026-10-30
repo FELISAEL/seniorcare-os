@@ -1,4 +1,4 @@
-const CACHE_NAME = "seniorcare-resident-v5";
+const CACHE_NAME = "seniorcare-resident-v8";
 const BASE = "/panel/adulto-mayor/";
 const STATIC_ASSETS = [
   BASE,
@@ -33,9 +33,13 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(fetch(event.request));
     return;
   }
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
-    const copy = response.clone();
-    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+  // Red primero: con conexión siempre se usa la versión desplegada (Nginx revalida con ETag);
+  // la caché queda solo como respaldo sin conexión.
+  event.respondWith(fetch(event.request).then((response) => {
+    if (response.ok) {
+      const copy = response.clone();
+      caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+    }
     return response;
-  }).catch(() => caches.match(`${BASE}index.html`))));
+  }).catch(() => caches.match(event.request).then((cached) => cached || caches.match(`${BASE}index.html`))));
 });

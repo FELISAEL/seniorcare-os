@@ -8,7 +8,7 @@ function updateClock() {
 
 function updateConnectionStatus() {
   const online = navigator.onLine;
-  elements.connectionStatus.textContent = online ? "Con conexión" : "Modo sin conexión";
+  elements.connectionStatus.textContent = online ? "En línea" : "Sin conexión";
   elements.connectionStatus.classList.toggle("is-offline", !online);
 }
 

@@ -15,6 +15,14 @@ function Assert-Panel($Login, [string]$Expected) {
     }
 }
 
+function Read-EnvSetting([string]$Key) {
+    $line = Get-Content '.env' -Encoding UTF8 |
+        Where-Object { $_ -match "^\s*$Key\s*=" } |
+        Select-Object -Last 1
+    if (-not $line) { throw "No se encontró $Key en .env." }
+    ($line -split '=', 2)[1].Trim()
+}
+
 function Bearer($Login) { @{ Authorization = "Bearer $($Login.accessToken)" } }
 
 function Assert-Forbidden([scriptblock]$Action, [string]$Name) {
@@ -39,10 +47,10 @@ try {
     }
     Write-Host "[OK] API unificada ($($health.service))" -ForegroundColor Green
 
-    $admin = Login-SeniorCare 'admin' 'Cambiar123!'
-    $caregiver = Login-SeniorCare 'cuidador' 'Cuidador123!'
-    $residentLogin = Login-SeniorCare 'maria' 'Maria123!'
-    $family = Login-SeniorCare 'ana' 'Familia123!'
+    $admin = Login-SeniorCare 'admin' (Read-EnvSetting 'SEED_ADMIN_PASSWORD')
+    $caregiver = Login-SeniorCare 'cuidador' (Read-EnvSetting 'SEED_CAREGIVER_PASSWORD')
+    $residentLogin = Login-SeniorCare 'maria' (Read-EnvSetting 'SEED_RESIDENT_PASSWORD')
+    $family = Login-SeniorCare 'ana' (Read-EnvSetting 'SEED_FAMILY_PASSWORD')
 
     Assert-Panel $admin '/panel/administracion/'
     Assert-Panel $caregiver '/panel/cuidador/'

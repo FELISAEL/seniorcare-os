@@ -86,14 +86,17 @@ docker compose --profile monitoring up -d aspire-dashboard
 
 Usuarios de demostración:
 
-| Perfil | Usuario | Contraseña | Panel |
+| Perfil | Usuario | Variable de contraseña en `.env` | Panel |
 | --- | --- | --- | --- |
-| Administrador | `admin` | `Cambiar123!` | `/panel/administracion/` |
-| Cuidador | `cuidador` | `Cuidador123!` | `/panel/cuidador/` |
-| Adulto mayor | `maria` | `Maria123!` | `/panel/adulto-mayor/` |
-| Familiar | `ana` | `Familia123!` | `/panel/familiar/` |
+| Administrador | `admin` | `SEED_ADMIN_PASSWORD` | `/panel/administracion/` |
+| Cuidador | `cuidador` | `SEED_CAREGIVER_PASSWORD` | `/panel/cuidador/` |
+| Adulto mayor | `maria` | `SEED_RESIDENT_PASSWORD` | `/panel/adulto-mayor/` |
+| Familiar | `ana` | `SEED_FAMILY_PASSWORD` | `/panel/familiar/` |
 
-Las credenciales anteriores son únicamente de desarrollo.
+Las contraseñas de desarrollo viven únicamente en el `.env` local (no se versiona) y
+no se muestran en el portal. Las cuentas se crean con esos valores la primera vez que
+la API inicializa `identity_db`; cambiar el `.env` después no modifica una contraseña
+ya existente en la base de datos.
 
 ### Prueba de integración
 

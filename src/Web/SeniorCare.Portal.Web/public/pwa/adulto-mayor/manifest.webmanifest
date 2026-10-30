@@ -6,7 +6,7 @@
   "start_url": "/panel/adulto-mayor/",
   "scope": "/panel/adulto-mayor/",
   "display": "standalone",
-  "background_color": "#edf4f9",
-  "theme_color": "#08111f",
+  "background_color": "#F5F7F6",
+  "theme_color": "#176B5D",
   "icons": []
 }

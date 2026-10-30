@@ -50,10 +50,8 @@ try {
     Write-Host 'Portal público + login: http://localhost:8088'
     Write-Host 'Monitoreo:             http://localhost:18888'
     Write-Host ''
-    Write-Host 'Administrador: admin / Cambiar123!'
-    Write-Host 'Cuidador:      cuidador / Cuidador123!'
-    Write-Host 'Adulto mayor:  maria / Maria123!'
-    Write-Host 'Familiar:      ana / Familia123!'
+    Write-Host 'Usuarios de demostración: admin, cuidador, maria, ana'
+    Write-Host 'Contraseñas: variables SEED_*_PASSWORD del archivo .env local.'
 }
 finally {
     Pop-Location
