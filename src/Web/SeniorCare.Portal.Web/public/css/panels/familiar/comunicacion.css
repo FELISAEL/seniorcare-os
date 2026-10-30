@@ -1,0 +1,29 @@
+/* ---------- Comunicación: videollamada activa ---------- */
+
+.video-item {
+  padding: 1rem 1.1rem;
+  border-radius: 12px;
+  border-color: var(--brand-line);
+  background: var(--brand-tint);
+}
+
+.video-item strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* «Unirse» usa el botón principal del panel. */
+.video-item a {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0.6rem 1.1rem;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  background: var(--brand);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.video-item a:hover {
+  background: var(--brand-strong);
+}

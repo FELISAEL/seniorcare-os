@@ -1,0 +1,156 @@
+/* ---------- Tokens del panel Familiar ---------- */
+
+:root {
+  /* Identidad verde institucional (la misma de Adulto Mayor y Cuidador). */
+  --brand: #176b5d;
+  --brand-strong: #0f5045;
+  --brand-2: #2a8c7a;
+  --brand-soft: #e3f3ef;
+  --brand-tint: #f3faf8;
+  --brand-line: #a9d5ca;
+  --sidebar: #0f3f37;
+  --sidebar-active: #1b5a4f;
+  --sidebar-accent: #7fd1bd;
+  --sidebar-text: #d2e6e0;
+  --sidebar-muted: #a9cbc2;
+
+  /* La base compartida (care-team) pinta con estas variables: aquí se redirigen al verde
+     solo para este panel. Rojo y ámbar conservan sus valores compartidos (SOS y asistencia). */
+  --navy: var(--sidebar);
+  --navy-light: var(--sidebar-active);
+  --blue: var(--brand);
+  --blue-soft: var(--brand-soft);
+
+  /* Neutros con un leve matiz verde. */
+  --ink: #16322f;
+  --muted: #526761;
+  --line: #dce6e2;
+  --line-strong: #c3d3cd;
+  --background: #f5f7f6;
+  --surface-soft: #f8faf9;
+  --amber-ink: #7a4703;
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(22, 50, 47, 0.05), 0 4px 14px rgba(22, 50, 47, 0.05);
+
+  /* Íconos de trazo para tarjetas y estados vacíos. */
+  --icon-person: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23176b5d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4.5 20c1.4-3.6 4.2-5.5 7.5-5.5s6.1 1.9 7.5 5.5'/%3E%3C/svg%3E");
+  --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23176b5d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8 12.5 2.5 2.5L16 9.5'/%3E%3C/svg%3E");
+  --icon-pill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23176b5d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.5 20.5a5 5 0 0 1-7-7l6-6a5 5 0 0 1 7 7z'/%3E%3Cpath d='m7 10.5 6.5 6.5'/%3E%3C/svg%3E");
+  --icon-video: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23176b5d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='6' width='13' height='12' rx='2.5'/%3E%3Cpath d='m15.5 10.5 6-3.5v10l-6-3.5'/%3E%3C/svg%3E");
+  /* Máscara (se pinta con currentColor) para el ícono del botón de videollamada. */
+  --mask-video: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='6' width='13' height='12' rx='2.5'/%3E%3Cpath d='m15.5 10.5 6-3.5v10l-6-3.5'/%3E%3C/svg%3E");
+
+  font-family:
+    Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto,
+    sans-serif;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.eyebrow {
+  margin: 0 0 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Botones ---------- */
+
+.button {
+  display: inline-flex;
+  min-height: 44px;
+  padding: 0.6rem 1.1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.button--primary:hover {
+  background: var(--brand-strong);
+}
+
+.button--primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.button--secondary {
+  border-color: var(--line-strong);
+}
+
+.button--secondary:hover {
+  border-color: #7f948e;
+  background: var(--surface-soft);
+}
+
+/* ---------- Paneles ---------- */
+
+.panel {
+  padding: 1.5rem;
+  border-radius: var(--radius);
+}
+
+.panel-heading {
+  padding-bottom: 1.1rem;
+}
+
+.panel-heading h2 {
+  font-size: 1.35rem;
+  line-height: 1.25;
+}
+
+/* ---------- Estados vacíos (mensajes que genera el panel) ---------- */
+
+.empty-state,
+#scheduleList > p:only-child,
+#videoList > p:only-child {
+  --icon: var(--icon-check);
+
+  display: grid;
+  margin: 0;
+  padding: 2.25rem 1.5rem;
+  justify-items: center;
+  gap: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: var(--surface-soft);
+  font-weight: 600;
+  text-align: center;
+}
+
+.empty-state::before,
+#scheduleList > p:only-child::before,
+#videoList > p:only-child::before {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--icon) center / 24px no-repeat, var(--brand-soft);
+  content: "";
+}
+
+#scheduleList > p:only-child {
+  --icon: var(--icon-pill);
+}
+
+#videoList > p:only-child {
+  --icon: var(--icon-video);
+}

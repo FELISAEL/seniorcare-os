@@ -1,0 +1,57 @@
+/* ---------- Medicamentos de hoy ----------
+   Hora en ficha propia (sin partir «a. m.»), medicamento y dosis, indicación y estado. */
+
+.schedule-list {
+  gap: 0.6rem;
+}
+
+.schedule-item {
+  grid-template-columns: 6.5rem minmax(0, 1fr) auto;
+  gap: 1.1rem;
+  padding: 0.9rem 1.1rem 0.9rem 0.9rem;
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.schedule-time {
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--brand-strong);
+  background: var(--brand-soft);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.schedule-item h3 {
+  font-size: 1.05rem;
+}
+
+.schedule-item p {
+  margin-top: 0.15rem;
+  font-size: 0.95rem;
+}
+
+.schedule-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  color: var(--amber-ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.schedule-status::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+  content: "";
+}
+
+.schedule-status.is-taken::before {
+  background: var(--green);
+}

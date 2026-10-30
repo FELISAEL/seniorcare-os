@@ -1,0 +1,173 @@
+/* Va al final: repite las reglas móviles de la base compartida que los estilos de escritorio
+   de este panel reemplazan, y agrega las propias. El menú del teléfono está en navegacion-movil.css. */
+
+/* ---------- Tablet: el menú lateral pasa a ser una barra superior ---------- */
+
+@media (min-width: 721px) and (max-width: 1050px) {
+  .family-dashboard .dashboard {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .family-dashboard .sidebar {
+    height: auto;
+    max-height: 45vh;
+    max-height: 45dvh;
+    padding: 0.75rem;
+  }
+
+  .sidebar-brand {
+    padding-bottom: 0.6rem;
+  }
+
+  .family-dashboard .family-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 0.6rem;
+  }
+
+  .family-dashboard .nav-link {
+    min-height: 44px;
+    padding: 0.6rem 0.4rem;
+    text-align: center;
+  }
+
+  /* En barra superior la guía activa va abajo, no a la izquierda. */
+  .family-dashboard .nav-link.is-active {
+    box-shadow: inset 0 -3px 0 var(--sidebar-accent);
+  }
+
+  .logout {
+    margin: 0.6rem 0 0;
+  }
+}
+
+/* ---------- Teléfonos: contenido ----------
+   Encabezado y tarjetas con menos relleno para llegar antes al contenido. */
+
+@media (max-width: 720px) {
+  .family-dashboard .content {
+    padding: 1rem 1rem 2rem;
+  }
+
+  .family-dashboard .family-views {
+    margin-top: 0.85rem;
+  }
+
+  /* Encabezado: «Conectado» a la derecha del texto, no en una fila propia. */
+  .family-dashboard .page-header {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .family-dashboard .page-header .eyebrow {
+    margin-bottom: 0.15rem;
+    font-size: 0.7rem;
+  }
+
+  .family-dashboard .page-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .family-dashboard .page-header p:last-child {
+    margin-top: 0.15rem;
+    font-size: 0.92rem;
+  }
+
+  .family-dashboard .system-status {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .panel {
+    padding: 1rem;
+  }
+
+  /* El título de la vista y «Actualizar» comparten fila. */
+  .panel-heading {
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 0.85rem;
+  }
+
+  .panel-heading h2 {
+    font-size: 1.2rem;
+  }
+
+  .alert-list,
+  .schedule-list,
+  .video-list {
+    margin-top: 0.85rem;
+  }
+
+  .family-hero {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.9rem;
+    padding: 1rem;
+  }
+
+  .family-hero::before {
+    width: 48px;
+    height: 48px;
+    background-size: 24px;
+  }
+
+  .family-hero h2 {
+    font-size: 1.3rem;
+  }
+
+  .family-hero .button {
+    grid-column: 1 / -1;
+  }
+
+  .schedule-item {
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: 0.5rem 0.8rem;
+    padding: 0.8rem;
+  }
+
+  .schedule-time {
+    font-size: 0.95rem;
+  }
+
+  .schedule-item h3 {
+    font-size: 1rem;
+  }
+
+  .schedule-status {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .alert-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.85rem 0.9rem;
+  }
+
+  .video-item {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .video-item a {
+    justify-content: center;
+  }
+
+  .empty-state,
+  #scheduleList > p:only-child,
+  #videoList > p:only-child {
+    padding: 1.5rem 1rem;
+    gap: 0.7rem;
+  }
+
+  .empty-state::before,
+  #scheduleList > p:only-child::before,
+  #videoList > p:only-child::before {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background-size: 20px;
+  }
+}

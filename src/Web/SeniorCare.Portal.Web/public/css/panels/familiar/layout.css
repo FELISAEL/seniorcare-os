@@ -1,0 +1,160 @@
+/* ---------- Estructura: menú fijo y solo el contenido se desplaza ---------- */
+
+.family-dashboard .dashboard {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.family-dashboard .content {
+  width: min(1180px, 100%);
+  min-height: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 3.5vw, 3rem) 3rem;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.family-dashboard .family-views {
+  min-width: 0;
+  margin-top: 1.25rem;
+}
+
+.family-dashboard [role="tabpanel"] {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.family-dashboard [role="tabpanel"][hidden] {
+  display: none !important;
+}
+
+.family-dashboard [role="tabpanel"]:focus-visible {
+  outline: 4px solid #ffca3a;
+  outline-offset: 3px;
+}
+
+/* ---------- Menú lateral ---------- */
+
+.family-dashboard .sidebar {
+  position: static;
+  height: 100%;
+  min-height: 0;
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 0 0.5rem 1.4rem;
+}
+
+.sidebar-brand .logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.sidebar-brand strong {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Solo el subtítulo «Familia», no el ícono SC (que también es un span). */
+.sidebar-brand div span {
+  color: var(--sidebar-muted);
+  font-size: 0.82rem;
+}
+
+/* nav solo envuelve la lista de pestañas: sin la cuadrícula ni el margen de la base compartida
+   (en tablet esa cuadrícula de 4 columnas encogía las pestañas a una sola columna). */
+.family-dashboard .sidebar nav {
+  display: block;
+  margin-top: 0;
+}
+
+.family-dashboard .family-tabs {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 1.25rem;
+}
+
+/* Las pestañas son botones: se quitan los estilos nativos y se alinean como enlaces. */
+.family-dashboard .nav-link {
+  padding: 0.75rem 0.9rem;
+  border: 0;
+  color: var(--sidebar-text);
+  background: transparent;
+  font-weight: 600;
+  text-align: left;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.family-dashboard .nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Vista activa: fondo y una guía fina a la izquierda. */
+.family-dashboard .nav-link.is-active {
+  color: #fff;
+  background: var(--sidebar-active);
+  box-shadow: inset 3px 0 0 var(--sidebar-accent);
+}
+
+.logout {
+  margin-inline: 0.5rem;
+  font-weight: 600;
+  transition: background-color 150ms ease;
+}
+
+.logout:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- Encabezado familiar ----------
+   Franja verde compacta y lisa: saludo protagonista y, a la derecha, el indicador. */
+
+.family-dashboard .page-header {
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius);
+  color: #fff;
+  background: var(--brand);
+}
+
+.family-dashboard .page-header .eyebrow {
+  color: var(--brand-soft);
+}
+
+.family-dashboard .page-header h1 {
+  font-size: clamp(1.5rem, 2.6vw, 1.85rem);
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.family-dashboard .page-header p:last-child {
+  margin-top: 0.25rem;
+  color: var(--brand-soft);
+}
+
+/* Misma cápsula translúcida que el encabezado del panel Adulto Mayor (texto blanco 5.3:1). */
+.family-dashboard .system-status {
+  flex: none;
+  gap: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+}
+
+.family-dashboard .status-dot {
+  width: 8px;
+  height: 8px;
+  background: #5fd6a3;
+  box-shadow: none;
+}

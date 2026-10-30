@@ -1,2 +1,12 @@
+/* SeniorCare OS · Panel Familiar
+   Base compartida del equipo de cuidado y, encima, el diseño propio del panel Familiar
+   (archivos de esta carpeta), que no afecta a Administración ni al Cuidador. */
 @import url("../care-team/app.css");
+@import url("./base.css");
+@import url("./layout.css");
 @import url("./resumen.css");
+@import url("./medicamentos.css");
+@import url("./alertas.css");
+@import url("./comunicacion.css");
+@import url("./navegacion-movil.css");
+@import url("./responsive.css");

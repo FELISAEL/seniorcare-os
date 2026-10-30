@@ -3,14 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#102a43">
+  <meta name="theme-color" content="#0f3f37">
   <meta name="description" content="Panel familiar de SeniorCare OS">
   <title>Familia | SeniorCare OS</title>
   <link rel="stylesheet" href="/css/panels/familiar/app.css">
 </head>
 <body class="family-dashboard">
   <div class="dashboard">
-    <aside class="sidebar">
+    <div class="mobile-bar">
+      <div class="mobile-brand"><span class="logo" aria-hidden="true">SC</span><div><strong>SeniorCare</strong><span>Familia</span></div></div>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="familySidebar">
+        <svg class="menu-toggle__open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="menu-toggle__close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <aside class="sidebar" id="familySidebar">
       <div class="sidebar-brand"><span class="logo" aria-hidden="true">SC</span><div><strong>SeniorCare</strong><span>Familia</span></div></div>
       <nav aria-label="Navegación principal">
         <div class="family-tabs" role="tablist" aria-label="Opciones del panel Familiar" aria-orientation="vertical">
@@ -22,6 +29,7 @@
       </nav>
       <button class="logout" id="logoutButton" type="button">Cerrar sesión</button>
     </aside>
+    <div class="drawer-overlay" id="menuOverlay" hidden></div>
 
     <main class="content">
       <header class="page-header">
@@ -61,6 +69,7 @@
   <script src="/js/panels/familiar/alertas.js" defer></script>
   <script src="/js/panels/familiar/videollamada.js" defer></script>
   <script src="/js/panels/familiar/ui.js" defer></script>
+  <script src="/js/panels/familiar/menu.js" defer></script>
   <script src="/js/panels/familiar/app.js" defer></script>
 </body>
 </html>

@@ -1,13 +1,14 @@
 function initializeFamilyNavigation() {
   const tablist = $(".family-tabs");
   const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
-  const mobileLayout = window.matchMedia("(max-width: 1050px)");
+  // Solo en tablet las pestañas forman una fila; en escritorio y en el menú del teléfono son una lista vertical.
+  const tabletLayout = window.matchMedia("(min-width: 721px) and (max-width: 1050px)");
   const updateOrientation = () => tablist.setAttribute(
-    "aria-orientation", mobileLayout.matches ? "horizontal" : "vertical"
+    "aria-orientation", tabletLayout.matches ? "horizontal" : "vertical"
   );
 
   updateOrientation();
-  mobileLayout.addEventListener("change", updateOrientation);
+  tabletLayout.addEventListener("change", updateOrientation);
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => selectFamilyView(tab, tabs));
     tab.addEventListener("keydown", (event) => navigateFamilyTabs(event, tabs));

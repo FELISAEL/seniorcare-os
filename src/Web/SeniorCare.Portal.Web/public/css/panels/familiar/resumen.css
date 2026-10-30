@@ -1,300 +1,43 @@
-.family-hero { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.family-hero h2 { margin: 0 0 8px; font-size: clamp(1.7rem, 3vw, 2.5rem); }
-.family-hero p { margin: 0; color: #61758a; }
-@media (max-width: 760px) { .family-hero { align-items: stretch; flex-direction: column; } }
+/* ---------- Resumen: persona vinculada ----------
+   Tarjeta compacta con ícono de persona (sin fotografía: la imagen anterior era ilustrativa
+   y podía confundirse con la persona real), datos de contacto y la acción de videollamada. */
 
-/* --- Rediseño teal, con foto real del proyecto --- */
-
-:root {
-  --navy: #ffffff;
-  --navy-light: #e5f5f2;
-  --blue: #1f8a7a;
-  --blue-soft: #e5f5f2;
-  --green: #1f8a7a;
-  --green-soft: #e5f5f2;
-  --amber: #1f8a7a;
-  --amber-soft: #e5f5f2;
-  --ink: #16281d;
-  --muted: #6b7d78;
-  --line: #e2efec;
-  --background: #faf7f1;
-  --shadow: 0 14px 34px rgba(31, 138, 122, 0.1);
-}
-
-body {
-  background: var(--background);
-  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-/* Sidebar con degradado teal + patrón sutil de puntos */
-.sidebar {
-  background:
-    radial-gradient(circle at 1px 1px, rgba(255,255,255,0.12) 1px, transparent 0) 0 0/16px 16px,
-    linear-gradient(180deg, #1f8a7a, #145e54);
-  border-right: none;
-}
-.sidebar-brand strong { color: #fff; }
-.sidebar-brand span { color: #bfe6de; }
-.logo {
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
-  font-weight: 900;
-  border: 2px solid rgba(255, 255, 255, 0.4);
-}
-.nav-link { color: #d6f0ea; }
-.nav-link:hover,
-.nav-link.is-active {
-  color: var(--blue);
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-}
-.logout {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  font-weight: 800;
-}
-.logout:hover { background: #fff; color: var(--blue); }
-
-/* Header animado — solo tonos teal, con espacio debajo */
-.page-header {
-  position: relative;
-  padding: 1.6rem 1.8rem;
-  border-radius: 24px;
-  overflow: hidden;
-  background: linear-gradient(-45deg, #1f8a7a, #2fb39f, #145e54, #1f8a7a);
-  background-size: 300% 300%;
-  animation: gradientMove 12s ease infinite;
-  margin-bottom: 1.5rem;
-}
-.page-header h1,
-.page-header .eyebrow,
-.page-header p:last-child { color: #fff !important; position: relative; z-index: 1; }
-.page-header .eyebrow { background: rgba(255,255,255,0.25); }
-.system-status { background: rgba(255,255,255,0.2); color: #fff; border: none; position: relative; z-index: 1; }
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Tarjeta principal: foto real del proyecto (misma del login) */
 .family-hero {
-  position: relative;
-  min-height: 220px;
-  padding: 2rem;
-  border-radius: 26px;
-  border: none;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  background:
-    linear-gradient(90deg, #ffffff 38%, rgba(255,255,255,0.55) 65%, rgba(255,255,255,0) 85%),
-    url("/assets/public/hero-seniorcare-familia.png") right center / cover no-repeat;
-}
-.family-hero h2 {
-  font-weight: 800;
-  color: var(--ink);
-  position: relative;
-  z-index: 1;
-}
-.family-hero > div:first-child {
-  position: relative;
-  z-index: 1;
-  max-width: 60%;
-}
-.family-hero button {
-  position: relative;
-  z-index: 2;
-}
-
-@media (max-width: 760px) {
-  .family-hero {
-    background:
-      linear-gradient(180deg, #ffffff 55%, rgba(255,255,255,0.6) 80%, rgba(255,255,255,0) 100%),
-      url("/assets/public/hero-seniorcare-familia.png") center 20% / cover no-repeat;
-    min-height: 280px;
-  }
-  .family-hero > div:first-child {
-    max-width: 100%;
-  }
-}
-
-/* Tarjetas con leve elevación al pasar el mouse */
-.stat-card,
-.panel {
-  border-radius: 24px;
-  border-color: var(--line);
-  box-shadow: var(--shadow);
-  transition: transform 180ms ease, box-shadow 180ms ease;
-}
-.stat-card:hover,
-.panel:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 40px rgba(31, 138, 122, 0.15);
-}
-
-.eyebrow {
-  display: inline-flex;
-  padding: 5px 14px;
-  border-radius: 999px;
-  background: #fff;
-  color: var(--blue);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  font-weight: 800;
-}
-
-/* Medicamentos con acento e ícono */
-.schedule-item {
-  border-radius: 16px;
-  border-left: 4px solid var(--blue);
-  background: #fff;
-  padding: 1rem 1.1rem;
-}
-.schedule-item h3::before { content: "💊  "; }
-.schedule-status { border-radius: 999px; }
-
-/* Videollamada con ícono */
-.video-item { border-radius: 16px; background: #fff; }
-.video-item h3::before,
-.video-list p::before { content: "🎥  "; }
-.video-item a {
-  border-radius: 999px;
-  background: linear-gradient(135deg, #1f8a7a, #2fb39f);
-}
-
-/* Alertas vacías con ícono amigable */
-.empty-state {
-  border-radius: 16px;
-  background: var(--navy-light);
-  color: var(--blue);
-}
-.empty-state::before { content: "✅  "; }
-
-/* Botones */
-.button { border-radius: 999px; font-weight: 800; }
-.button--primary {
-  background: linear-gradient(135deg, var(--blue), #2fb39f);
-  box-shadow: 0 10px 22px rgba(31, 138, 122, 0.3);
-}
-.button--secondary {
-  color: var(--blue);
-  background: var(--blue-soft);
-  border: none;
-}
-.button--secondary:hover { background: var(--blue); color: #fff; }
-
-/* Navegación estable; solo el contenido seleccionado se desplaza. */
-.family-dashboard .dashboard {
-  height: 100vh;
-  height: 100dvh;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.family-dashboard .sidebar {
-  position: static;
-  height: 100%;
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.family-dashboard .content {
-  min-height: 0;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-}
-
-.family-dashboard .family-tabs {
   display: grid;
-  gap: 0.4rem;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  border-color: var(--brand-line);
+  background: var(--brand-tint);
 }
 
-.family-dashboard .nav-link {
-  border: 0;
-  background: transparent;
-  text-align: left;
+.family-hero::before {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--icon-person) center / 30px no-repeat, var(--brand-soft);
+  box-shadow: inset 0 0 0 1px var(--brand-line);
+  content: "";
 }
 
-.family-dashboard .nav-link:hover,
-.family-dashboard .nav-link.is-active {
-  background: #fff;
-}
-
-.family-dashboard .family-views {
-  min-width: 0;
-}
-
-.family-dashboard [role="tabpanel"] {
+.family-hero h2 {
   margin: 0;
-  overflow-wrap: anywhere;
+  font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+  line-height: 1.2;
 }
 
-.family-dashboard [role="tabpanel"][hidden] {
-  display: none !important;
+.family-hero p:not(.eyebrow) {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
 }
 
-.family-dashboard [role="tabpanel"]:focus-visible {
-  outline: 4px solid #ffca3a;
-  outline-offset: 3px;
-}
-
-@media (max-width: 1050px) {
-  .family-dashboard .dashboard {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto minmax(0, 1fr);
-  }
-
-  .family-dashboard .sidebar {
-    height: auto;
-    max-height: 45vh;
-    max-height: 45dvh;
-    padding: 0.75rem;
-  }
-
-  .family-dashboard .sidebar-brand {
-    padding-bottom: 0.5rem;
-  }
-
-  .family-dashboard .sidebar nav {
-    display: block;
-    margin-top: 0.5rem;
-  }
-
-  .family-dashboard .family-tabs {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .family-dashboard .nav-link {
-    min-height: 44px;
-    padding: 0.6rem 0.4rem;
-    text-align: center;
-  }
-
-  .family-dashboard .logout {
-    margin-top: 0.5rem;
-  }
-}
-
-@media (max-width: 720px) {
-  .family-dashboard .family-tabs {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .family-dashboard .video-item {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .family-dashboard .page-header {
-    animation: none;
-  }
-
-  .family-dashboard .stat-card,
-  .family-dashboard .panel {
-    transition: none;
-    transform: none;
-  }
+/* «Iniciar videollamada» con ícono de cámara. */
+.family-hero .button::before {
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  content: "";
+  -webkit-mask: var(--mask-video) center / contain no-repeat;
+  mask: var(--mask-video) center / contain no-repeat;
 }
